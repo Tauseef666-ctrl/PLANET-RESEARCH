@@ -14,6 +14,11 @@ import { MoonSection } from './components/MoonSection'
 import { AsteroidSection } from './components/AsteroidSection'
 import { AboutSection } from './components/AboutSection'
 import { PlanetGlobe } from './three/PlanetGlobe'
+import { SpaceMap } from './components/SpaceMap'
+import { ExoplanetGlobe } from './components/ExoplanetGlobe'
+import { ResearchSection } from './components/ResearchSection'
+import { DataHub } from './components/DataHub'
+import { SAMPLE_EXOPLANETS } from './data/exoplanets'
 
 function SolarSystemSection() {
   const { setSelectedPlanet, setActiveView } = useStore()
@@ -114,6 +119,8 @@ export default function App() {
     }
   }, [activeView, setSelectedPlanet])
 
+  const selectedExoplanet = useStore((s) => s.selectedExoplanet)
+
   const showHero = activeView === 'home'
   const showSolarSystem = activeView === 'solar-system' || activeView === 'home'
   const showPlanetSection = activeView === 'planet'
@@ -121,8 +128,12 @@ export default function App() {
   const showExoplanetSection = activeView === 'exoplanet' || activeView === 'home'
   const showAsteroidSection = activeView === 'asteroid' || activeView === 'home'
   const showMissions = activeView === 'missions' || activeView === 'home'
-  const showResearch = activeView === 'research' || activeView === 'home' || activeView === 'data'
+  const showResearch = activeView === 'research' || activeView === 'home'
+  const showDataHub = activeView === 'data' || activeView === 'home'
+  const showSpaceMap = activeView === 'space-map' || activeView === 'home'
   const showAbout = activeView === 'about' || activeView === 'home'
+
+  const selectedExoplanetData = selectedExoplanet ? SAMPLE_EXOPLANETS.find((e) => e.pl_name === selectedExoplanet) : null
 
   return (
     <div className="relative min-h-screen" style={{ background: '#050510' }}>
@@ -162,12 +173,24 @@ export default function App() {
             </>
           )}
 
-          {showExoplanetSection && (
+          {showSpaceMap && (
+            <>
+              <SpaceMap />
+              <SectionDivider />
+            </>
+          )}
+
+          {showExoplanetSection && selectedExoplanetData ? (
+            <>
+              <ExoplanetGlobe exoplanet={selectedExoplanetData} />
+              <SectionDivider />
+            </>
+          ) : showExoplanetSection ? (
             <>
               <ExoplanetSection />
               <SectionDivider />
             </>
-          )}
+          ) : null}
 
           {showAsteroidSection && (
             <>
@@ -192,7 +215,14 @@ export default function App() {
 
           {showResearch && (
             <>
-              <ResearchDashboard />
+              <ResearchSection />
+              <SectionDivider />
+            </>
+          )}
+
+          {showDataHub && (
+            <>
+              <DataHub />
               <SectionDivider />
             </>
           )}
