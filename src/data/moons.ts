@@ -1,0 +1,120 @@
+export interface MoonData {
+  id: string
+  name: string
+  parentPlanet: string
+  diameter: number
+  gravity: number
+  atmosphere: string
+  surfaceInfo: string
+  scientificSignificance: string
+  missions: string[]
+  color: string
+  size: number
+}
+
+export const MOONS: MoonData[] = [
+  {
+    id: 'moon',
+    name: 'Moon',
+    parentPlanet: 'Earth',
+    diameter: 3474,
+    gravity: 1.62,
+    atmosphere: 'Virtually none (exosphere)',
+    surfaceInfo: 'Heavily cratered, basaltic plains (maria), highlands',
+    scientificSignificance: 'Only celestial body visited by humans. Source of tidal forces on Earth.',
+    missions: ['Apollo 11-17', 'Luna program', 'Chang\'e program', 'Artemis (planned)'],
+    color: '#c8c8c8',
+    size: 0.27,
+  },
+  {
+    id: 'europa',
+    name: 'Europa',
+    parentPlanet: 'Jupiter',
+    diameter: 3122,
+    gravity: 1.315,
+    atmosphere: 'Trace O2',
+    surfaceInfo: 'Smooth ice shell, possible subsurface ocean, few craters',
+    scientificSignificance: 'One of the best candidates for extraterrestrial life in our Solar System.',
+    missions: ['Voyager 1 & 2', 'Galileo', 'Europa Clipper (en route)'],
+    color: '#e8d8c0',
+    size: 0.24,
+  },
+  {
+    id: 'ganymede',
+    name: 'Ganymede',
+    parentPlanet: 'Jupiter',
+    diameter: 5268,
+    gravity: 1.428,
+    atmosphere: 'Trace O2',
+    surfaceInfo: 'Mixed terrain: dark cratered and lighter grooved terrain',
+    scientificSignificance: 'Largest moon in the Solar System. Only moon with its own magnetic field.',
+    missions: ['Voyager 1 & 2', 'Galileo', 'JUICE (en route)'],
+    color: '#a8a090',
+    size: 0.35,
+  },
+  {
+    id: 'callisto',
+    name: 'Callisto',
+    parentPlanet: 'Jupiter',
+    diameter: 4821,
+    gravity: 1.235,
+    atmosphere: 'Trace CO2',
+    surfaceInfo: 'Most heavily cratered object in the Solar System',
+    scientificSignificance: 'Possible subsurface ocean. Considered safest place for human base near Jupiter.',
+    missions: ['Voyager 1 & 2', 'Galileo'],
+    color: '#8a8070',
+    size: 0.32,
+  },
+  {
+    id: 'io',
+    name: 'Io',
+    parentPlanet: 'Jupiter',
+    diameter: 3643,
+    gravity: 1.796,
+    atmosphere: 'SO2, S2',
+    surfaceInfo: 'Most volcanically active body in the Solar System',
+    scientificSignificance: 'Over 400 active volcanoes. Driven by tidal heating from Jupiter.',
+    missions: ['Voyager 1 & 2', 'Galileo', 'Juno'],
+    color: '#d4a017',
+    size: 0.28,
+  },
+  {
+    id: 'titan',
+    name: 'Titan',
+    parentPlanet: 'Saturn',
+    diameter: 5150,
+    gravity: 1.352,
+    atmosphere: 'Dense N2 (98.4%) with CH4 (1.4%)',
+    surfaceInfo: 'Methane lakes, hydrocarbon dunes, water ice bedrock',
+    scientificSignificance: 'Only moon with a thick atmosphere. Has liquid methane cycle similar to Earth water cycle.',
+    missions: ['Voyager 1', 'Cassini-Huygens', 'Dragonfly (planned)'],
+    color: '#d4a040',
+    size: 0.33,
+  },
+  {
+    id: 'enceladus',
+    name: 'Enceladus',
+    parentPlanet: 'Saturn',
+    diameter: 504,
+    gravity: 0.113,
+    atmosphere: 'Trace water vapor',
+    surfaceInfo: 'Smooth ice surface with tiger stripe fractures at south pole',
+    scientificSignificance: 'Cryovolcanic geysers shoot water vapor from subsurface ocean. Potential habitable environment.',
+    missions: ['Voyager 2', 'Cassini'],
+    color: '#e8e8e8',
+    size: 0.12,
+  },
+  {
+    id: 'triton',
+    name: 'Triton',
+    parentPlanet: 'Neptune',
+    diameter: 2707,
+    gravity: 0.779,
+    atmosphere: 'Trace N2',
+    surfaceInfo: 'Cantalo terrain, nitrogen geysers, very young surface',
+    scientificSignificance: 'Largest Neptune moon. Orbits retrograde — likely a captured Kuiper Belt object.',
+    missions: ['Voyager 2'],
+    color: '#c0b8a8',
+    size: 0.21,
+  },
+]
