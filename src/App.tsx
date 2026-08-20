@@ -13,6 +13,7 @@ import { ResearchDashboard } from './components/ResearchDashboard'
 import { MoonSection } from './components/MoonSection'
 import { AsteroidSection } from './components/AsteroidSection'
 import { AboutSection } from './components/AboutSection'
+import { PlanetGlobe } from './three/PlanetGlobe'
 
 function SolarSystemSection() {
   const { setSelectedPlanet, setActiveView } = useStore()
@@ -130,6 +131,7 @@ export default function App() {
       <Navbar />
       <SearchPanel />
       <PlanetPanel />
+      <PlanetGlobe />
 
       {/* Content overlay that scrolls over the 3D scene */}
       <div className="relative z-10">
