@@ -1,9 +1,28 @@
 import { motion } from 'framer-motion'
 import { ChevronDown, Search } from 'lucide-react'
 import { useStore } from '../store/useStore'
+import { sounds } from '../utils/sounds'
+
+const HERO_NAV_MAP: Record<string, string> = {
+  'SOLAR SYSTEM': 'solar-system',
+  'PLANETS': 'solar-system',
+  'EXOPLANETS': 'exoplanets',
+  'MISSIONS': 'missions',
+  'RESEARCH': 'research',
+}
 
 export function HeroSection() {
-  const { setSearchOpen, setActiveView } = useStore()
+  const { setSearchOpen } = useStore()
+
+  const scrollToSection = (sectionId: string) => {
+    setTimeout(() => {
+      const el = document.getElementById(sectionId)
+      if (el) {
+        const y = el.getBoundingClientRect().top + window.scrollY - 100
+        window.scrollTo({ top: y, behavior: 'smooth' })
+      }
+    }, 50)
+  }
 
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center text-center px-4 z-10 pointer-events-none">
@@ -46,7 +65,7 @@ export function HeroSection() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 2.3, duration: 0.8 }}
-        onClick={() => setSearchOpen(true)}
+        onClick={() => { sounds.play('click'); setSearchOpen(true) }}
         className="pointer-events-auto flex items-center gap-3 px-6 py-3 rounded-xl transition-all hover:scale-105"
         style={{
           background: 'rgba(13, 27, 42, 0.5)',
@@ -74,10 +93,7 @@ export function HeroSection() {
         {['SOLAR SYSTEM', 'PLANETS', 'EXOPLANETS', 'MISSIONS', 'RESEARCH'].map((label) => (
           <button
             key={label}
-            onClick={() => {
-              const view = label.toLowerCase().replace(' ', '-') as any
-              setActiveView(view)
-            }}
+            onClick={() => { sounds.play('click'); scrollToSection(HERO_NAV_MAP[label]) }}
             className="px-4 py-2 text-[10px] tracking-[0.2em] uppercase rounded-lg transition-all hover:scale-105"
             style={{
               fontFamily: '"Space Grotesk", sans-serif',
@@ -96,7 +112,8 @@ export function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 3, duration: 1 }}
-        className="absolute bottom-10"
+        className="absolute bottom-10 pointer-events-auto cursor-pointer"
+        onClick={() => scrollToSection('solar-system')}
       >
         <motion.div
           animate={{ y: [0, 8, 0] }}

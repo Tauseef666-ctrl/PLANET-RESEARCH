@@ -1,56 +1,145 @@
 import { useState, useRef, useMemo, useCallback, Suspense } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { OrbitControls, Html, Line, Stars, Sphere } from '@react-three/drei'
+import { OrbitControls, Html, Line, Stars } from '@react-three/drei'
 import * as THREE from 'three'
 import { useStore } from '../store/useStore'
 import { PLANETS, PlanetData } from '../data/planets'
-import { Search, X, Navigation, Compass } from 'lucide-react'
+import { Search, X, Compass, ArrowLeft, Globe } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { sounds } from '../utils/sounds'
 
 const ACCENT = '#00d4ff'
 
+const REAL_ORBIT_RADII: Record<string, number> = {
+  mercury: 6,
+  venus: 9,
+  earth: 12,
+  mars: 16,
+  jupiter: 28,
+  saturn: 38,
+  uranus: 50,
+  neptune: 62,
+}
+
+const REAL_SIZES: Record<string, number> = {
+  mercury: 0.2,
+  venus: 0.5,
+  earth: 0.5,
+  mars: 0.35,
+  jupiter: 2.5,
+  saturn: 2.0,
+  uranus: 1.2,
+  neptune: 1.1,
+}
+
 function Sun() {
   const ref = useRef<THREE.Mesh>(null!)
-  useFrame((_, delta) => {
-    if (ref.current) ref.current.rotation.y += delta * 0.1
+  const glowRef = useRef<THREE.Mesh>(null!)
+  const coronaRef = useRef<THREE.Points>(null!)
+
+  const coronaPositions = useMemo(() => {
+    const count = 1000
+    const pos = new Float32Array(count * 3)
+    for (let i = 0; i < count; i++) {
+      const i3 = i * 3
+      const r = 2.8 + Math.random() * 1.2
+      const theta = Math.random() * Math.PI * 2
+      const phi = Math.acos(2 * Math.random() - 1)
+      pos[i3] = r * Math.sin(phi) * Math.cos(theta)
+      pos[i3 + 1] = r * Math.sin(phi) * Math.sin(theta)
+      pos[i3 + 2] = r * Math.cos(phi)
+    }
+    return pos
+  }, [])
+
+  useFrame((state) => {
+    const t = state.clock.elapsedTime
+    if (ref.current) ref.current.rotation.y = t * 0.05
+    if (glowRef.current) {
+      const scale = 3.2 + Math.sin(t * 0.5) * 0.12
+      glowRef.current.scale.setScalar(scale)
+    }
+    if (coronaRef.current) {
+      coronaRef.current.rotation.y = t * 0.02
+    }
   })
+
   return (
-    <Sphere ref={ref} args={[2, 32, 32]}>
-      <meshBasicMaterial color="#FDB813" />
-    </Sphere>
+    <group>
+      <mesh ref={ref}>
+        <sphereGeometry args={[2, 32, 32]} />
+        <meshStandardMaterial
+          color="#FDB813"
+          emissive="#ff6600"
+          emissiveIntensity={2}
+          toneMapped={false}
+        />
+      </mesh>
+      <mesh ref={glowRef}>
+        <sphereGeometry args={[1, 16, 16]} />
+        <meshBasicMaterial
+          color="#ff8800"
+          transparent
+          opacity={0.18}
+          side={THREE.BackSide}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
+        />
+      </mesh>
+      <points ref={coronaRef}>
+        <bufferGeometry>
+          <bufferAttribute
+            attach="attributes-position"
+            count={coronaPositions.length / 3}
+            array={coronaPositions}
+            itemSize={3}
+          />
+        </bufferGeometry>
+        <pointsMaterial
+          size={0.06}
+          color="#ffaa44"
+          transparent
+          opacity={0.4}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
+          sizeAttenuation
+        />
+      </points>
+      <pointLight color="#FDB813" intensity={2} distance={150} decay={0.5} />
+    </group>
   )
 }
 
-function SunGlow() {
-  return (
-    <Sphere args={[3, 32, 32]}>
-      <meshBasicMaterial color="#FDB813" transparent opacity={0.15} side={THREE.BackSide} />
-    </Sphere>
-  )
-}
-
-function OrbitLine({ radius }: { radius: number }) {
+function DashedOrbitLine({ radius }: { radius: number }) {
   const points = useMemo(() => {
     const pts: THREE.Vector3[] = []
-    for (let i = 0; i <= 128; i++) {
-      const angle = (i / 128) * Math.PI * 2
+    const segments = 128
+    for (let i = 0; i <= segments; i++) {
+      const angle = (i / segments) * Math.PI * 2
       pts.push(new THREE.Vector3(Math.cos(angle) * radius, 0, Math.sin(angle) * radius))
     }
     return pts
   }, [radius])
+
   return (
     <Line
       points={points}
       color={ACCENT}
       lineWidth={0.5}
       transparent
-      opacity={0.15}
+      opacity={0.18}
+      dashed
+      dashSize={0.8}
+      gapSize={0.5}
     />
   )
 }
 
 function PlanetSphere({
   planet,
+  orbitRadius,
+  planetSize,
+  startAngle,
   isHovered,
   isSelected,
   onHover,
@@ -58,6 +147,9 @@ function PlanetSphere({
   onClick,
 }: {
   planet: PlanetData
+  orbitRadius: number
+  planetSize: number
+  startAngle: number
   isHovered: boolean
   isSelected: boolean
   onHover: () => void
@@ -65,13 +157,13 @@ function PlanetSphere({
   onClick: () => void
 }) {
   const ref = useRef<THREE.Mesh>(null!)
-  const [angle, setAngle] = useState(Math.random() * Math.PI * 2)
+  const angleRef = useRef(startAngle)
 
   useFrame((_, delta) => {
-    setAngle((a) => a + delta * planet.orbitSpeed * 0.15)
+    angleRef.current += delta * planet.orbitSpeed * 0.15
     if (ref.current) {
-      ref.current.position.x = Math.cos(angle) * planet.orbitRadius
-      ref.current.position.z = Math.sin(angle) * planet.orbitRadius
+      ref.current.position.x = Math.cos(angleRef.current) * orbitRadius
+      ref.current.position.z = Math.sin(angleRef.current) * orbitRadius
       ref.current.rotation.y += planet.rotationSpeed
     }
   })
@@ -88,25 +180,44 @@ function PlanetSphere({
         onPointerOut={() => onUnhover()}
         onClick={(e) => { e.stopPropagation(); onClick() }}
       >
-        <sphereGeometry args={[planet.size * 0.4, 32, 32]} />
-        <meshStandardMaterial color={planet.color} emissive={planet.color} emissiveIntensity={glowIntensity} roughness={0.6} metalness={0.2} />
+        <sphereGeometry args={[planetSize, 24, 24]} />
+        <meshStandardMaterial
+          color={planet.color}
+          emissive={planet.color}
+          emissiveIntensity={glowIntensity}
+          roughness={0.6}
+          metalness={0.2}
+        />
       </mesh>
-      <Html position={[0, 0, 0]} style={{ pointerEvents: 'none' }}>
-        {/* This is a dummy Html to keep drei happy; labels rendered below */}
-      </Html>
     </group>
   )
 }
 
 function PlanetLabel({
   planet,
-  position,
+  orbitRadius,
+  planetSize,
+  startAngle,
 }: {
   planet: PlanetData
-  position: [number, number, number]
+  orbitRadius: number
+  planetSize: number
+  startAngle: number
 }) {
+  const ref = useRef<THREE.Mesh>(null!)
+  const angleRef = useRef(startAngle)
+
+  useFrame((_, delta) => {
+    angleRef.current += delta * planet.orbitSpeed * 0.15
+    if (ref.current) {
+      ref.current.position.x = Math.cos(angleRef.current) * orbitRadius
+      ref.current.position.z = Math.sin(angleRef.current) * orbitRadius
+      ref.current.position.y = planetSize + 0.6
+    }
+  })
+
   return (
-    <Html position={position} center distanceFactor={40} style={{ pointerEvents: 'none' }}>
+    <Html ref={ref as any} center distanceFactor={40} style={{ pointerEvents: 'none' }}>
       <div
         style={{
           background: 'rgba(5, 16, 31, 0.85)',
@@ -127,43 +238,9 @@ function PlanetLabel({
   )
 }
 
-function ConnectionLines() {
-  const lines = useMemo(() => {
-    const result: [THREE.Vector3, THREE.Vector3][] = []
-    for (let i = 0; i < PLANETS.length; i++) {
-      for (let j = i + 1; j < PLANETS.length; j++) {
-        if (Math.random() > 0.7) continue
-        result.push([
-          new THREE.Vector3(PLANETS[i].orbitRadius, 0, 0),
-          new THREE.Vector3(PLANETS[j].orbitRadius, 0, 0),
-        ])
-      }
-    }
-    return result
-  }, [])
-
-  return (
-    <>
-      {lines.map(([start, end], i) => (
-        <Line
-          key={i}
-          points={[start, end]}
-          color={ACCENT}
-          lineWidth={0.3}
-          transparent
-          opacity={0.06}
-          dashed
-          dashSize={0.5}
-          gapSize={0.5}
-        />
-      ))}
-    </>
-  )
-}
-
 function CameraController({ target }: { target: THREE.Vector3 | null }) {
   const { camera } = useThree()
-  const targetPos = useRef(new THREE.Vector3(0, 30, 50))
+  const targetPos = useRef(new THREE.Vector3(0, 25, 45))
 
   useFrame(() => {
     if (target) {
@@ -172,7 +249,7 @@ function CameraController({ target }: { target: THREE.Vector3 | null }) {
         0.02
       )
     } else {
-      targetPos.current.lerp(new THREE.Vector3(0, 30, 50), 0.02)
+      targetPos.current.lerp(new THREE.Vector3(0, 25, 45), 0.02)
     }
     camera.position.lerp(targetPos.current, 0.03)
     camera.lookAt(target || new THREE.Vector3(0, 0, 0))
@@ -183,59 +260,65 @@ function CameraController({ target }: { target: THREE.Vector3 | null }) {
 
 function SceneContent({
   hoveredPlanet,
-  selectedPlanetInfo,
+  selectedPlanetId,
   setHoveredPlanet,
-  setSelectedPlanetInfo,
+  setSelectedPlanetId,
   setFlyTarget,
 }: {
   hoveredPlanet: string | null
-  selectedPlanetInfo: string | null
+  selectedPlanetId: string | null
   setHoveredPlanet: (p: string | null) => void
-  setSelectedPlanetInfo: (p: string | null) => void
+  setSelectedPlanetId: (p: string | null) => void
   setFlyTarget: (v: THREE.Vector3 | null) => void
 }) {
+  const planetAngles = useMemo(() => {
+    const angles: Record<string, number> = {}
+    PLANETS.forEach((p) => {
+      angles[p.id] = Math.random() * Math.PI * 2
+    })
+    return angles
+  }, [])
+
   return (
     <>
       <ambientLight intensity={0.3} />
       <pointLight position={[0, 0, 0]} intensity={2} distance={200} color="#FDB813" />
       <Stars radius={200} depth={60} count={3000} factor={4} saturation={0} fade speed={0.5} />
 
-      <SunGlow />
       <Sun />
 
-      <OrbitLine radius={8} />
-      <OrbitLine radius={12} />
-      <OrbitLine radius={16} />
-      <OrbitLine radius={22} />
-      <OrbitLine radius={32} />
-      <OrbitLine radius={42} />
-      <OrbitLine radius={54} />
-      <OrbitLine radius={64} />
-
-      <ConnectionLines />
+      {PLANETS.map((planet) => {
+        const orbitR = REAL_ORBIT_RADII[planet.id] || planet.orbitRadius
+        return <DashedOrbitLine key={`orbit-${planet.id}`} radius={orbitR} />
+      })}
 
       {PLANETS.map((planet) => {
-        const angle = 0
-        const pos: [number, number, number] = [
-          Math.cos(angle) * planet.orbitRadius,
-          planet.size * 0.4 + 1,
-          Math.sin(angle) * planet.orbitRadius,
+        const orbitR = REAL_ORBIT_RADII[planet.id] || planet.orbitRadius
+        const pSize = REAL_SIZES[planet.id] || planet.size * 0.4
+        const angle = planetAngles[planet.id]
+        const labelPos: [number, number, number] = [
+          Math.cos(angle) * orbitR,
+          pSize + 0.6,
+          Math.sin(angle) * orbitR,
         ]
         return (
           <group key={planet.id}>
             <PlanetSphere
               planet={planet}
+              orbitRadius={orbitR}
+              planetSize={pSize}
+              startAngle={angle}
               isHovered={hoveredPlanet === planet.id}
-              isSelected={selectedPlanetInfo === planet.id}
+              isSelected={selectedPlanetId === planet.id}
               onHover={() => setHoveredPlanet(planet.id)}
               onUnhover={() => setHoveredPlanet(null)}
               onClick={() => {
-                setSelectedPlanetInfo(selectedPlanetInfo === planet.id ? null : planet.id)
-                const p = PLANETS.find((pl) => pl.id === planet.id)
-                if (p) setFlyTarget(new THREE.Vector3(Math.cos(angle) * p.orbitRadius, 0, Math.sin(angle) * p.orbitRadius))
+                sounds.play('select')
+                setSelectedPlanetId(selectedPlanetId === planet.id ? null : planet.id)
+                setFlyTarget(new THREE.Vector3(Math.cos(angle) * orbitR, 0, Math.sin(angle) * orbitR))
               }}
             />
-            <PlanetLabel planet={planet} position={pos} />
+            <PlanetLabel planet={planet} orbitRadius={orbitR} planetSize={pSize} startAngle={angle} />
           </group>
         )
       })}
@@ -246,7 +329,7 @@ function SceneContent({
         enableZoom
         enableRotate
         minDistance={10}
-        maxDistance={150}
+        maxDistance={120}
         target={[0, 0, 0]}
         maxPolarAngle={Math.PI * 0.85}
       />
@@ -254,42 +337,91 @@ function SceneContent({
   )
 }
 
+function MiniPlanetCanvas({ planetId }: { planetId: string }) {
+  return (
+    <div className="w-full h-48 rounded-xl overflow-hidden mb-4" style={{ border: '1px solid rgba(0, 212, 255, 0.1)' }}>
+      <Canvas camera={{ position: [0, 0, 4], fov: 35 }} gl={{ antialias: true, alpha: true }}>
+        <color attach="background" args={['#050510']} />
+        <ambientLight intensity={0.3} />
+        <directionalLight position={[3, 2, 4]} intensity={2} />
+        <pointLight position={[-3, -2, -4]} intensity={0.3} color="#334455" />
+        <Suspense fallback={null}>
+          <MiniPlanetSphere planetId={planetId} />
+        </Suspense>
+        <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={1.5} />
+      </Canvas>
+    </div>
+  )
+}
+
+function MiniPlanetSphere({ planetId }: { planetId: string }) {
+  const ref = useRef<THREE.Mesh>(null!)
+  const planet = PLANETS.find((p) => p.id === planetId)
+
+  useFrame((_, delta) => {
+    if (ref.current) ref.current.rotation.y += delta * 0.3
+  })
+
+  return (
+    <group>
+      <mesh ref={ref}>
+        <sphereGeometry args={[1.4, 32, 32]} />
+        <meshStandardMaterial color={planet?.color || '#888'} roughness={0.7} metalness={0.1} />
+      </mesh>
+      {planetId === 'saturn' && (
+        <mesh rotation={[Math.PI / 2.3, 0, 0.2]}>
+          <ringGeometry args={[1.8, 2.8, 64]} />
+          <meshStandardMaterial color="#d4c5a0" transparent opacity={0.6} side={THREE.DoubleSide} roughness={0.9} />
+        </mesh>
+      )}
+      {planetId === 'uranus' && (
+        <mesh rotation={[Math.PI / 2.2, 0.3, 0]}>
+          <ringGeometry args={[1.6, 2.1, 64]} />
+          <meshStandardMaterial color="#9ed8e8" transparent opacity={0.2} side={THREE.DoubleSide} />
+        </mesh>
+      )}
+    </group>
+  )
+}
+
 function InfoPanel({
   planet,
   onClose,
-  onGoToPlanet,
+  onExplore,
 }: {
   planet: PlanetData
   onClose: () => void
-  onGoToPlanet: () => void
+  onExplore: () => void
 }) {
   return (
     <motion.div
       initial={{ opacity: 0, x: 30 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 30 }}
-      className="absolute top-4 right-4 w-80 rounded-2xl p-5 z-50"
+      className="absolute top-4 right-4 w-80 max-h-[calc(100%-2rem)] overflow-y-auto rounded-2xl p-5 z-50"
       style={{
-        background: 'rgba(5, 16, 31, 0.75)',
+        background: 'rgba(5, 16, 31, 0.85)',
         backdropFilter: 'blur(20px)',
         border: '1px solid rgba(0, 212, 255, 0.15)',
         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(0, 212, 255, 0.1)',
       }}
     >
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-3">
         <h3
           className="text-xl font-bold tracking-wider"
           style={{ fontFamily: '"Space Grotesk", sans-serif', color: '#e8f0f8' }}
         >
           {planet.name}
         </h3>
-        <button onClick={onClose} className="p-1 rounded-lg hover:bg-white/5 transition-colors">
+        <button onClick={() => { sounds.play('click'); onClose() }} className="p-1 rounded-lg hover:bg-white/5 transition-colors">
           <X size={14} color="#667788" />
         </button>
       </div>
 
+      <MiniPlanetCanvas planetId={planet.id} />
+
       <div
-        className="text-[10px] tracking-widest uppercase mb-4 px-2 py-1 rounded-md inline-block"
+        className="text-[10px] tracking-widest uppercase mb-3 px-2 py-1 rounded-md inline-block"
         style={{
           background: `${planet.color}15`,
           color: planet.color,
@@ -326,21 +458,34 @@ function InfoPanel({
         ))}
       </div>
 
-      <button
-        onClick={onGoToPlanet}
-        className="w-full py-2.5 rounded-xl text-xs tracking-wider font-semibold transition-all hover:scale-[1.02]"
-        style={{
-          background: `linear-gradient(135deg, ${planet.color}30, rgba(0, 212, 255, 0.2))`,
-          border: `1px solid ${planet.color}40`,
-          color: '#e8f0f8',
-          fontFamily: '"Space Grotesk", sans-serif',
-        }}
-      >
-        <span className="flex items-center justify-center gap-2">
-          <Navigation size={12} />
-          GO TO {planet.name.toUpperCase()}
-        </span>
-      </button>
+      <div className="space-y-2">
+        <button
+          onClick={() => { sounds.play('navigate'); onExplore() }}
+          className="w-full py-2.5 rounded-xl text-xs tracking-wider font-semibold transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
+          style={{
+            background: `linear-gradient(135deg, ${planet.color}30, rgba(0, 212, 255, 0.2))`,
+            border: `1px solid ${planet.color}40`,
+            color: '#e8f0f8',
+            fontFamily: '"Space Grotesk", sans-serif',
+          }}
+        >
+          <Globe size={12} />
+          EXPLORE {planet.name.toUpperCase()}
+        </button>
+        <button
+          onClick={() => { sounds.play('click'); onClose() }}
+          className="w-full py-2 rounded-xl text-xs tracking-wider transition-all hover:bg-white/5 flex items-center justify-center gap-2"
+          style={{
+            background: 'rgba(255, 255, 255, 0.03)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            color: '#8899aa',
+            fontFamily: '"Space Grotesk", sans-serif',
+          }}
+        >
+          <ArrowLeft size={11} />
+          BACK TO MAP
+        </button>
+      </div>
     </motion.div>
   )
 }
@@ -357,7 +502,6 @@ function Minimap({ hoveredPlanet }: { hoveredPlanet: string | null }) {
     >
       <div className="relative w-full h-full">
         <Compass size={10} className="absolute top-1 left-1" color="#334455" />
-        {/* Sun dot */}
         <div
           className="absolute rounded-full"
           style={{
@@ -370,10 +514,10 @@ function Minimap({ hoveredPlanet }: { hoveredPlanet: string | null }) {
             boxShadow: '0 0 4px #FDB813',
           }}
         />
-        {/* Planet dots */}
         {PLANETS.map((p) => {
-          const ratio = p.orbitRadius / 70
-          const x = 50 + ratio * 45
+          const maxR = REAL_ORBIT_RADII.neptune || 62
+          const ratio = (REAL_ORBIT_RADII[p.id] || p.orbitRadius) / maxR
+          const x = 50 + ratio * 42
           const y = 50
           const isHovered = hoveredPlanet === p.id
           return (
@@ -415,12 +559,12 @@ export function SpaceMap() {
 
   const selectedPlanetData = selectedInfo ? PLANETS.find((p) => p.id === selectedInfo) : null
 
-  const handleGoToPlanet = useCallback(() => {
+  const handleExplorePlanet = useCallback(() => {
     if (selectedInfo) {
       setSelectedPlanet(selectedInfo)
-      setActiveView('planet')
+      setSelectedInfo(null)
     }
-  }, [selectedInfo, setSelectedPlanet, setActiveView])
+  }, [selectedInfo, setSelectedPlanet])
 
   return (
     <section className="relative z-10 max-w-7xl mx-auto px-4 py-16">
@@ -481,9 +625,11 @@ export function SpaceMap() {
               <button
                 key={p.id}
                 onClick={() => {
+                  sounds.play('select')
                   setSelectedInfo(p.id)
                   setSearch('')
-                  setFlyTarget(new THREE.Vector3(Math.cos(0) * p.orbitRadius, 0, Math.sin(0) * p.orbitRadius))
+                  const orbitR = REAL_ORBIT_RADII[p.id] || p.orbitRadius
+                  setFlyTarget(new THREE.Vector3(Math.cos(0) * orbitR, 0, Math.sin(0) * orbitR))
                 }}
                 className="w-full flex items-center gap-3 px-3 py-2 hover:bg-white/5 transition-colors text-left"
               >
@@ -501,13 +647,13 @@ export function SpaceMap() {
         )}
 
         {/* Canvas */}
-        <Canvas camera={{ position: [0, 30, 50], fov: 50 }} style={{ background: 'transparent' }}>
+        <Canvas camera={{ position: [0, 25, 45], fov: 50 }} style={{ background: 'transparent' }}>
           <Suspense fallback={null}>
             <SceneContent
               hoveredPlanet={hoveredPlanet}
-              selectedPlanetInfo={selectedInfo}
+              selectedPlanetId={selectedInfo}
               setHoveredPlanet={setHoveredPlanet}
-              setSelectedPlanetInfo={setSelectedInfo}
+              setSelectedPlanetId={setSelectedInfo}
               setFlyTarget={setFlyTarget}
             />
           </Suspense>
@@ -522,7 +668,7 @@ export function SpaceMap() {
             <InfoPanel
               planet={selectedPlanetData}
               onClose={() => { setSelectedInfo(null); setFlyTarget(null) }}
-              onGoToPlanet={handleGoToPlanet}
+              onExplore={handleExplorePlanet}
             />
           )}
         </AnimatePresence>

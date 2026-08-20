@@ -2,14 +2,14 @@ import { Sun } from './Sun'
 import { Planet } from './Planet'
 import { PLANETS } from '../data/planets'
 import { useStore } from '../store/useStore'
+import { sounds } from '../utils/sounds'
 
 export function SolarSystem() {
   const setSelectedPlanet = useStore((s) => s.setSelectedPlanet)
-  const setActiveView = useStore((s) => s.setActiveView)
 
   const handlePlanetClick = (planetId: string) => {
+    sounds.play('select')
     setSelectedPlanet(planetId)
-    setActiveView('planet')
   }
 
   return (

@@ -5,6 +5,7 @@ import * as THREE from 'three'
 import { PlanetData } from '../data/planets'
 import { useStore } from '../store/useStore'
 import { createProceduralTexture } from './PlanetTextures'
+import { sounds } from '../utils/sounds'
 
 interface PlanetProps {
   data: PlanetData
@@ -71,6 +72,7 @@ export function Planet({ data, onClick }: PlanetProps) {
               ref={meshRef}
               onClick={(e) => {
                 e.stopPropagation()
+                sounds.play('select')
                 onClick?.()
               }}
               onPointerOver={(e) => {

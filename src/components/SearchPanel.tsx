@@ -7,6 +7,7 @@ import { PLANETS } from '../data/planets'
 import { MISSIONS } from '../data/missions'
 import { SAMPLE_EXOPLANETS } from '../data/exoplanets'
 import { MOONS } from '../data/moons'
+import { sounds } from '../utils/sounds'
 
 interface SearchResult {
   type: string
@@ -67,6 +68,7 @@ export function SearchPanel() {
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Escape') {
+      sounds.play('click')
       setSearchOpen(false)
     } else if (e.key === 'ArrowDown') {
       e.preventDefault()
@@ -80,10 +82,10 @@ export function SearchPanel() {
   }
 
   const handleSelect = (item: SearchResult) => {
+    sounds.play('select')
     setSearchOpen(false)
     if (item.type === 'PLANET') {
       setSelectedPlanet(item.id)
-      setActiveView('planet')
     } else if (item.type === 'MISSION') {
       setActiveView('missions')
     } else if (item.type === 'EXOPLANET') {

@@ -6,6 +6,7 @@ import * as THREE from 'three'
 import { useStore } from '../store/useStore'
 import { PLANETS } from '../data/planets'
 import { createProceduralTexture } from '../three/PlanetTextures'
+import { sounds } from '../utils/sounds'
 
 function MiniPlanet({ planetId }: { planetId: string }) {
   const meshRef = useRef<THREE.Mesh>(null!)
@@ -163,6 +164,7 @@ export function PlanetPanel() {
               <div className="hidden md:block" />
               <button
                 onClick={() => {
+                  sounds.play('click')
                   setSelectedPlanet(null)
                   setActiveView('home')
                 }}
@@ -344,7 +346,7 @@ export function PlanetPanel() {
               {/* Action buttons */}
               <div className="space-y-2.5 pt-2 pb-4">
                 <button
-                  onClick={() => setActiveView('planet')}
+                  onClick={() => { sounds.play('navigate'); setActiveView('planet') }}
                   className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm tracking-wider transition-all hover:brightness-125"
                   style={{
                     fontFamily: '"Space Grotesk", sans-serif',

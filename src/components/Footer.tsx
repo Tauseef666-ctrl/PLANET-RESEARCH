@@ -1,7 +1,30 @@
 import { motion } from 'framer-motion'
 import { Github, ExternalLink } from 'lucide-react'
 
+const EXPLORE_LINKS: { label: string; sectionId: string }[] = [
+  { label: 'Solar System', sectionId: 'solar-system' },
+  { label: 'Planets', sectionId: 'solar-system' },
+  { label: 'Exoplanets', sectionId: 'exoplanets' },
+  { label: 'Asteroids', sectionId: 'asteroids' },
+  { label: 'Moons', sectionId: 'moons' },
+]
+
+const RESEARCH_LINKS: { label: string; sectionId: string }[] = [
+  { label: 'Missions', sectionId: 'missions' },
+  { label: 'Data', sectionId: 'data-hub' },
+  { label: 'Space Map', sectionId: 'space-map' },
+  { label: 'Research Hub', sectionId: 'research' },
+]
+
 export function Footer() {
+  const scrollToSection = (sectionId: string) => {
+    const el = document.getElementById(sectionId)
+    if (el) {
+      const y = el.getBoundingClientRect().top + window.scrollY - 100
+      window.scrollTo({ top: y, behavior: 'smooth' })
+    }
+  }
+
   return (
     <motion.footer
       initial={{ opacity: 0 }}
@@ -46,11 +69,18 @@ export function Footer() {
               Explore
             </h4>
             <ul className="space-y-2">
-              {['Solar System', 'Planets', 'Exoplanets', 'Asteroids', 'Moons'].map((item) => (
-                <li key={item}>
-                  <span className="text-xs text-gray-600 hover:text-gray-400 cursor-pointer transition-colors">
-                    {item}
-                  </span>
+              {EXPLORE_LINKS.map((item) => (
+                <li key={item.label}>
+                  <a
+                    href={`#${item.sectionId}`}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      scrollToSection(item.sectionId)
+                    }}
+                    className="text-xs text-gray-600 hover:text-gray-400 cursor-pointer transition-colors"
+                  >
+                    {item.label}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -65,11 +95,18 @@ export function Footer() {
               Research
             </h4>
             <ul className="space-y-2">
-              {['Missions', 'Data', 'Space Map', 'Research Hub'].map((item) => (
-                <li key={item}>
-                  <span className="text-xs text-gray-600 hover:text-gray-400 cursor-pointer transition-colors">
-                    {item}
-                  </span>
+              {RESEARCH_LINKS.map((item) => (
+                <li key={item.label}>
+                  <a
+                    href={`#${item.sectionId}`}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      scrollToSection(item.sectionId)
+                    }}
+                    className="text-xs text-gray-600 hover:text-gray-400 cursor-pointer transition-colors"
+                  >
+                    {item.label}
+                  </a>
                 </li>
               ))}
             </ul>

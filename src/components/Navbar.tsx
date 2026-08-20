@@ -1,21 +1,34 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, Volume2, VolumeX, Settings, Menu, X, Eye, EyeOff, Monitor } from 'lucide-react'
 import { useStore, ActiveView, GraphicsQuality } from '../store/useStore'
+import { sounds } from '../utils/sounds'
 
-const NAV_ITEMS: { id: ActiveView; label: string }[] = [
+const NAV_ITEMS: { id: ActiveView; label: string; sectionId?: string }[] = [
   { id: 'home', label: 'HOME' },
-  { id: 'solar-system', label: 'SOLAR SYSTEM' },
-  { id: 'planet', label: 'PLANETS' },
-  { id: 'moon', label: 'MOONS' },
-  { id: 'exoplanet', label: 'EXOPLANETS' },
-  { id: 'asteroid', label: 'ASTEROIDS' },
-  { id: 'missions', label: 'MISSIONS' },
-  { id: 'research', label: 'RESEARCH' },
-  { id: 'data', label: 'DATA' },
-  { id: 'space-map', label: 'SPACE MAP' },
-  { id: 'about', label: 'ABOUT' },
+  { id: 'solar-system', label: 'SOLAR SYSTEM', sectionId: 'solar-system' },
+  { id: 'planet', label: 'PLANETS', sectionId: 'solar-system' },
+  { id: 'moon', label: 'MOONS', sectionId: 'moons' },
+  { id: 'exoplanet', label: 'EXOPLANETS', sectionId: 'exoplanets' },
+  { id: 'asteroid', label: 'ASTEROIDS', sectionId: 'asteroids' },
+  { id: 'missions', label: 'MISSIONS', sectionId: 'missions' },
+  { id: 'research', label: 'RESEARCH', sectionId: 'research' },
+  { id: 'data', label: 'DATA', sectionId: 'data-hub' },
+  { id: 'space-map', label: 'SPACE MAP', sectionId: 'space-map' },
+  { id: 'about', label: 'ABOUT', sectionId: 'about' },
 ]
+
+const SECTION_TO_NAV: Record<string, string> = {
+  'solar-system': 'solar-system',
+  'moons': 'moon',
+  'exoplanets': 'exoplanet',
+  'asteroids': 'asteroid',
+  'missions': 'missions',
+  'research': 'research',
+  'data-hub': 'data',
+  'space-map': 'space-map',
+  'about': 'about',
+}
 
 const QUALITY_OPTIONS: { value: GraphicsQuality; label: string }[] = [
   { value: 'ultra', label: 'Ultra' },
@@ -27,6 +40,8 @@ const QUALITY_OPTIONS: { value: GraphicsQuality; label: string }[] = [
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [scrolledSection, setScrolledSection] = useState<string>('home')
   const {
     activeView, setActiveView,
     soundEnabled, toggleSound,
@@ -35,6 +50,54 @@ export function Navbar() {
     highContrast, toggleHighContrast,
     setSearchOpen,
   } = useStore()
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50)
+
+      if (window.scrollY < 200) {
+        setScrolledSection('home')
+        return
+      }
+
+      const sectionIds = Object.keys(SECTION_TO_NAV)
+      for (const id of sectionIds) {
+        const el = document.getElementById(id)
+        if (el) {
+          const rect = el.getBoundingClientRect()
+          if (rect.top <= 150 && rect.bottom > 150) {
+            setScrolledSection(SECTION_TO_NAV[id])
+            return
+          }
+        }
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const scrollToSection = (sectionId: string) => {
+    setActiveView('home')
+    setTimeout(() => {
+      const el = document.getElementById(sectionId)
+      if (el) {
+        const y = el.getBoundingClientRect().top + window.scrollY - 100
+        window.scrollTo({ top: y, behavior: 'smooth' })
+      }
+    }, 150)
+  }
+
+  const handleNavClick = (item: typeof NAV_ITEMS[number]) => {
+    sounds.play('click')
+    if (item.id === 'home') {
+      setActiveView('home')
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else if (item.sectionId) {
+      scrollToSection(item.sectionId)
+    }
+    setMobileOpen(false)
+  }
 
   return (
     <>
@@ -46,13 +109,13 @@ export function Navbar() {
         className="fixed top-0 left-0 right-0 z-50"
       >
         <div
-          className="mx-4 mt-4 rounded-xl px-4 py-3 flex items-center justify-between"
+          className="mx-4 mt-4 rounded-xl px-4 py-3 flex items-center justify-between transition-all duration-300"
           style={{
-            background: 'rgba(5, 5, 16, 0.7)',
+            background: isScrolled ? 'rgba(5, 5, 16, 0.85)' : 'rgba(5, 5, 16, 0.15)',
             backdropFilter: 'blur(20px)',
             WebkitBackdropFilter: 'blur(20px)',
-            border: '1px solid rgba(0, 212, 255, 0.12)',
-            boxShadow: '0 4px 30px rgba(0, 0, 0, 0.5)',
+            border: `1px solid rgba(0, 212, 255, ${isScrolled ? 0.15 : 0.05})`,
+            boxShadow: isScrolled ? '0 4px 30px rgba(0, 0, 0, 0.5)' : 'none',
           }}
         >
           {/* Logo */}
@@ -82,13 +145,13 @@ export function Navbar() {
             {NAV_ITEMS.map((item) => (
               <button
                 key={item.id}
-                onClick={() => setActiveView(item.id)}
+                onClick={() => handleNavClick(item)}
                 className="px-3 py-1.5 text-[11px] tracking-[0.15em] uppercase rounded-md transition-all duration-300"
                 style={{
                   fontFamily: '"Space Grotesk", sans-serif',
-                  color: activeView === item.id ? '#00d4ff' : '#667788',
-                  background: activeView === item.id ? 'rgba(0, 212, 255, 0.08)' : 'transparent',
-                  textShadow: activeView === item.id ? '0 0 8px rgba(0, 212, 255, 0.3)' : 'none',
+                  color: scrolledSection === item.id ? '#00d4ff' : '#667788',
+                  background: scrolledSection === item.id ? 'rgba(0, 212, 255, 0.08)' : 'transparent',
+                  textShadow: scrolledSection === item.id ? '0 0 8px rgba(0, 212, 255, 0.3)' : 'none',
                 }}
               >
                 {item.label}
@@ -107,7 +170,7 @@ export function Navbar() {
             </button>
 
             <button
-              onClick={toggleSound}
+              onClick={() => { sounds.play('click'); toggleSound(); sounds.setEnabled(!soundEnabled) }}
               className="p-2 rounded-lg transition-colors hover:bg-white/5"
               title={soundEnabled ? 'Mute' : 'Unmute'}
             >
@@ -234,15 +297,12 @@ export function Navbar() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  onClick={() => {
-                    setActiveView(item.id)
-                    setMobileOpen(false)
-                  }}
+                  onClick={() => handleNavClick(item)}
                   className="block w-full text-left py-3 px-4 text-sm tracking-[0.15em] uppercase rounded-lg transition-all"
                   style={{
                     fontFamily: '"Space Grotesk", sans-serif',
-                    color: activeView === item.id ? '#00d4ff' : '#667788',
-                    background: activeView === item.id ? 'rgba(0, 212, 255, 0.08)' : 'transparent',
+                    color: scrolledSection === item.id ? '#00d4ff' : '#667788',
+                    background: scrolledSection === item.id ? 'rgba(0, 212, 255, 0.08)' : 'transparent',
                   }}
                 >
                   {item.label}

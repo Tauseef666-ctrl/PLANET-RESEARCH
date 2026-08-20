@@ -58,7 +58,7 @@ export const useStore = create<SpaceStore>((set) => ({
   },
 
   activeView: 'home',
-  setActiveView: (activeView) => set({ activeView, selectedPlanet: null, selectedExoplanet: null }),
+  setActiveView: (activeView) => set({ activeView, selectedExoplanet: null }),
 
   selectedPlanet: null,
   setSelectedPlanet: (selectedPlanet) => set({ selectedPlanet }),
