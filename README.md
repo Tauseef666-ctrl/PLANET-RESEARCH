@@ -4,7 +4,7 @@ An immersive, interactive 3D space exploration and research website built with R
 
 ## Live Demo
 
-**[View Live Site](https://planet-research.vercel.app)**
+**[View Live Site](https://planet-research6-9sqhmz6sx-tauseef666-ctrls-projects.vercel.app/)**
 
 ## Features
 
