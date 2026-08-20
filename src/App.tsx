@@ -5,7 +5,6 @@ import { LoadingScreen } from './components/LoadingScreen'
 import { Navbar } from './components/Navbar'
 import { HeroSection } from './components/HeroSection'
 import { SearchPanel } from './components/SearchPanel'
-import { PlanetPanel } from './components/PlanetPanel'
 import { Footer } from './components/Footer'
 import { ExoplanetSection } from './components/ExoplanetSection'
 import { MissionsSection } from './components/MissionsSection'
@@ -19,9 +18,10 @@ import { ExoplanetGlobe } from './components/ExoplanetGlobe'
 import { ResearchSection } from './components/ResearchSection'
 import { DataHub } from './components/DataHub'
 import { SAMPLE_EXOPLANETS } from './data/exoplanets'
+import { sounds } from './utils/sounds'
 
 function SolarSystemSection() {
-  const { setSelectedPlanet, setActiveView } = useStore()
+  const { setSelectedPlanet } = useStore()
 
   const planets = [
     { id: 'mercury', name: 'Mercury', type: 'Terrestrial', color: '#b5b5b5' },
@@ -35,7 +35,7 @@ function SolarSystemSection() {
   ]
 
   return (
-    <section className="relative z-10 max-w-7xl mx-auto px-4 py-16">
+    <section id="solar-system" className="relative z-10 max-w-7xl mx-auto px-4 py-16">
       <div className="text-center mb-10">
         <h2
           className="text-3xl md:text-4xl font-bold tracking-wider"
@@ -51,8 +51,8 @@ function SolarSystemSection() {
           <button
             key={p.id}
             onClick={() => {
+              sounds.play('select')
               setSelectedPlanet(p.id)
-              setActiveView('planet')
               window.scrollTo({ top: 0, behavior: 'smooth' })
             }}
             className="rounded-xl p-5 text-left transition-all hover:scale-[1.02]"
@@ -96,7 +96,7 @@ function SectionDivider() {
 }
 
 export default function App() {
-  const { isLoading, activeView, setSelectedPlanet, setActiveView } = useStore()
+  const { isLoading, activeView } = useStore()
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -114,16 +114,18 @@ export default function App() {
   }, [handleKeyDown])
 
   useEffect(() => {
-    if (activeView !== 'planet') {
-      setSelectedPlanet(null)
+    const init = () => {
+      sounds.init()
+      window.removeEventListener('click', init)
     }
-  }, [activeView, setSelectedPlanet])
+    window.addEventListener('click', init)
+    return () => window.removeEventListener('click', init)
+  }, [])
 
   const selectedExoplanet = useStore((s) => s.selectedExoplanet)
 
   const showHero = activeView === 'home'
   const showSolarSystem = activeView === 'solar-system' || activeView === 'home'
-  const showPlanetSection = activeView === 'planet'
   const showMoonSection = activeView === 'moon' || activeView === 'home'
   const showExoplanetSection = activeView === 'exoplanet' || activeView === 'home'
   const showAsteroidSection = activeView === 'asteroid' || activeView === 'home'
@@ -141,7 +143,6 @@ export default function App() {
       <Scene />
       <Navbar />
       <SearchPanel />
-      <PlanetPanel />
       <PlanetGlobe />
 
       {/* Content overlay that scrolls over the 3D scene */}
@@ -156,80 +157,81 @@ export default function App() {
             </>
           )}
 
-          {showPlanetSection && (
-            <>
-              <div className="relative z-10 max-w-7xl mx-auto px-4 py-16">
-                <div className="text-center">
-                  <h2
-                    className="text-3xl md:text-4xl font-bold tracking-wider"
-                    style={{ fontFamily: '"Space Grotesk", sans-serif', color: '#e8f0f8' }}
-                  >
-                    PLANET <span style={{ color: '#00d4ff' }}>EXPLORATION</span>
-                  </h2>
-                  <p className="text-sm text-gray-500 mt-2">Select a planet from the sidebar or click on any planet in the 3D scene</p>
-                </div>
-              </div>
-              <SectionDivider />
-            </>
-          )}
-
           {showSpaceMap && (
             <>
-              <SpaceMap />
+              <section id="space-map">
+                <SpaceMap />
+              </section>
               <SectionDivider />
             </>
           )}
 
           {showExoplanetSection && selectedExoplanetData ? (
             <>
-              <ExoplanetGlobe exoplanet={selectedExoplanetData} />
+              <section id="exoplanets">
+                <ExoplanetGlobe exoplanet={selectedExoplanetData} />
+              </section>
               <SectionDivider />
             </>
           ) : showExoplanetSection ? (
             <>
-              <ExoplanetSection />
+              <section id="exoplanets">
+                <ExoplanetSection />
+              </section>
               <SectionDivider />
             </>
           ) : null}
 
           {showAsteroidSection && (
             <>
-              <AsteroidSection />
+              <section id="asteroids">
+                <AsteroidSection />
+              </section>
               <SectionDivider />
             </>
           )}
 
           {showMoonSection && (
             <>
-              <MoonSection />
+              <section id="moons">
+                <MoonSection />
+              </section>
               <SectionDivider />
             </>
           )}
 
           {showMissions && (
             <>
-              <MissionsSection />
+              <section id="missions">
+                <MissionsSection />
+              </section>
               <SectionDivider />
             </>
           )}
 
           {showResearch && (
             <>
-              <ResearchSection />
+              <section id="research">
+                <ResearchSection />
+              </section>
               <SectionDivider />
             </>
           )}
 
           {showDataHub && (
             <>
-              <DataHub />
+              <section id="data-hub">
+                <DataHub />
+              </section>
               <SectionDivider />
             </>
           )}
 
           {showAbout && (
             <>
-              <AboutSection />
+              <section id="about">
+                <AboutSection />
+              </section>
             </>
           )}
 

@@ -7,6 +7,7 @@ import { X, RotateCcw, ZoomIn, ZoomOut, ArrowLeft, ChevronRight, Zap, Rocket, Gl
 import { useStore } from '../store/useStore'
 import { PLANETS } from '../data/planets'
 import { createProceduralTexture } from './PlanetTextures'
+import { sounds } from '../utils/sounds'
 
 function CameraAnimation({ isReady }: { isReady: boolean }) {
   const { camera } = useThree()
@@ -189,7 +190,7 @@ const valueClass = "text-[11px] text-gray-300 leading-relaxed"
 
 function InfoPanel({ planetId, onClose }: { planetId: string; onClose: () => void }) {
   const planet = PLANETS.find((p) => p.id === planetId)
-  const { setActiveView } = useStore()
+  const setSelectedPlanet = useStore((s) => s.setSelectedPlanet)
   if (!planet) return null
 
   return (
@@ -351,7 +352,8 @@ function InfoPanel({ planetId, onClose }: { planetId: string; onClose: () => voi
         {/* Back button */}
         <button
           onClick={() => {
-            setActiveView('solar-system')
+            sounds.play('click')
+            setSelectedPlanet(null)
           }}
           className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs tracking-wider transition-all hover:bg-white/5"
           style={{
@@ -500,8 +502,8 @@ export function PlanetGlobe() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.7 }}
             onClick={() => {
+              sounds.play('click')
               setSelectedPlanet(null)
-              setActiveView('solar-system')
             }}
             className="absolute top-6 right-6 p-3 rounded-xl transition-all hover:scale-110 z-20"
             style={{
