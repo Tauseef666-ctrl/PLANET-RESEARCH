@@ -32,6 +32,7 @@ export function Planet({ data, onClick }: PlanetProps) {
   const groupRef = useRef<THREE.Group>(null!)
   const orbitRef = useRef<THREE.Group>(null!)
   const glowRef = useRef<THREE.Mesh>(null!)
+  const labelRef = useRef<HTMLDivElement>(null!)
   const [hovered, setHovered] = useState(false)
   const selectedPlanet = useStore((s) => s.selectedPlanet)
   const isSelected = selectedPlanet === data.id
@@ -52,7 +53,7 @@ export function Planet({ data, onClick }: PlanetProps) {
       orbitRef.current.rotation.y = t * data.orbitSpeed * 0.1
     }
     if (groupRef.current) {
-      const targetScale = hovered || isSelected ? 1.2 : 1
+      const targetScale = hovered || isSelected ? 1.3 : 1
       groupRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.08)
     }
     if (glowRef.current && (hovered || isSelected)) {
@@ -63,7 +64,7 @@ export function Planet({ data, onClick }: PlanetProps) {
 
   return (
     <group>
-      <OrbitLine radius={data.orbitRadius} opacity={hovered || isSelected ? 0.25 : 0.08} />
+      <OrbitLine radius={data.orbitRadius} opacity={hovered || isSelected ? 0.3 : 0.1} color={hovered || isSelected ? data.color : undefined} />
 
       <group ref={orbitRef}>
         <group position={[data.orbitRadius, 0, 0]}>
@@ -91,18 +92,18 @@ export function Planet({ data, onClick }: PlanetProps) {
                 roughness={0.75}
                 metalness={0.05}
                 emissive={data.emissive || '#000000'}
-                emissiveIntensity={isSelected ? 0.4 : hovered ? 0.2 : 0.05}
+                emissiveIntensity={isSelected ? 0.5 : hovered ? 0.3 : 0.08}
               />
             </mesh>
 
             {/* Atmosphere glow */}
             {hasAtmosphere && (
-              <mesh scale={hovered || isSelected ? 1.12 : 1.06}>
+              <mesh scale={hovered || isSelected ? 1.15 : 1.06}>
                 <sphereGeometry args={[planetSize, 32, 32]} />
                 <meshBasicMaterial
                   color={atmosphereColor}
                   transparent
-                  opacity={hovered || isSelected ? 0.18 : 0.1}
+                  opacity={hovered || isSelected ? 0.22 : 0.1}
                   side={THREE.BackSide}
                   blending={THREE.AdditiveBlending}
                   depthWrite={false}
@@ -126,12 +127,12 @@ export function Planet({ data, onClick }: PlanetProps) {
 
             {/* Hover glow ring */}
             {(hovered || isSelected) && (
-              <mesh ref={glowRef} scale={1.25}>
+              <mesh ref={glowRef} scale={1.3}>
                 <sphereGeometry args={[planetSize, 32, 32]} />
                 <meshBasicMaterial
-                  color="#00d4ff"
+                  color={data.color}
                   transparent
-                  opacity={isSelected ? 0.12 : 0.06}
+                  opacity={isSelected ? 0.15 : 0.08}
                   side={THREE.BackSide}
                   blending={THREE.AdditiveBlending}
                   depthWrite={false}
@@ -139,37 +140,40 @@ export function Planet({ data, onClick }: PlanetProps) {
               </mesh>
             )}
 
-            {/* Label */}
-            {(hovered || isSelected) && (
-              <Html
-                position={[0, planetSize + 0.8, 0]}
-                center
-                distanceFactor={15}
-                style={{ pointerEvents: 'none' }}
+            {/* Always-visible label */}
+            <Html
+              position={[0, planetSize + 0.6, 0]}
+              center
+              distanceFactor={20}
+              style={{ pointerEvents: 'none' }}
+            >
+              <div
+                ref={labelRef}
+                style={{
+                  background: hovered || isSelected ? 'rgba(13, 27, 42, 0.92)' : 'rgba(13, 27, 42, 0.6)',
+                  backdropFilter: 'blur(8px)',
+                  border: `1px solid ${hovered || isSelected ? data.color + '88' : 'rgba(255,255,255,0.08)'}`,
+                  borderRadius: '8px',
+                  padding: '4px 10px',
+                  color: hovered || isSelected ? data.color : '#8899aa',
+                  fontFamily: '"Space Grotesk", sans-serif',
+                  fontSize: hovered || isSelected ? '12px' : '10px',
+                  fontWeight: 600,
+                  whiteSpace: 'nowrap',
+                  textShadow: hovered || isSelected ? `0 0 10px ${data.color}66` : 'none',
+                  boxShadow: hovered || isSelected ? `0 0 15px ${data.color}22` : 'none',
+                  transition: 'all 0.3s ease',
+                  transform: `scale(${hovered || isSelected ? 1.1 : 1})`,
+                }}
               >
-                <div
-                  style={{
-                    background: 'rgba(13, 27, 42, 0.9)',
-                    backdropFilter: 'blur(12px)',
-                    border: '1px solid rgba(0, 212, 255, 0.4)',
-                    borderRadius: '10px',
-                    padding: '8px 16px',
-                    color: '#00d4ff',
-                    fontFamily: '"Space Grotesk", sans-serif',
-                    fontSize: '13px',
-                    fontWeight: 600,
-                    whiteSpace: 'nowrap',
-                    textShadow: '0 0 10px rgba(0, 212, 255, 0.5)',
-                    boxShadow: '0 0 20px rgba(0, 212, 255, 0.15), inset 0 0 20px rgba(0, 212, 255, 0.03)',
-                  }}
-                >
-                  {data.name}
-                  <div style={{ fontSize: '10px', color: '#667788', fontWeight: 400, marginTop: '3px', letterSpacing: '0.1em' }}>
+                {data.name}
+                {hovered && (
+                  <div style={{ fontSize: '8px', color: '#556677', fontWeight: 400, marginTop: '2px', letterSpacing: '0.1em' }}>
                     {data.type} · Click to explore
                   </div>
-                </div>
-              </Html>
-            )}
+                )}
+              </div>
+            </Html>
           </group>
         </group>
       </group>
