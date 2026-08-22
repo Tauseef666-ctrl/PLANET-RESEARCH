@@ -19,6 +19,9 @@ interface SearchResult {
 export function SearchPanel() {
   const { searchOpen, setSearchOpen, searchQuery, setSearchQuery, setActiveView, setSelectedPlanet } = useStore()
   const [selectedIdx, setSelectedIdx] = useState(0)
+  const [history, setHistory] = useState<string[]>(() => {
+    try { return JSON.parse(localStorage.getItem('space-search-history') || '[]') } catch { return [] }
+  })
   const inputRef = useRef<HTMLInputElement>(null)
 
   const allItems = useMemo(() => {
@@ -84,6 +87,9 @@ export function SearchPanel() {
   const handleSelect = (item: SearchResult) => {
     sounds.play('select')
     setSearchOpen(false)
+    const newHistory = [searchQuery, ...history.filter((h) => h !== searchQuery)].slice(0, 8)
+    setHistory(newHistory)
+    localStorage.setItem('space-search-history', JSON.stringify(newHistory))
     if (item.type === 'PLANET') {
       setSelectedPlanet(item.id)
     } else if (item.type === 'MISSION') {
@@ -137,6 +143,18 @@ export function SearchPanel() {
                 <X size={16} color="#667788" />
               </button>
             </div>
+
+            {/* Recent searches */}
+            {!searchQuery && history.length > 0 && (
+              <div className="mt-2 rounded-xl p-4" style={{ background: 'rgba(13, 27, 42, 0.95)', border: '1px solid rgba(0, 212, 255, 0.12)' }}>
+                <div className="text-[10px] tracking-[0.2em] uppercase mb-2" style={{ fontFamily: '"Space Grotesk", sans-serif', color: '#556677' }}>RECENT SEARCHES</div>
+                <div className="flex flex-wrap gap-2">
+                  {history.map((h, i) => (
+                    <button key={i} onClick={() => { sounds.play('click'); setSearchQuery(h) }} className="px-3 py-1 rounded-lg text-[11px] transition-all hover:scale-105" style={{ background: 'rgba(0,212,255,0.06)', border: '1px solid rgba(0,212,255,0.12)', color: '#88aacc' }}>{h}</button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Results */}
             {results.length > 0 && (
