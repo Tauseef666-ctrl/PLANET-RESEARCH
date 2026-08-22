@@ -12,7 +12,7 @@ export function Scene() {
 
   return (
     <Canvas
-      camera={{ position: [0, 30, 60], fov: 55, near: 0.1, far: 1000 }}
+      camera={{ position: [0, 25, 55], fov: 50, near: 0.1, far: 1000 }}
       gl={{
         antialias: quality !== 'low',
         alpha: false,
@@ -23,10 +23,10 @@ export function Scene() {
     >
       <color attach="background" args={['#050510']} />
 
-      <ambientLight intensity={0.15} />
-      <directionalLight position={[10, 10, 5]} intensity={0.3} />
+      <ambientLight intensity={0.3} />
+      <directionalLight position={[10, 10, 5]} intensity={0.6} />
 
-      <fog attach="fog" args={['#050510', 80, 300]} />
+      <fog attach="fog" args={['#050510', 120, 400]} />
 
       <Suspense fallback={null}>
         <Stars count={quality === 'low' ? 2000 : quality === 'medium' ? 4000 : 8000} quality={quality} />
