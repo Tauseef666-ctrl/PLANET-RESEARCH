@@ -14,6 +14,7 @@ import { AsteroidSection } from './components/AsteroidSection'
 import { AboutSection } from './components/AboutSection'
 import { PlanetGlobe } from './three/PlanetGlobe'
 import { KeyboardShortcuts } from './components/KeyboardShortcuts'
+import { BackToTop } from './components/BackToTop'
 import { SpaceMap } from './components/SpaceMap'
 import { ExoplanetGlobe } from './components/ExoplanetGlobe'
 import { ResearchSection } from './components/ResearchSection'
@@ -146,6 +147,7 @@ export default function App() {
       <SearchPanel />
       <PlanetGlobe />
       <KeyboardShortcuts />
+      <BackToTop />
 
       {/* Content overlay that scrolls over the 3D scene */}
       <div className="relative z-10">
