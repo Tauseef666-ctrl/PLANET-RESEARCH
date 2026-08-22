@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react'
+import { useEffect, useCallback, Suspense, lazy } from 'react'
 import { useStore } from './store/useStore'
 import { Scene } from './three/Scene'
 import { LoadingScreen } from './components/LoadingScreen'
@@ -6,7 +6,6 @@ import { Navbar } from './components/Navbar'
 import { HeroSection } from './components/HeroSection'
 import { SearchPanel } from './components/SearchPanel'
 import { Footer } from './components/Footer'
-import { ExoplanetSection } from './components/ExoplanetSection'
 import { MissionsSection } from './components/MissionsSection'
 import { ResearchDashboard } from './components/ResearchDashboard'
 import { MoonSection } from './components/MoonSection'
@@ -17,11 +16,12 @@ import { KeyboardShortcuts } from './components/KeyboardShortcuts'
 import { BackToTop } from './components/BackToTop'
 import { PlanetCompare } from './components/PlanetCompare'
 import { MobileMenu } from './components/MobileMenu'
-import { SectionReveal, StaggerContainer, StaggerItem } from './components/SectionReveal'
-import { SpaceMap } from './components/SpaceMap'
-import { ExoplanetGlobe } from './components/ExoplanetGlobe'
-import { ResearchSection } from './components/ResearchSection'
-import { DataHub } from './components/DataHub'
+import { SectionReveal } from './components/SectionReveal'
+const SpaceMap = lazy(() => import('./components/SpaceMap').then(m => ({ default: m.SpaceMap })))
+const ExoplanetGlobe = lazy(() => import('./components/ExoplanetGlobe').then(m => ({ default: m.ExoplanetGlobe })))
+const ExoplanetSection = lazy(() => import('./components/ExoplanetSection').then(m => ({ default: m.ExoplanetSection })))
+const ResearchSection = lazy(() => import('./components/ResearchSection').then(m => ({ default: m.ResearchSection })))
+const DataHub = lazy(() => import('./components/DataHub').then(m => ({ default: m.DataHub })))
 import { SAMPLE_EXOPLANETS } from './data/exoplanets'
 import { sounds } from './utils/sounds'
 
@@ -173,7 +173,7 @@ export default function App() {
           {showSpaceMap && (
             <SectionReveal>
               <section id="space-map">
-                <SpaceMap />
+                <Suspense fallback={null}><SpaceMap /></Suspense>
               </section>
               <SectionDivider />
             </SectionReveal>
@@ -182,14 +182,14 @@ export default function App() {
           {showExoplanetSection && selectedExoplanetData ? (
             <SectionReveal>
               <section id="exoplanets">
-                <ExoplanetGlobe exoplanet={selectedExoplanetData} />
+                <Suspense fallback={null}><ExoplanetGlobe exoplanet={selectedExoplanetData} /></Suspense>
               </section>
               <SectionDivider />
             </SectionReveal>
           ) : showExoplanetSection ? (
             <SectionReveal>
               <section id="exoplanets">
-                <ExoplanetSection />
+                <Suspense fallback={null}><ExoplanetSection /></Suspense>
               </section>
               <SectionDivider />
             </SectionReveal>
@@ -225,7 +225,7 @@ export default function App() {
           {showResearch && (
             <SectionReveal>
               <section id="research">
-                <ResearchSection />
+                <Suspense fallback={null}><ResearchSection /></Suspense>
               </section>
               <SectionDivider />
             </SectionReveal>
@@ -234,7 +234,7 @@ export default function App() {
           {showDataHub && (
             <SectionReveal>
               <section id="data-hub">
-                <DataHub />
+                <Suspense fallback={null}><DataHub /></Suspense>
               </section>
               <SectionDivider />
             </SectionReveal>
