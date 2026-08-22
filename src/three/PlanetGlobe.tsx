@@ -3,7 +3,7 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls, Html } from '@react-three/drei'
 import * as THREE from 'three'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, RotateCcw, ZoomIn, ZoomOut, ArrowLeft, ChevronRight, Zap, Rocket, Globe, Wind, Ruler } from 'lucide-react'
+import { X, RotateCcw, ZoomIn, ZoomOut, ArrowLeft, ChevronRight, Zap, Rocket, Globe, Wind, Ruler, ExternalLink, Navigation } from 'lucide-react'
 import { useStore } from '../store/useStore'
 import { PLANETS } from '../data/planets'
 import { createProceduralTexture } from './PlanetTextures'
@@ -349,6 +349,60 @@ function InfoPanel({ planetId, onClose }: { planetId: string; onClose: () => voi
           </div>
         </div>
 
+        {/* NASA Data */}
+        <div className="rounded-xl p-3" style={sectionStyle}>
+          <h4
+            className="text-[9px] tracking-[0.2em] uppercase mb-2 flex items-center gap-1.5"
+            style={{ fontFamily: '"Space Grotesk", sans-serif', color: '#00d4ff' }}
+          >
+            <Navigation size={10} /> NASA Data Sources
+          </h4>
+          <div className="space-y-2">
+            <a
+              href={`https://solarsystem.nasa.gov/planets/${planet.id}/overview/`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => sounds.play('click')}
+              className="flex items-center justify-between p-2 rounded-lg transition-all hover:bg-white/5 group/link"
+              style={{ background: 'rgba(0, 212, 255, 0.04)', border: '1px solid rgba(0, 212, 255, 0.08)' }}
+            >
+              <div>
+                <div className="text-[11px] text-gray-300 group-hover/link:text-white transition-colors">Solar System Exploration</div>
+                <div className="text-[9px] text-gray-600">Official NASA mission data</div>
+              </div>
+              <ExternalLink size={12} color="#556677" />
+            </a>
+            <a
+              href={`https://www.jpl.nasa.gov/solarsystem/${planet.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => sounds.play('click')}
+              className="flex items-center justify-between p-2 rounded-lg transition-all hover:bg-white/5 group/link"
+              style={{ background: 'rgba(0, 212, 255, 0.04)', border: '1px solid rgba(0, 212, 255, 0.08)' }}
+            >
+              <div>
+                <div className="text-[11px] text-gray-300 group-hover/link:text-white transition-colors">JPL Photojournal</div>
+                <div className="text-[9px] text-gray-600">Images & media library</div>
+              </div>
+              <ExternalLink size={12} color="#556677" />
+            </a>
+            <a
+              href={`https://ssd.jpl.nasa.gov/planets/approx_pos.html`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => sounds.play('click')}
+              className="flex items-center justify-between p-2 rounded-lg transition-all hover:bg-white/5 group/link"
+              style={{ background: 'rgba(0, 212, 255, 0.04)', border: '1px solid rgba(0, 212, 255, 0.08)' }}
+            >
+              <div>
+                <div className="text-[11px] text-gray-300 group-hover/link:text-white transition-colors">JPL Ephemeris</div>
+                <div className="text-[9px] text-gray-600">Real-time orbital positions</div>
+              </div>
+              <ExternalLink size={12} color="#556677" />
+            </a>
+          </div>
+        </div>
+
         {/* Back button */}
         <button
           onClick={() => {
@@ -377,6 +431,11 @@ export function PlanetGlobe() {
   const [cameraReady, setCameraReady] = useState(false)
   const planet = PLANETS.find((p) => p.id === selectedPlanet)
 
+  const planetIds = PLANETS.map((p) => p.id)
+  const currentIdx = selectedPlanet ? planetIds.indexOf(selectedPlanet) : -1
+  const prevPlanet = currentIdx > 0 ? PLANETS[currentIdx - 1] : null
+  const nextPlanet = currentIdx < planetIds.length - 1 ? PLANETS[currentIdx + 1] : null
+
   useEffect(() => {
     if (selectedPlanet) {
       document.body.style.cursor = 'default'
@@ -386,6 +445,25 @@ export function PlanetGlobe() {
       return () => clearTimeout(timer)
     }
   }, [selectedPlanet])
+
+  // Keyboard navigation
+  useEffect(() => {
+    if (!selectedPlanet) return
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft' && prevPlanet) navigatePlanet(prevPlanet.id)
+      if (e.key === 'ArrowRight' && nextPlanet) navigatePlanet(nextPlanet.id)
+      if (e.key === 'Escape') { sounds.play('click'); setSelectedPlanet(null) }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [selectedPlanet, prevPlanet, nextPlanet])
+
+  const navigatePlanet = (id: string) => {
+    sounds.play('navigate')
+    setSelectedPlanet(id)
+    setCameraReady(false)
+    setTimeout(() => setCameraReady(true), 100)
+  }
 
   if (!selectedPlanet || !planet) return null
 
@@ -448,8 +526,26 @@ export function PlanetGlobe() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
-            className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 z-20"
+            className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20"
           >
+            {/* Prev planet */}
+            {prevPlanet && (
+              <button
+                onClick={() => navigatePlanet(prevPlanet.id)}
+                className="px-3 py-2 rounded-xl text-[10px] tracking-wider transition-all hover:scale-105"
+                style={{
+                  fontFamily: '"Space Grotesk", sans-serif',
+                  background: 'rgba(13, 27, 42, 0.85)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  color: '#8899aa',
+                  backdropFilter: 'blur(10px)',
+                }}
+                title={`Previous: ${prevPlanet.name}`}
+              >
+                ← {prevPlanet.name}
+              </button>
+            )}
+
             {/* Zoom out */}
             <button
               onClick={() => setZoom(Math.min(zoom + 1.5, 10))}
@@ -494,6 +590,24 @@ export function PlanetGlobe() {
             >
               <ZoomIn size={16} />
             </button>
+
+            {/* Next planet */}
+            {nextPlanet && (
+              <button
+                onClick={() => navigatePlanet(nextPlanet.id)}
+                className="px-3 py-2 rounded-xl text-[10px] tracking-wider transition-all hover:scale-105"
+                style={{
+                  fontFamily: '"Space Grotesk", sans-serif',
+                  background: 'rgba(13, 27, 42, 0.85)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  color: '#8899aa',
+                  backdropFilter: 'blur(10px)',
+                }}
+                title={`Next: ${nextPlanet.name}`}
+              >
+                {nextPlanet.name} →
+              </button>
+            )}
           </motion.div>
 
           {/* Back button - top right */}
@@ -521,23 +635,38 @@ export function PlanetGlobe() {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 1.0 }}
-            className="absolute bottom-6 right-6 max-w-[260px] p-3 rounded-xl z-20 pointer-events-none"
+            className="absolute bottom-6 right-6 max-w-[280px] p-4 rounded-xl z-20 pointer-events-none"
             style={{
-              background: 'rgba(13, 27, 42, 0.75)',
-              backdropFilter: 'blur(15px)',
-              border: '1px solid rgba(0, 212, 255, 0.08)',
+              background: 'rgba(13, 27, 42, 0.85)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(0, 212, 255, 0.1)',
+              boxShadow: '0 0 30px rgba(0, 212, 255, 0.05)',
             }}
           >
-            <div className="flex items-center gap-1.5 mb-1.5">
-              <ChevronRight size={10} style={{ color: '#00d4ff' }} />
+            <div className="flex items-center gap-1.5 mb-2">
+              <ChevronRight size={10} style={{ color: planet.color }} />
               <span
                 className="text-[9px] tracking-[0.2em] uppercase"
-                style={{ fontFamily: '"Space Grotesk", sans-serif', color: '#00d4ff' }}
+                style={{ fontFamily: '"Space Grotesk", sans-serif', color: planet.color }}
               >
                 {planet.notableFeature}
               </span>
             </div>
-            <p className="text-[11px] text-gray-400 leading-relaxed">{planet.description}</p>
+            <p className="text-[11px] text-gray-400 leading-relaxed mb-3">{planet.description}</p>
+            <div className="grid grid-cols-3 gap-2 pt-2" style={{ borderTop: '1px solid rgba(0, 212, 255, 0.06)' }}>
+              <div>
+                <div className="text-[8px] text-gray-600 tracking-wider uppercase">Orbit</div>
+                <div className="text-[10px] text-gray-400">{planet.orbitalPeriod}</div>
+              </div>
+              <div>
+                <div className="text-[8px] text-gray-600 tracking-wider uppercase">Day</div>
+                <div className="text-[10px] text-gray-400">{planet.rotationPeriod}</div>
+              </div>
+              <div>
+                <div className="text-[8px] text-gray-600 tracking-wider uppercase">Moons</div>
+                <div className="text-[10px] text-gray-400">{planet.moons.length}</div>
+              </div>
+            </div>
           </motion.div>
         </div>
       </motion.div>
