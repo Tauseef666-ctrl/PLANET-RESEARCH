@@ -16,6 +16,7 @@ import { PlanetGlobe } from './three/PlanetGlobe'
 import { KeyboardShortcuts } from './components/KeyboardShortcuts'
 import { BackToTop } from './components/BackToTop'
 import { PlanetCompare } from './components/PlanetCompare'
+import { SectionReveal, StaggerContainer, StaggerItem } from './components/SectionReveal'
 import { SpaceMap } from './components/SpaceMap'
 import { ExoplanetGlobe } from './components/ExoplanetGlobe'
 import { ResearchSection } from './components/ResearchSection'
@@ -38,6 +39,7 @@ function SolarSystemSection() {
   ]
 
   return (
+    <SectionReveal>
     <section id="solar-system" className="relative z-10 max-w-7xl mx-auto px-4 py-16">
       <div className="text-center mb-10">
         <h2
@@ -85,6 +87,7 @@ function SolarSystemSection() {
         <PlanetCompare />
       </div>
     </section>
+    </SectionReveal>
   )
 }
 
@@ -159,88 +162,88 @@ export default function App() {
 
         <div className="relative" style={{ marginTop: showHero ? '-100vh' : 0, paddingTop: showHero ? '100vh' : 80 }}>
           {showSolarSystem && (
-            <>
+            <SectionReveal>
               <SolarSystemSection />
               <SectionDivider />
-            </>
+            </SectionReveal>
           )}
 
           {showSpaceMap && (
-            <>
+            <SectionReveal>
               <section id="space-map">
                 <SpaceMap />
               </section>
               <SectionDivider />
-            </>
+            </SectionReveal>
           )}
 
           {showExoplanetSection && selectedExoplanetData ? (
-            <>
+            <SectionReveal>
               <section id="exoplanets">
                 <ExoplanetGlobe exoplanet={selectedExoplanetData} />
               </section>
               <SectionDivider />
-            </>
+            </SectionReveal>
           ) : showExoplanetSection ? (
-            <>
+            <SectionReveal>
               <section id="exoplanets">
                 <ExoplanetSection />
               </section>
               <SectionDivider />
-            </>
+            </SectionReveal>
           ) : null}
 
           {showAsteroidSection && (
-            <>
+            <SectionReveal>
               <section id="asteroids">
                 <AsteroidSection />
               </section>
               <SectionDivider />
-            </>
+            </SectionReveal>
           )}
 
           {showMoonSection && (
-            <>
+            <SectionReveal>
               <section id="moons">
                 <MoonSection />
               </section>
               <SectionDivider />
-            </>
+            </SectionReveal>
           )}
 
           {showMissions && (
-            <>
+            <SectionReveal>
               <section id="missions">
                 <MissionsSection />
               </section>
               <SectionDivider />
-            </>
+            </SectionReveal>
           )}
 
           {showResearch && (
-            <>
+            <SectionReveal>
               <section id="research">
                 <ResearchSection />
               </section>
               <SectionDivider />
-            </>
+            </SectionReveal>
           )}
 
           {showDataHub && (
-            <>
+            <SectionReveal>
               <section id="data-hub">
                 <DataHub />
               </section>
               <SectionDivider />
-            </>
+            </SectionReveal>
           )}
 
           {showAbout && (
-            <>
+            <SectionReveal>
               <section id="about">
                 <AboutSection />
               </section>
-            </>
+            </SectionReveal>
           )}
 
           <Footer />
