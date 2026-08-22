@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
@@ -43,9 +43,18 @@ const CONSTELLATIONS = [
   },
 ]
 
+function ConstellationLine({ start, end }: { start: THREE.Vector3; end: THREE.Vector3 }) {
+  const lineObj = useMemo(() => {
+    const geo = new THREE.BufferGeometry().setFromPoints([start, end])
+    const mat = new THREE.LineBasicMaterial({ color: '#00d4ff', transparent: true, opacity: 0.3 })
+    return new THREE.Line(geo, mat)
+  }, [start, end])
+  return <primitive object={lineObj} />
+}
+
 export function ConstellationMode() {
   const [active, setActive] = useState(false)
-  const linesRef = useRef<THREE.Group>(null!)
+  const groupRef = useRef<THREE.Group>(null!)
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -58,27 +67,24 @@ export function ConstellationMode() {
   }, [])
 
   useFrame((state) => {
-    if (linesRef.current && active) {
-      linesRef.current.rotation.y = state.clock.elapsedTime * 0.01
+    if (groupRef.current && active) {
+      groupRef.current.rotation.y = state.clock.elapsedTime * 0.01
     }
   })
 
   if (!active) return null
 
   return (
-    <group ref={linesRef}>
+    <group ref={groupRef}>
       {CONSTELLATIONS.map((c) => (
         <group key={c.name}>
-          {c.lines.map(([a, b], i) => {
-            const start = new THREE.Vector3(c.stars[a].x, c.stars[a].y, c.stars[a].z)
-            const end = new THREE.Vector3(c.stars[b].x, c.stars[b].y, c.stars[b].z)
-            const geo = new THREE.BufferGeometry().setFromPoints([start, end])
-            return (
-              <line key={i} geometry={geo}>
-                <lineBasicMaterial color="#00d4ff" transparent opacity={0.3} />
-              </line>
-            )
-          })}
+          {c.lines.map(([a, b], i) => (
+            <ConstellationLine
+              key={i}
+              start={new THREE.Vector3(c.stars[a].x, c.stars[a].y, c.stars[a].z)}
+              end={new THREE.Vector3(c.stars[b].x, c.stars[b].y, c.stars[b].z)}
+            />
+          ))}
           {c.stars.map((s, i) => (
             <mesh key={i} position={[s.x, s.y, s.z]}>
               <sphereGeometry args={[0.15, 8, 8]} />
