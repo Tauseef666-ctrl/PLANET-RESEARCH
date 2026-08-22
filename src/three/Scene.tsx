@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber'
 import { OrbitControls, AdaptiveDpr, AdaptiveEvents } from '@react-three/drei'
 import { Stars } from './Stars'
 import { SolarSystem } from './SolarSystem'
+import { ConstellationMode } from './Constellations'
 import { useStore } from '../store/useStore'
 
 export function Scene() {
@@ -29,6 +30,7 @@ export function Scene() {
       <Suspense fallback={null}>
         <Stars count={quality === 'low' ? 2000 : quality === 'medium' ? 4000 : 8000} quality={quality} />
         <SolarSystem />
+        <ConstellationMode />
       </Suspense>
 
       <OrbitControls
