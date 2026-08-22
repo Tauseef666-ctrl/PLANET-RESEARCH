@@ -19,18 +19,13 @@ export default defineConfig({
   },
   build: {
     target: 'esnext',
-    minify: 'terser',
-    terserOptions: {
-      compress: { drop_console: true, drop_debugger: true },
-    },
     rollupOptions: {
       output: {
         manualChunks: {
           three: ['three'],
           'react-three': ['@react-three/fiber', '@react-three/drei'],
-          'motion-firebase': ['framer-motion'],
-          gsap: ['gsap'],
-          vendor: ['react', 'react-dom', 'zustand', 'fuse.js'],
+          motion: ['framer-motion'],
+          vendor: ['react', 'react-dom'],
         },
       },
     },
