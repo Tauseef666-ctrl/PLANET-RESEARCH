@@ -16,6 +16,7 @@ import { PlanetGlobe } from './three/PlanetGlobe'
 import { KeyboardShortcuts } from './components/KeyboardShortcuts'
 import { BackToTop } from './components/BackToTop'
 import { PlanetCompare } from './components/PlanetCompare'
+import { MobileMenu } from './components/MobileMenu'
 import { SectionReveal, StaggerContainer, StaggerItem } from './components/SectionReveal'
 import { SpaceMap } from './components/SpaceMap'
 import { ExoplanetGlobe } from './components/ExoplanetGlobe'
@@ -155,6 +156,7 @@ export default function App() {
       <PlanetGlobe />
       <KeyboardShortcuts />
       <BackToTop />
+      <MobileMenu />
 
       {/* Content overlay that scrolls over the 3D scene */}
       <div className="relative z-10">
