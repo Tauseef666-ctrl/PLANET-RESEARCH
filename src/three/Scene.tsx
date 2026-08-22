@@ -4,6 +4,7 @@ import { OrbitControls, AdaptiveDpr, AdaptiveEvents } from '@react-three/drei'
 import { Stars } from './Stars'
 import { SolarSystem } from './SolarSystem'
 import { ConstellationMode } from './Constellations'
+import { ShootingStars } from './ShootingStars'
 import { useStore } from '../store/useStore'
 
 export function Scene() {
@@ -31,6 +32,7 @@ export function Scene() {
         <Stars count={quality === 'low' ? 2000 : quality === 'medium' ? 4000 : 8000} quality={quality} />
         <SolarSystem />
         <ConstellationMode />
+        <ShootingStars />
       </Suspense>
 
       <OrbitControls
