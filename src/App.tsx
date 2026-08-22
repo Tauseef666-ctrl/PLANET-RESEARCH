@@ -15,6 +15,7 @@ import { AboutSection } from './components/AboutSection'
 import { PlanetGlobe } from './three/PlanetGlobe'
 import { KeyboardShortcuts } from './components/KeyboardShortcuts'
 import { BackToTop } from './components/BackToTop'
+import { PlanetCompare } from './components/PlanetCompare'
 import { SpaceMap } from './components/SpaceMap'
 import { ExoplanetGlobe } from './components/ExoplanetGlobe'
 import { ResearchSection } from './components/ResearchSection'
@@ -79,6 +80,9 @@ function SolarSystemSection() {
             <p className="text-[10px] text-gray-600">{p.type}</p>
           </button>
         ))}
+      </div>
+      <div className="flex justify-center mt-6">
+        <PlanetCompare />
       </div>
     </section>
   )
