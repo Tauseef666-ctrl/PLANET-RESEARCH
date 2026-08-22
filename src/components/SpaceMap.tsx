@@ -647,7 +647,7 @@ export function SpaceMap() {
         )}
 
         {/* Canvas */}
-        <Canvas camera={{ position: [0, 25, 45], fov: 50 }} style={{ background: 'transparent' }}>
+        <Canvas camera={{ position: [0, 25, 45], fov: 50 }} style={{ background: 'transparent', width: '100%', height: '100%' }}>
           <Suspense fallback={null}>
             <SceneContent
               hoveredPlanet={hoveredPlanet}

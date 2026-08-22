@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, useMemo } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { OrbitControls, Html } from '@react-three/drei'
+import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, RotateCcw, ZoomIn, ZoomOut, ArrowLeft, ChevronRight, Zap, Rocket, Globe, Wind, Ruler, ExternalLink, Navigation } from 'lucide-react'
@@ -9,14 +9,12 @@ import { PLANETS } from '../data/planets'
 import { createProceduralTexture } from './PlanetTextures'
 import { sounds } from '../utils/sounds'
 
-function CameraAnimation({ isReady }: { isReady: boolean }) {
+function CameraAnimation() {
   const { camera } = useThree()
   const targetPos = useMemo(() => new THREE.Vector3(0, 0, 5.5), [])
 
   useFrame(() => {
-    if (!isReady) {
-      camera.position.lerp(targetPos, 0.03)
-    }
+    camera.position.lerp(targetPos, 0.04)
   })
 
   return null
@@ -428,7 +426,6 @@ export function PlanetGlobe() {
   const { selectedPlanet, setSelectedPlanet, setActiveView } = useStore()
   const [isSpinning, setIsSpinning] = useState(true)
   const [zoom, setZoom] = useState(5.5)
-  const [cameraReady, setCameraReady] = useState(false)
   const planet = PLANETS.find((p) => p.id === selectedPlanet)
 
   const planetIds = PLANETS.map((p) => p.id)
@@ -439,10 +436,7 @@ export function PlanetGlobe() {
   useEffect(() => {
     if (selectedPlanet) {
       document.body.style.cursor = 'default'
-      setCameraReady(false)
       setZoom(5.5)
-      const timer = setTimeout(() => setCameraReady(true), 100)
-      return () => clearTimeout(timer)
     }
   }, [selectedPlanet])
 
@@ -461,8 +455,6 @@ export function PlanetGlobe() {
   const navigatePlanet = (id: string) => {
     sounds.play('navigate')
     setSelectedPlanet(id)
-    setCameraReady(false)
-    setTimeout(() => setCameraReady(true), 100)
   }
 
   if (!selectedPlanet || !planet) return null
@@ -473,16 +465,17 @@ export function PlanetGlobe() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[80] flex"
+        className="fixed inset-0 z-[80]"
         style={{ background: 'rgba(5, 5, 16, 0.97)' }}
       >
+        <div className="w-full h-full flex">
         {/* 3D Canvas */}
-        <div className="flex-1 relative">
-          <Canvas camera={{ position: [0, 0, 18], fov: 45 }} gl={{ antialias: true }}>
+        <div className="flex-1 relative" style={{ width: '100%', height: '100%' }}>
+          <Canvas camera={{ position: [0, 0, 18], fov: 45 }} gl={{ antialias: true }} style={{ width: '100%', height: '100%' }}>
             <color attach="background" args={['#050510']} />
             <fog attach="fog" args={['#050510', 14, 30]} />
 
-            <CameraAnimation isReady={cameraReady} />
+            <CameraAnimation />
             <GlobeMesh planetId={selectedPlanet} isSpinning={isSpinning} />
             <OrbitControls
               enablePan={false}
@@ -668,6 +661,7 @@ export function PlanetGlobe() {
               </div>
             </div>
           </motion.div>
+        </div>
         </div>
       </motion.div>
     </AnimatePresence>
