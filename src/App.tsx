@@ -17,7 +17,7 @@ import { BackToTop } from './components/BackToTop'
 import { PlanetCompare } from './components/PlanetCompare'
 import { MobileMenu } from './components/MobileMenu'
 import { SectionReveal } from './components/SectionReveal'
-const SpaceMap = lazy(() => import('./components/SpaceMap').then(m => ({ default: m.SpaceMap })))
+const PlanetExplorer = lazy(() => import('./components/PlanetExplorer').then(m => ({ default: m.PlanetExplorer })))
 const ExoplanetGlobe = lazy(() => import('./components/ExoplanetGlobe').then(m => ({ default: m.ExoplanetGlobe })))
 const ExoplanetSection = lazy(() => import('./components/ExoplanetSection').then(m => ({ default: m.ExoplanetSection })))
 const ResearchSection = lazy(() => import('./components/ResearchSection').then(m => ({ default: m.ResearchSection })))
@@ -170,7 +170,7 @@ export default function App() {
   const showMissions = activeView === 'missions' || activeView === 'home'
   const showResearch = activeView === 'research' || activeView === 'home'
   const showDataHub = activeView === 'data' || activeView === 'home'
-  const showSpaceMap = activeView === 'space-map' || activeView === 'home'
+  const showPlanetExplorer = activeView === 'planet-explorer' || activeView === 'home'
   const showAbout = activeView === 'about' || activeView === 'home'
 
   const selectedExoplanetData = selectedExoplanet ? SAMPLE_EXOPLANETS.find((e) => e.pl_name === selectedExoplanet) : null
@@ -198,10 +198,10 @@ export default function App() {
             </SectionReveal>
           )}
 
-          {showSpaceMap && (
+          {showPlanetExplorer && (
             <SectionReveal>
-              <section id="space-map">
-                <Suspense fallback={null}><SpaceMap /></Suspense>
+              <section id="planet-explorer">
+                <Suspense fallback={null}><PlanetExplorer /></Suspense>
               </section>
               <SectionDivider />
             </SectionReveal>

@@ -5,7 +5,7 @@ import { sounds } from '../utils/sounds'
 
 const NAV_ITEMS = [
   { id: 'solar-system', label: 'SOLAR SYSTEM' },
-  { id: 'space-map', label: 'SPACE MAP' },
+  { id: 'planet-explorer', label: 'PLANET EXPLORER' },
   { id: 'exoplanets', label: 'EXOPLANETS' },
   { id: 'asteroids', label: 'ASTEROIDS' },
   { id: 'moons', label: 'MOONS' },

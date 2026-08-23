@@ -12,7 +12,7 @@ const EXPLORE_LINKS: { label: string; sectionId: string }[] = [
 const RESEARCH_LINKS: { label: string; sectionId: string }[] = [
   { label: 'Missions', sectionId: 'missions' },
   { label: 'Data', sectionId: 'data-hub' },
-  { label: 'Space Map', sectionId: 'space-map' },
+  { label: 'Planet Explorer', sectionId: 'planet-explorer' },
   { label: 'Research Hub', sectionId: 'research' },
 ]
 

@@ -14,7 +14,7 @@ const NAV_ITEMS: { id: ActiveView; label: string; sectionId?: string }[] = [
   { id: 'missions', label: 'MISSIONS', sectionId: 'missions' },
   { id: 'research', label: 'RESEARCH', sectionId: 'research' },
   { id: 'data', label: 'DATA', sectionId: 'data-hub' },
-  { id: 'space-map', label: 'SPACE MAP', sectionId: 'space-map' },
+  { id: 'planet-explorer', label: 'PLANET EXPLORER', sectionId: 'planet-explorer' },
   { id: 'about', label: 'ABOUT', sectionId: 'about' },
 ]
 
@@ -26,7 +26,7 @@ const SECTION_TO_NAV: Record<string, string> = {
   'missions': 'missions',
   'research': 'research',
   'data-hub': 'data',
-  'space-map': 'space-map',
+  'planet-explorer': 'planet-explorer',
   'about': 'about',
 }
 
