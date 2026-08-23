@@ -17,6 +17,7 @@ import { BackToTop } from './components/BackToTop'
 import { PlanetCompare } from './components/PlanetCompare'
 import { MobileMenu } from './components/MobileMenu'
 import { SoundToggle } from './components/SoundToggle'
+import { QuickNav } from './components/QuickNav'
 import { SectionReveal } from './components/SectionReveal'
 const PlanetExplorer = lazy(() => import('./components/PlanetExplorer').then(m => ({ default: m.PlanetExplorer })))
 const ExoplanetGlobe = lazy(() => import('./components/ExoplanetGlobe').then(m => ({ default: m.ExoplanetGlobe })))
@@ -187,6 +188,7 @@ export default function App() {
       <BackToTop />
       <MobileMenu />
       <SoundToggle />
+      <QuickNav />
 
       {/* Content overlay that scrolls over the 3D scene */}
       <div className="relative z-10">
