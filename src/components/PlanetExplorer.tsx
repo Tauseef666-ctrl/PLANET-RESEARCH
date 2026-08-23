@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { Search, X, Globe, ExternalLink, ChevronRight, Rocket, Zap, Wind, Ruler, Navigation } from 'lucide-react'
+import { Search, X, Globe, ExternalLink, ChevronRight, Rocket, Zap, Wind, Ruler, Navigation, Shuffle } from 'lucide-react'
 import { useStore } from '../store/useStore'
 import { PLANETS, PlanetData } from '../data/planets'
 import { sounds } from '../utils/sounds'
@@ -194,18 +194,38 @@ export function PlanetExplorer() {
 
       {/* Search */}
       <div className="max-w-xl mx-auto mb-8">
-        <div className="flex items-center gap-3 px-4 py-3 rounded-xl" style={{ background: 'rgba(13, 27, 42, 0.6)', border: '1px solid rgba(0, 212, 255, 0.15)', backdropFilter: 'blur(10px)' }}>
-          <Search size={16} color="#556677" />
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search planets by name, type, or classification..."
-            className="flex-1 bg-transparent outline-none text-sm text-white placeholder-gray-600"
-            style={{ fontFamily: '"Space Grotesk", sans-serif' }}
-          />
-          {search && <button onClick={() => setSearch('')}><X size={14} color="#556677" /></button>}
+        <div className="flex items-center gap-3">
+          <div className="flex-1 flex items-center gap-3 px-4 py-3 rounded-xl" style={{ background: 'rgba(13, 27, 42, 0.6)', border: '1px solid rgba(0, 212, 255, 0.15)', backdropFilter: 'blur(10px)' }}>
+            <Search size={16} color="#556677" />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search planets by name, type, or classification..."
+              className="flex-1 bg-transparent outline-none text-sm text-white placeholder-gray-600"
+              style={{ fontFamily: '"Space Grotesk", sans-serif' }}
+            />
+            {search && <button onClick={() => setSearch('')}><X size={14} color="#556677" /></button>}
+          </div>
+          <button
+            onClick={() => {
+              sounds.play('click')
+              const random = PLANETS[Math.floor(Math.random() * PLANETS.length)]
+              setSelected(random.id)
+              setSearch('')
+            }}
+            className="p-3 rounded-xl transition-all hover:scale-110 shrink-0"
+            style={{
+              background: 'rgba(0, 212, 255, 0.08)',
+              border: '1px solid rgba(0, 212, 255, 0.2)',
+              color: '#00d4ff',
+            }}
+            title="Random planet"
+          >
+            <Shuffle size={16} />
+          </button>
         </div>
+        {search && <p className="text-[10px] text-gray-600 mt-2 text-center">{filtered.length} result{filtered.length !== 1 ? 's' : ''} found</p>}
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6">
