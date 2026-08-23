@@ -1,10 +1,10 @@
-import { useRef, useState, useMemo } from 'react'
+import { useRef, useState, useMemo, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Html } from '@react-three/drei'
 import * as THREE from 'three'
 import { PlanetData } from '../data/planets'
 import { useStore } from '../store/useStore'
-import { createProceduralTexture } from './PlanetTextures'
+import { createProceduralTexture, getPlanetTexture } from './PlanetTextures'
 import { sounds } from '../utils/sounds'
 
 interface PlanetProps {
@@ -39,7 +39,16 @@ export function Planet({ data, onClick }: PlanetProps) {
 
   const planetSize = data.size * 0.5
 
-  const texture = useMemo(() => createProceduralTexture(data.id, 512), [data.id])
+  const fallbackTexture = useMemo(() => createProceduralTexture(data.id, 512), [data.id])
+  const [texture, setTexture] = useState<THREE.Texture>(fallbackTexture)
+
+  useEffect(() => {
+    let cancelled = false
+    getPlanetTexture(data.id).then((tex) => {
+      if (!cancelled) setTexture(tex)
+    })
+    return () => { cancelled = true }
+  }, [data.id])
 
   const hasAtmosphere = ['earth', 'venus', 'jupiter', 'saturn', 'uranus', 'neptune'].includes(data.id)
   const atmosphereColor = data.id === 'earth' ? '#4a90d9' : data.id === 'venus' ? '#e8cda0' : '#00d4ff'
