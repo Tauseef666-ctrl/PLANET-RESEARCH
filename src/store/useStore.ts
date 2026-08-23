@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 export type GraphicsQuality = 'ultra' | 'high' | 'medium' | 'low'
-export type ActiveView = 'home' | 'solar-system' | 'planet' | 'exoplanet' | 'asteroid' | 'moon' | 'missions' | 'research' | 'data' | 'space-map' | 'about'
+export type ActiveView = 'home' | 'solar-system' | 'planet' | 'exoplanet' | 'asteroid' | 'moon' | 'missions' | 'research' | 'data' | 'planet-explorer' | 'about'
 
 interface SpaceStore {
   isLoading: boolean
