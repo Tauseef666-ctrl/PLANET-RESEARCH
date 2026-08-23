@@ -112,63 +112,49 @@ function GlobeMesh({ planetId, isSpinning }: { planetId: string; isSpinning: boo
       {/* Clouds for Earth */}
       {hasClouds && (
         <mesh ref={cloudsRef} scale={1.015}>
-          <sphereGeometry args={[size, 48, 48]} />
+          <sphereGeometry args={[size, 64, 64]} />
           <meshBasicMaterial
             color="#ffffff"
             transparent
-            opacity={0.1}
+            opacity={0.15}
             blending={THREE.AdditiveBlending}
             depthWrite={false}
           />
         </mesh>
       )}
 
-      {/* Saturn rings - multi-layered */}
+      {/* Saturn rings - multi-layered with real colors */}
       {planetId === 'saturn' && (
         <group rotation={[Math.PI / 2.3, 0, 0.2]}>
+          {/* Ring D (innermost, faint) */}
+          <mesh>
+            <ringGeometry args={[size * 1.15, size * 1.23, 128]} />
+            <meshStandardMaterial color="#b8a878" transparent opacity={0.15} side={THREE.DoubleSide} roughness={0.9} />
+          </mesh>
+          {/* Ring C */}
+          <mesh>
+            <ringGeometry args={[size * 1.23, size * 1.52, 128]} />
+            <meshStandardMaterial color="#c8b890" transparent opacity={0.35} side={THREE.DoubleSide} roughness={0.88} />
+          </mesh>
+          {/* Cassini Division (dark gap) */}
+          <mesh>
+            <ringGeometry args={[size * 1.52, size * 1.58, 128]} />
+            <meshBasicMaterial color="#050510" transparent opacity={0.7} side={THREE.DoubleSide} depthWrite={false} />
+          </mesh>
+          {/* Ring B (brightest, dense) */}
+          <mesh>
+            <ringGeometry args={[size * 1.58, size * 1.95, 128]} />
+            <meshStandardMaterial color="#e8d5b0" transparent opacity={0.75} side={THREE.DoubleSide} roughness={0.82} />
+          </mesh>
           {/* Ring A (outer) */}
           <mesh>
-            <ringGeometry args={[size * 1.7, size * 2.1, 128]} />
-            <meshStandardMaterial
-              color="#d4c5a0"
-              transparent
-              opacity={0.5}
-              side={THREE.DoubleSide}
-              roughness={0.85}
-            />
+            <ringGeometry args={[size * 1.95, size * 2.2, 128]} />
+            <meshStandardMaterial color="#d4c5a0" transparent opacity={0.5} side={THREE.DoubleSide} roughness={0.85} />
           </mesh>
-          {/* Ring B (middle, dense) */}
+          {/* Encke Gap hint */}
           <mesh>
-            <ringGeometry args={[size * 1.4, size * 1.65, 128]} />
-            <meshStandardMaterial
-              color="#e8d5b0"
-              transparent
-              opacity={0.7}
-              side={THREE.DoubleSide}
-              roughness={0.85}
-            />
-          </mesh>
-          {/* Ring C (inner, faint) */}
-          <mesh>
-            <ringGeometry args={[size * 1.25, size * 1.35, 128]} />
-            <meshStandardMaterial
-              color="#c8b890"
-              transparent
-              opacity={0.25}
-              side={THREE.DoubleSide}
-              roughness={0.9}
-            />
-          </mesh>
-          {/* Gap (Cassini Division hint) */}
-          <mesh>
-            <ringGeometry args={[size * 1.65, size * 1.7, 128]} />
-            <meshBasicMaterial
-              color="#050510"
-              transparent
-              opacity={0.6}
-              side={THREE.DoubleSide}
-              depthWrite={false}
-            />
+            <ringGeometry args={[size * 2.12, size * 2.14, 128]} />
+            <meshBasicMaterial color="#050510" transparent opacity={0.5} side={THREE.DoubleSide} depthWrite={false} />
           </mesh>
         </group>
       )}
