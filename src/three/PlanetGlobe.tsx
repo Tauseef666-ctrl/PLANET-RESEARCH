@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { X, RotateCcw, ZoomIn, ZoomOut, ArrowLeft, ChevronRight, Zap, Rocket, Globe, Wind, Ruler, ExternalLink, Navigation } from 'lucide-react'
 import { useStore } from '../store/useStore'
 import { PLANETS } from '../data/planets'
-import { createProceduralTexture } from './PlanetTextures'
+import { createProceduralTexture, getPlanetTexture, getPlanetBump } from './PlanetTextures'
 import { sounds } from '../utils/sounds'
 
 function CameraAnimation() {
@@ -29,8 +29,24 @@ function GlobeMesh({ planetId, isSpinning }: { planetId: string; isSpinning: boo
   const planet = PLANETS.find((p) => p.id === planetId)
   const size = 2.2
 
-  const texture = useMemo(() => createProceduralTexture(planetId, 1024), [planetId])
-  const bumpMap = useMemo(() => createProceduralTexture(planetId + '_bump', 512), [planetId])
+  const fallbackTexture = useMemo(() => createProceduralTexture(planetId, 1024), [planetId])
+  const fallbackBump = useMemo(() => createProceduralTexture(planetId + '_bump', 512), [planetId])
+
+  const [texture, setTexture] = useState<THREE.Texture>(fallbackTexture)
+  const [bumpMap, setBumpMap] = useState<THREE.Texture | null>(fallbackBump)
+
+  useEffect(() => {
+    let cancelled = false
+    setTexture(fallbackTexture)
+    setBumpMap(fallbackBump)
+    getPlanetTexture(planetId).then((tex) => {
+      if (!cancelled) setTexture(tex)
+    })
+    getPlanetBump(planetId).then((bmp) => {
+      if (!cancelled && bmp) setBumpMap(bmp)
+    })
+    return () => { cancelled = true }
+  }, [planetId])
 
   useFrame((_, delta) => {
     if (meshRef.current && isSpinning) {
