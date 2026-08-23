@@ -31,14 +31,14 @@ function SolarSystemSection() {
   const { setSelectedPlanet } = useStore()
 
   const planets = [
-    { id: 'mercury', name: 'Mercury', type: 'Terrestrial', color: '#b5b5b5', dist: '57.9M km', moons: 0, temp: '430°C' },
-    { id: 'venus', name: 'Venus', type: 'Terrestrial', color: '#e8cda0', dist: '108.2M km', moons: 0, temp: '465°C' },
-    { id: 'earth', name: 'Earth', type: 'Terrestrial', color: '#4a90d9', dist: '149.6M km', moons: 1, temp: '15°C' },
-    { id: 'mars', name: 'Mars', type: 'Terrestrial', color: '#c1440e', dist: '227.9M km', moons: 2, temp: '-65°C' },
-    { id: 'jupiter', name: 'Jupiter', type: 'Gas Giant', color: '#c88b3a', dist: '778.5M km', moons: 95, temp: '-110°C' },
-    { id: 'saturn', name: 'Saturn', type: 'Gas Giant', color: '#e8d5a3', dist: '1.43B km', moons: 146, temp: '-140°C' },
-    { id: 'uranus', name: 'Uranus', type: 'Ice Giant', color: '#73c2d6', dist: '2.87B km', moons: 28, temp: '-195°C' },
-    { id: 'neptune', name: 'Neptune', type: 'Ice Giant', color: '#3f54ba', dist: '4.50B km', moons: 16, temp: '-200°C' },
+    { id: 'mercury', name: 'Mercury', type: 'Terrestrial', color: '#b5b5b5', dist: '57.9M km', moons: 0, temp: '430°C', emoji: '☿' },
+    { id: 'venus', name: 'Venus', type: 'Terrestrial', color: '#e8cda0', dist: '108.2M km', moons: 0, temp: '465°C', emoji: '♀' },
+    { id: 'earth', name: 'Earth', type: 'Terrestrial', color: '#4a90d9', dist: '149.6M km', moons: 1, temp: '15°C', emoji: '🜨' },
+    { id: 'mars', name: 'Mars', type: 'Terrestrial', color: '#c1440e', dist: '227.9M km', moons: 2, temp: '-65°C', emoji: '♂' },
+    { id: 'jupiter', name: 'Jupiter', type: 'Gas Giant', color: '#c88b3a', dist: '778.5M km', moons: 95, temp: '-110°C', emoji: '♃' },
+    { id: 'saturn', name: 'Saturn', type: 'Gas Giant', color: '#e8d5a3', dist: '1.43B km', moons: 146, temp: '-140°C', emoji: '♄' },
+    { id: 'uranus', name: 'Uranus', type: 'Ice Giant', color: '#73c2d6', dist: '2.87B km', moons: 28, temp: '-195°C', emoji: '⛢' },
+    { id: 'neptune', name: 'Neptune', type: 'Ice Giant', color: '#3f54ba', dist: '4.50B km', moons: 16, temp: '-200°C', emoji: '♆' },
   ]
 
   return (
@@ -92,7 +92,7 @@ function SolarSystemSection() {
                   className="text-sm font-semibold"
                   style={{ fontFamily: '"Space Grotesk", sans-serif', color: p.color }}
                 >
-                  {p.name}
+                  <span className="mr-1 opacity-60">{p.emoji}</span>{p.name}
                 </h3>
                 <p className="text-[9px] text-gray-600 tracking-wider">{p.type}</p>
               </div>
