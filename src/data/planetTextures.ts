@@ -10,7 +10,6 @@ export const PLANET_TEXTURES: Record<string, { map: string; bump?: string; norma
   },
   earth: {
     map: `${TEXTURE_BASE}/b/b4/The_blue_marble_%28remastered%29.jpg`,
-    bump: `${TEXTURE_BASE}/2/2b/Equirectangular-plugin-Earth_daymap.jpg`,
     emissive: `${TEXTURE_BASE}/4/4d/Blackmarble_2016.jpg`,
   },
   mars: {
@@ -24,15 +23,11 @@ export const PLANET_TEXTURES: Record<string, { map: string; bump?: string; norma
     map: `${TEXTURE_BASE}/6/66/Saturn%2C_its_rings%2C_and_a_few_of_its_moons.jpg`,
   },
   uranus: {
-    map: `${TEXTURE_BASE__/5/56/Uranus_Voyager2_color_calibrated.png`,
+    map: `${TEXTURE_BASE}/5/56/Uranus_Voyager2_color_calibrated.png`,
   },
   neptune: {
     map: `${TEXTURE_BASE}/6/60/Neptune_Voyager2_color_calibrated.png`,
   },
 }
 
-export const MOON_TEXTURE = `${TEXTURE_BASE}/e/e1/FullMoon2010.jpg`
-
-export const SUN_TEXTURE = `${TEXTURE_BASE__/3/3f/Sun_lopping.wav.jpg`
-
-export const SATURN_RING_TEXTURE = `${TEXTURE_BASE%/9/9f/Saturn_ring_texture.png`
+export const MOON_TEXTURE_URL = `${TEXTURE_BASE}/e/e1/FullMoon2010.jpg`
