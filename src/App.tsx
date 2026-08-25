@@ -215,7 +215,7 @@ export default function App() {
           {showExoplanetSection && selectedExoplanetData ? (
             <SectionReveal>
               <section id="exoplanets">
-                <Suspense fallback={null}><ExoplanetGlobe exoplanet={selectedExoplanetData} /></Suspense>
+                <Suspense fallback={<ShimmerFallback height="h-80" />}><ExoplanetGlobe exoplanet={selectedExoplanetData} /></Suspense>
               </section>
               <SectionDivider />
             </SectionReveal>
@@ -267,7 +267,7 @@ export default function App() {
           {showDataHub && (
             <SectionReveal>
               <section id="data-hub">
-                <Suspense fallback={null}><DataHub /></Suspense>
+                <Suspense fallback={<ShimmerFallback height="h-80" />}><DataHub /></Suspense>
               </section>
               <SectionDivider />
             </SectionReveal>
