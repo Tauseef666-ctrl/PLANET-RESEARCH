@@ -19,6 +19,7 @@ import { MobileMenu } from './components/MobileMenu'
 import { SoundToggle } from './components/SoundToggle'
 import { QuickNav } from './components/QuickNav'
 import { SectionReveal } from './components/SectionReveal'
+import { ShimmerFallback } from './components/ShimmerFallback'
 const PlanetExplorer = lazy(() => import('./components/PlanetExplorer').then(m => ({ default: m.PlanetExplorer })))
 const ExoplanetGlobe = lazy(() => import('./components/ExoplanetGlobe').then(m => ({ default: m.ExoplanetGlobe })))
 const ExoplanetSection = lazy(() => import('./components/ExoplanetSection').then(m => ({ default: m.ExoplanetSection })))
@@ -205,7 +206,7 @@ export default function App() {
           {showPlanetExplorer && (
             <SectionReveal>
               <section id="planet-explorer">
-                <Suspense fallback={null}><PlanetExplorer /></Suspense>
+                <Suspense fallback={<ShimmerFallback height="h-96" />}><PlanetExplorer /></Suspense>
               </section>
               <SectionDivider />
             </SectionReveal>
@@ -221,7 +222,7 @@ export default function App() {
           ) : showExoplanetSection ? (
             <SectionReveal>
               <section id="exoplanets">
-                <Suspense fallback={null}><ExoplanetSection /></Suspense>
+                <Suspense fallback={<ShimmerFallback height="h-64" />}><ExoplanetSection /></Suspense>
               </section>
               <SectionDivider />
             </SectionReveal>
@@ -257,7 +258,7 @@ export default function App() {
           {showResearch && (
             <SectionReveal>
               <section id="research">
-                <Suspense fallback={null}><ResearchSection /></Suspense>
+                <Suspense fallback={<ShimmerFallback />}><ResearchSection /></Suspense>
               </section>
               <SectionDivider />
             </SectionReveal>
