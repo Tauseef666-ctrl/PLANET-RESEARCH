@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, X, ChevronDown, AlertTriangle } from 'lucide-react'
+import { Search, X, ChevronDown, AlertTriangle, ExternalLink } from 'lucide-react'
 
 const ACCENT = '#00d4ff'
 
@@ -402,6 +402,15 @@ export function AsteroidSection() {
                       {asteroid.classification}
                     </span>
                   </div>
+                  <a
+                    href={`https://en.wikipedia.org/wiki/${asteroid.name}_(asteroid)`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 mt-3 text-[9px] text-gray-600 hover:text-gray-400 transition-colors"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    Wikipedia <ExternalLink size={8} />
+                  </a>
                 </div>
 
                 {/* Expanded details */}
