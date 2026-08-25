@@ -172,6 +172,22 @@ function GlobeMesh({ planetId, isSpinning }: { planetId: string; isSpinning: boo
         </mesh>
       )}
 
+      {/* Jupiter Great Red Spot */}
+      {planetId === 'jupiter' && (
+        <mesh position={[size * 0.52, -size * 0.15, size * 0.85]} rotation={[0.1, 0.9, 0.1]}>
+          <sphereGeometry args={[size * 0.2, 24, 16]} />
+          <meshStandardMaterial color="#cc4422" emissive="#991100" emissiveIntensity={0.3} roughness={0.6} />
+        </mesh>
+      )}
+
+      {/* Neptune dark spot */}
+      {planetId === 'neptune' && (
+        <mesh position={[-size * 0.3, size * 0.2, size * 0.9]} rotation={[0.2, -0.5, 0]}>
+          <sphereGeometry args={[size * 0.12, 16, 16]} />
+          <meshStandardMaterial color="#223388" emissive="#112266" emissiveIntensity={0.2} roughness={0.7} />
+        </mesh>
+      )}
+
       {/* Lighting */}
       <directionalLight position={[5, 3, 5]} intensity={2.5} />
       <pointLight position={[-5, -3, -5]} intensity={0.4} color="#334455" />
