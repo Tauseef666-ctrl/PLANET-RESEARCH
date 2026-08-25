@@ -105,7 +105,12 @@ export function PlanetCompare() {
                 >
                   {PLANETS.map((p) => <option key={p.id} value={p.id} style={{ background: '#0d1b2a' }}>{p.name}</option>)}
                 </select>
-                <ArrowLeftRight size={16} color="#00d4ff" />
+                <ArrowLeftRight
+                  size={16}
+                  color="#00d4ff"
+                  className="cursor-pointer hover:rotate-180 transition-transform duration-300"
+                  onClick={() => { sounds.play('click'); const temp = a; setA(b); setB(temp) }}
+                />
                 <select
                   value={b}
                   onChange={(e) => setB(e.target.value)}
