@@ -16,14 +16,16 @@ export function BackToTop() {
     <AnimatePresence>
       {visible && (
         <motion.button
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.8, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.8, y: 20 }}
+          whileHover={{ scale: 1.15 }}
+          whileTap={{ scale: 0.95 }}
           onClick={() => {
             sounds.play('navigate')
             window.scrollTo({ top: 0, behavior: 'smooth' })
           }}
-          className="fixed bottom-6 right-6 z-40 p-3 rounded-xl transition-all hover:scale-110"
+          className="fixed bottom-6 right-6 z-40 p-3 rounded-xl group"
           style={{
             background: 'rgba(13, 27, 42, 0.8)',
             backdropFilter: 'blur(15px)',
@@ -33,7 +35,13 @@ export function BackToTop() {
           }}
           title="Back to top"
         >
-          <ArrowUp size={18} />
+          <motion.div
+            className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"
+            style={{
+              boxShadow: '0 0 20px rgba(0, 212, 255, 0.3), inset 0 0 12px rgba(0, 212, 255, 0.05)',
+            }}
+          />
+          <ArrowUp size={18} className="relative z-10" />
         </motion.button>
       )}
     </AnimatePresence>
