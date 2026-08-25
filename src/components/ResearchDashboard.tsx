@@ -77,13 +77,13 @@ export function ResearchDashboard() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="rounded-xl p-4 text-center"
+                className="rounded-xl p-4 text-center transition-all hover:scale-[1.03] group"
                 style={{
                   background: 'rgba(13, 27, 42, 0.5)',
                   border: '1px solid rgba(0, 212, 255, 0.08)',
                 }}
               >
-                <Icon size={18} color={stat.color} className="mx-auto mb-2" />
+                <Icon size={18} color={stat.color} className="mx-auto mb-2 transition-transform group-hover:scale-110" />
                 <div
                   className="text-2xl font-bold"
                   style={{ fontFamily: '"Space Grotesk", sans-serif', color: stat.color }}
