@@ -125,13 +125,28 @@ function SolarSystemSection() {
 
 function SectionDivider() {
   return (
-    <div className="relative z-10 max-w-7xl mx-auto px-4">
-      <div
-        className="h-px"
-        style={{
-          background: 'linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.15), transparent)',
-        }}
-      />
+    <div className="relative z-10 max-w-7xl mx-auto px-4 py-2">
+      <div className="relative flex items-center">
+        <div
+          className="flex-1 h-px"
+          style={{
+            background: 'linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.15), rgba(0, 212, 255, 0.25))',
+          }}
+        />
+        <div
+          className="w-1.5 h-1.5 rounded-full mx-3"
+          style={{
+            background: '#00d4ff',
+            boxShadow: '0 0 8px rgba(0, 212, 255, 0.4), 0 0 16px rgba(0, 212, 255, 0.2)',
+          }}
+        />
+        <div
+          className="flex-1 h-px"
+          style={{
+            background: 'linear-gradient(90deg, rgba(0, 212, 255, 0.25), rgba(0, 212, 255, 0.15), transparent)',
+          }}
+        />
+      </div>
     </div>
   )
 }
