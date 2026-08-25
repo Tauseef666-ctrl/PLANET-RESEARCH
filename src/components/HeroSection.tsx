@@ -73,6 +73,30 @@ export function HeroSection() {
 
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center text-center px-4 z-10 pointer-events-none">
+      {/* Nebula gradient backgrounds */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.4 }}
+          transition={{ delay: 1.5, duration: 3 }}
+          className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-[120px]"
+          style={{ background: 'radial-gradient(circle, rgba(0,212,255,0.15), transparent)' }}
+        />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.3 }}
+          transition={{ delay: 2, duration: 3 }}
+          className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full blur-[100px]"
+          style={{ background: 'radial-gradient(circle, rgba(138,43,226,0.12), transparent)' }}
+        />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.2 }}
+          transition={{ delay: 2.5, duration: 3 }}
+          className="absolute top-1/2 right-1/3 w-64 h-64 rounded-full blur-[80px]"
+          style={{ background: 'radial-gradient(circle, rgba(255,107,74,0.1), transparent)' }}
+        />
+      </div>
       {/* Main title */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
