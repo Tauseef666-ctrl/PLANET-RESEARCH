@@ -1,5 +1,6 @@
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { ChevronDown, Search } from 'lucide-react'
+import { ChevronDown, Search, Globe, Rocket, Telescope, Database } from 'lucide-react'
 import { useStore } from '../store/useStore'
 import { sounds } from '../utils/sounds'
 
@@ -9,6 +10,52 @@ const HERO_NAV_MAP: Record<string, string> = {
   'EXOPLANETS': 'exoplanets',
   'MISSIONS': 'missions',
   'RESEARCH': 'research',
+}
+
+const STATS = [
+  { icon: Globe, value: 8, label: 'PLANETS', suffix: '' },
+  { icon: Telescope, value: 5669, label: 'EXOPLANETS', suffix: '+' },
+  { icon: Rocket, value: 90, label: 'MISSIONS', suffix: '+' },
+  { icon: Database, value: 13, label: 'ASTEROIDS', suffix: '' },
+]
+
+function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
+  const [count, setCount] = useState(0)
+  const ref = useRef<HTMLDivElement>(null)
+  const hasAnimated = useRef(false)
+
+  useEffect(() => {
+    if (!ref.current) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true
+          const duration = 1500
+          const steps = 60
+          const increment = value / steps
+          let current = 0
+          const timer = setInterval(() => {
+            current += increment
+            if (current >= value) {
+              setCount(value)
+              clearInterval(timer)
+            } else {
+              setCount(Math.floor(current))
+            }
+          }, duration / steps)
+        }
+      },
+      { threshold: 0.5 }
+    )
+    observer.observe(ref.current)
+    return () => observer.disconnect()
+  }, [value])
+
+  return (
+    <div ref={ref} className="text-xl md:text-2xl font-bold" style={{ fontFamily: '"Space Grotesk", sans-serif', color: '#00d4ff' }}>
+      {count.toLocaleString()}{suffix}
+    </div>
+  )
 }
 
 export function HeroSection() {
@@ -60,11 +107,32 @@ export function HeroSection() {
         Explore worlds beyond imagination
       </motion.p>
 
+      {/* Animated Stats */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 2.2, duration: 0.8 }}
+        className="pointer-events-auto flex flex-wrap items-center justify-center gap-8 md:gap-12 mb-10"
+      >
+        {STATS.map((stat) => (
+          <div key={stat.label} className="flex flex-col items-center gap-1">
+            <stat.icon size={14} color="#334455" />
+            <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+            <span
+              className="text-[8px] tracking-[0.2em] uppercase"
+              style={{ fontFamily: '"Space Grotesk", sans-serif', color: '#445566' }}
+            >
+              {stat.label}
+            </span>
+          </div>
+        ))}
+      </motion.div>
+
       {/* Search bar */}
       <motion.button
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 2.3, duration: 0.8 }}
+        transition={{ delay: 2.4, duration: 0.8 }}
         onClick={() => { sounds.play('click'); setSearchOpen(true) }}
         className="pointer-events-auto flex items-center gap-3 px-6 py-3 rounded-xl transition-all hover:scale-105"
         style={{
