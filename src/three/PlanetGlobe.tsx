@@ -188,6 +188,19 @@ function GlobeMesh({ planetId, isSpinning }: { planetId: string; isSpinning: boo
         </mesh>
       )}
 
+      {/* Subtle orbit trail ring */}
+      <mesh rotation={[Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[size * 2.5, size * 2.52, 128]} />
+        <meshBasicMaterial
+          color={atmosphereColor}
+          transparent
+          opacity={0.08}
+          side={THREE.DoubleSide}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
+        />
+      </mesh>
+
       {/* Lighting */}
       <directionalLight position={[5, 3, 5]} intensity={2.5} />
       <pointLight position={[-5, -3, -5]} intensity={0.4} color="#334455" />
