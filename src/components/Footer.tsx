@@ -1,19 +1,19 @@
 import { motion } from 'framer-motion'
 import { Github, ExternalLink } from 'lucide-react'
 
-const EXPLORE_LINKS: { label: string; sectionId: string }[] = [
-  { label: 'Solar System', sectionId: 'solar-system' },
-  { label: 'Planets', sectionId: 'solar-system' },
-  { label: 'Exoplanets', sectionId: 'exoplanets' },
-  { label: 'Asteroids', sectionId: 'asteroids' },
-  { label: 'Moons', sectionId: 'moons' },
+const EXPLORE_LINKS: { label: string; sectionId: string; color: string }[] = [
+  { label: 'Solar System', sectionId: 'solar-system', color: '#ff8800' },
+  { label: 'Planets', sectionId: 'solar-system', color: '#4a90d9' },
+  { label: 'Exoplanets', sectionId: 'exoplanets', color: '#00ff64' },
+  { label: 'Asteroids', sectionId: 'asteroids', color: '#ff6b35' },
+  { label: 'Moons', sectionId: 'moons', color: '#c8c8c8' },
 ]
 
-const RESEARCH_LINKS: { label: string; sectionId: string }[] = [
-  { label: 'Missions', sectionId: 'missions' },
-  { label: 'Data', sectionId: 'data-hub' },
-  { label: 'Planet Explorer', sectionId: 'planet-explorer' },
-  { label: 'Research Hub', sectionId: 'research' },
+const RESEARCH_LINKS: { label: string; sectionId: string; color: string }[] = [
+  { label: 'Missions', sectionId: 'missions', color: '#ff4444' },
+  { label: 'Data Hub', sectionId: 'data-hub', color: '#ffb400' },
+  { label: 'Planet Explorer', sectionId: 'planet-explorer', color: '#00d4ff' },
+  { label: 'Research Hub', sectionId: 'research', color: '#6b3fa0' },
 ]
 
 export function Footer() {
@@ -77,8 +77,12 @@ export function Footer() {
                       e.preventDefault()
                       scrollToSection(item.sectionId)
                     }}
-                    className="text-xs text-gray-600 hover:text-gray-400 cursor-pointer transition-colors"
+                    className="flex items-center gap-2 text-xs text-gray-600 hover:text-gray-400 cursor-pointer transition-colors group"
                   >
+                    <span
+                      className="w-1.5 h-1.5 rounded-full transition-all group-hover:scale-150"
+                      style={{ background: item.color, boxShadow: `0 0 4px ${item.color}44` }}
+                    />
                     {item.label}
                   </a>
                 </li>
@@ -103,8 +107,12 @@ export function Footer() {
                       e.preventDefault()
                       scrollToSection(item.sectionId)
                     }}
-                    className="text-xs text-gray-600 hover:text-gray-400 cursor-pointer transition-colors"
+                    className="flex items-center gap-2 text-xs text-gray-600 hover:text-gray-400 cursor-pointer transition-colors group"
                   >
+                    <span
+                      className="w-1.5 h-1.5 rounded-full transition-all group-hover:scale-150"
+                      style={{ background: item.color, boxShadow: `0 0 4px ${item.color}44` }}
+                    />
                     {item.label}
                   </a>
                 </li>
@@ -143,6 +151,16 @@ export function Footer() {
               </li>
               <li>
                 <a
+                  href="https://en.wikipedia.org/wiki/Solar_System"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1 text-xs text-gray-600 hover:text-gray-400 transition-colors"
+                >
+                  Wikipedia Space <ExternalLink size={9} />
+                </a>
+              </li>
+              <li>
+                <a
                   href="https://github.com/Tauseef666-ctrl/PLANET-RESEARCH/"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -165,7 +183,7 @@ export function Footer() {
           </p>
           <div className="flex items-center gap-4 text-[10px] text-gray-700">
             <span className="flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-500" /> Research Database Online
+              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" /> Research Database Online
             </span>
             <span>Last sync: Just now</span>
           </div>
