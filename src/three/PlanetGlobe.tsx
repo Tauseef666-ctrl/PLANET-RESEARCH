@@ -63,7 +63,7 @@ function GlobeMesh({ planetId, isSpinning }: { planetId: string; isSpinning: boo
   const hasAtmosphere = ['earth', 'venus', 'jupiter', 'saturn', 'uranus', 'neptune'].includes(planetId)
   const hasClouds = planetId === 'earth'
   const atmosphereColor =
-    planetId === 'earth' ? '#4a90d9' : planetId === 'venus' ? '#e8cda0' : '#00d4ff'
+    planetId === 'earth' ? '#4a90d9' : planetId === 'venus' ? '#e8cda0' : planetId === 'jupiter' ? '#c88b3a' : planetId === 'saturn' ? '#e8d5a3' : planetId === 'neptune' ? '#3f54ba' : '#00d4ff'
 
   return (
     <group>
@@ -86,7 +86,7 @@ function GlobeMesh({ planetId, isSpinning }: { planetId: string; isSpinning: boo
           <meshBasicMaterial
             color={atmosphereColor}
             transparent
-            opacity={planetId === 'earth' ? 0.12 : 0.06}
+            opacity={planetId === 'earth' ? 0.15 : planetId === 'venus' ? 0.12 : planetId === 'jupiter' ? 0.08 : 0.06}
             side={THREE.BackSide}
             blending={THREE.AdditiveBlending}
             depthWrite={false}
@@ -101,7 +101,7 @@ function GlobeMesh({ planetId, isSpinning }: { planetId: string; isSpinning: boo
           <meshBasicMaterial
             color={atmosphereColor}
             transparent
-            opacity={planetId === 'earth' ? 0.06 : 0.03}
+            opacity={planetId === 'earth' ? 0.08 : planetId === 'venus' ? 0.06 : 0.04}
             side={THREE.BackSide}
             blending={THREE.AdditiveBlending}
             depthWrite={false}
