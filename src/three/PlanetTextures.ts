@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { PLANET_TEXTURES } from '../data/planetTextures'
+import { PLANET_TEXTURES, MOON_TEXTURE_URL } from '../data/planetTextures'
 
 const textureLoader = new THREE.TextureLoader()
 const loadedTextures: Map<string, THREE.Texture> = new Map()
@@ -48,12 +48,23 @@ export async function getPlanetBump(planetId: string): Promise<THREE.Texture | n
   return null
 }
 
+let moonTexturePromise: Promise<THREE.Texture | null> | null = null
+
+export function getMoonTexture(): Promise<THREE.Texture | null> {
+  if (!moonTexturePromise) {
+    moonTexturePromise = loadTexture(MOON_TEXTURE_URL).then((tex) => {
+      if (tex) tex.colorSpace = THREE.SRGBColorSpace
+      return tex
+    })
+  }
+  return moonTexturePromise
+}
+
 export function createProceduralTexture(type: string, size = 512): THREE.CanvasTexture {
   const canvas = document.createElement('canvas')
   canvas.width = size
   canvas.height = size
   const ctx = canvas.getContext('2d')!
-
   switch (type) {
     case 'mercury': drawMercury(ctx, size); break
     case 'venus': drawVenus(ctx, size); break
@@ -63,10 +74,49 @@ export function createProceduralTexture(type: string, size = 512): THREE.CanvasT
     case 'saturn': drawSaturn(ctx, size); break
     case 'uranus': drawUranus(ctx, size); break
     case 'neptune': drawNeptune(ctx, size); break
+    case 'moon': drawMoon(ctx, size); break
     default:
       ctx.fillStyle = '#334455'
       ctx.fillRect(0, 0, size, size)
   }
+
+  const texture = new THREE.CanvasTexture(canvas)
+  texture.colorSpace = THREE.SRGBColorSpace
+  return texture
+}
+
+export function createCloudTexture(size = 512): THREE.CanvasTexture {
+  const canvas = document.createElement('canvas')
+  canvas.width = size
+  canvas.height = size
+  const ctx = canvas.getContext('2d')!
+  ctx.clearRect(0, 0, size, size)
+
+  const drawBlob = (cx: number, cy: number, r: number, alpha: number) => {
+    ctx.beginPath()
+    ctx.arc(cx, cy, r, 0, Math.PI * 2)
+    ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`
+    ctx.fill()
+    for (let i = 0; i < 6; i++) {
+      const a = Math.random() * Math.PI * 2
+      const dr = r * (0.5 + Math.random() * 0.9)
+      ctx.beginPath()
+      ctx.arc(cx + Math.cos(a) * dr * 0.4, cy + Math.sin(a) * dr * 0.4, r * (0.4 + Math.random() * 0.4), 0, Math.PI * 2)
+      ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.7})`
+      ctx.fill()
+    }
+  }
+
+  const bands = [0.12, 0.24, 0.38, 0.52, 0.68, 0.8, 0.9]
+  bands.forEach((by) => {
+    const count = 14 + by * 20
+    for (let i = 0; i < count; i++) {
+      const x = Math.random() * size
+      const y = (by + (Math.random() - 0.5) * 0.14) * size
+      const r = (Math.random() * 0.05 + 0.02) * size
+      drawBlob(x, y, r, Math.random() * 0.35)
+    }
+  })
 
   const texture = new THREE.CanvasTexture(canvas)
   texture.colorSpace = THREE.SRGBColorSpace
@@ -218,3 +268,24 @@ function drawNeptune(ctx: CanvasRenderingContext2D, size: number) {
   ctx.fillStyle = 'rgba(180, 80, 60, 0.3)'
   ctx.fill()
 }
+
+function drawMoon(ctx: CanvasRenderingContext2D, size: number) {
+  const gradient = ctx.createLinearGradient(0, 0, size, size)
+  gradient.addColorStop(0, '#cfcfcf')
+  gradient.addColorStop(1, '#9a9a9a')
+  ctx.fillStyle = gradient
+  ctx.fillRect(0, 0, size, size)
+  for (let i = 0; i < 120; i++) {
+    const x = Math.random() * size
+    const y = Math.random() * size
+    const r = Math.random() * size * 0.06 + 2
+    ctx.beginPath()
+    ctx.arc(x, y, r, 0, Math.PI * 2)
+    ctx.fillStyle = `rgba(90, 85, 80, ${Math.random() * 0.5 + 0.2})`
+    ctx.fill()
+    ctx.strokeStyle = `rgba(150, 145, 140, ${Math.random() * 0.4})`
+    ctx.lineWidth = 0.5
+    ctx.stroke()
+  }
+}
+

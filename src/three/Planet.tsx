@@ -3,8 +3,10 @@ import { useFrame } from '@react-three/fiber'
 import { Html } from '@react-three/drei'
 import * as THREE from 'three'
 import { PlanetData } from '../data/planets'
+import { MOONS } from '../data/moons'
 import { useStore } from '../store/useStore'
-import { createProceduralTexture, getPlanetTexture } from './PlanetTextures'
+import { createProceduralTexture, createCloudTexture, getPlanetTexture } from './PlanetTextures'
+import { OrbitingMoon } from './Moon'
 import { sounds } from '../utils/sounds'
 
 interface PlanetProps {
@@ -29,6 +31,7 @@ function OrbitLine({ radius, color = '#ffffff', opacity = 0.15 }: { radius: numb
 
 export function Planet({ data, onClick }: PlanetProps) {
   const meshRef = useRef<THREE.Mesh>(null!)
+  const cloudsRef = useRef<THREE.Mesh>(null!)
   const groupRef = useRef<THREE.Group>(null!)
   const orbitRef = useRef<THREE.Group>(null!)
   const glowRef = useRef<THREE.Mesh>(null!)
@@ -40,6 +43,7 @@ export function Planet({ data, onClick }: PlanetProps) {
   const planetSize = data.size * 0.5
 
   const fallbackTexture = useMemo(() => createProceduralTexture(data.id, 512), [data.id])
+  const cloudTexture = useMemo(() => createCloudTexture(512), [])
   const [texture, setTexture] = useState<THREE.Texture>(fallbackTexture)
 
   useEffect(() => {
@@ -53,10 +57,27 @@ export function Planet({ data, onClick }: PlanetProps) {
   const hasAtmosphere = ['earth', 'venus', 'jupiter', 'saturn', 'uranus', 'neptune'].includes(data.id)
   const atmosphereColor = data.id === 'earth' ? '#4a90d9' : data.id === 'venus' ? '#e8cda0' : '#00d4ff'
 
+  const axialTilt = useMemo(() => {
+    const tilts: Record<string, number> = {
+      mercury: 0.03, venus: 2.6, earth: 0.41, mars: 0.44,
+      jupiter: 0.05, saturn: 0.47, uranus: 1.71, neptune: 0.49,
+    }
+    return tilts[data.id] ?? 0
+  }, [data.id])
+
+  const activeMoons = useMemo(() => {
+    const ids = data.id === 'earth' ? ['moon'] : data.id === 'mars' ? ['phobos', 'deimos'] : data.id === 'jupiter' ? ['io', 'europa', 'ganymede', 'callisto'] : data.id === 'saturn' ? ['titan', 'enceladus'] : data.id === 'neptune' ? ['triton'] : []
+    if (ids.length === 0) return []
+    return MOONS.filter((m) => ids.includes(m.id))
+  }, [data.id])
+
   useFrame((state) => {
     const t = state.clock.elapsedTime
     if (meshRef.current) {
       meshRef.current.rotation.y += data.rotationSpeed * 0.1
+    }
+    if (cloudsRef.current && data.id === 'earth') {
+      cloudsRef.current.rotation.y += data.rotationSpeed * 0.14
     }
     if (orbitRef.current) {
       orbitRef.current.rotation.y = t * data.orbitSpeed * 0.1
@@ -78,6 +99,7 @@ export function Planet({ data, onClick }: PlanetProps) {
       <group ref={orbitRef}>
         <group position={[data.orbitRadius, 0, 0]}>
           <group ref={groupRef}>
+            <group rotation={[0, 0, axialTilt]}>
             <mesh
               ref={meshRef}
               onClick={(e) => {
@@ -104,6 +126,20 @@ export function Planet({ data, onClick }: PlanetProps) {
                 emissiveIntensity={isSelected ? 0.5 : hovered ? 0.3 : 0.08}
               />
             </mesh>
+
+            {/* Earth cloud layer */}
+            {data.id === 'earth' && (
+              <mesh ref={cloudsRef} scale={1.012}>
+                <sphereGeometry args={[planetSize, 32, 32]} />
+                <meshStandardMaterial
+                  map={cloudTexture}
+                  transparent
+                  opacity={0.5}
+                  roughness={1}
+                  depthWrite={false}
+                />
+              </mesh>
+            )}
 
             {/* Atmosphere glow */}
             {hasAtmosphere && (
@@ -133,6 +169,19 @@ export function Planet({ data, onClick }: PlanetProps) {
                 />
               </mesh>
             )}
+            </group>
+
+            {/* Real-time orbiting moons */}
+            {activeMoons.map((moon, i) => (
+              <OrbitingMoon
+                key={moon.id}
+                moon={moon}
+                planetSize={planetSize}
+                orbitRadius={planetSize * 1.7 + i * (planetSize * 0.5)}
+                speed={0.5 + i * 0.35}
+                color={moon.color}
+              />
+            ))}
 
             {/* Hover glow ring */}
             {(hovered || isSelected) && (
