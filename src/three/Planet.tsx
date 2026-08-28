@@ -40,7 +40,7 @@ export function Planet({ data, onClick }: PlanetProps) {
   const selectedPlanet = useStore((s) => s.selectedPlanet)
   const isSelected = selectedPlanet === data.id
 
-  const planetSize = data.size * 0.5
+  const planetSize = data.size * 0.38
 
   const fallbackTexture = useMemo(() => createProceduralTexture(data.id, 512), [data.id])
   const cloudTexture = useMemo(() => createCloudTexture(512), [])
@@ -129,12 +129,13 @@ export function Planet({ data, onClick }: PlanetProps) {
 
             {/* Earth cloud layer */}
             {data.id === 'earth' && (
-              <mesh ref={cloudsRef} scale={1.012}>
-                <sphereGeometry args={[planetSize, 32, 32]} />
+              <mesh ref={cloudsRef} scale={1.0}>
+                <sphereGeometry args={[planetSize * 1.008, 32, 32]} />
                 <meshStandardMaterial
-                  map={cloudTexture}
+                  color="#ffffff"
+                  alphaMap={cloudTexture}
                   transparent
-                  opacity={0.5}
+                  opacity={0.35}
                   roughness={1}
                   depthWrite={false}
                 />

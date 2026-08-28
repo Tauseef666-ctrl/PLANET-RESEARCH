@@ -12,6 +12,7 @@ const RESEARCH_CARDS = [
     category: 'Exoplanet Atmospheres',
     status: 'published',
     description: 'Detailed spectroscopic analysis of TRAPPIST-1e, f, and g atmospheres using JWST NIRSpec.',
+    link: 'https://exoplanets.nasa.gov/trappist1/',
   },
   {
     title: 'Near-Earth Object Trajectory Updates',
@@ -20,6 +21,7 @@ const RESEARCH_CARDS = [
     category: 'Planetary Defense',
     status: 'synced',
     description: 'Updated orbital solutions for 2,400+ near-Earth objects with refined Yarkovsky effect models.',
+    link: 'https://cneos.jpl.nasa.gov/',
   },
   {
     title: 'Mars Perseverance Sample Return Planning',
@@ -28,6 +30,7 @@ const RESEARCH_CARDS = [
     category: 'Mars Exploration',
     status: 'published',
     description: 'Mission architecture for Mars Sample Return campaign using Perseverance cached samples.',
+    link: 'https://science.nasa.gov/mission/mars-sample-return/',
   },
   {
     title: 'Juno Extended Mission: Jupiter Deep Interior',
@@ -36,6 +39,7 @@ const RESEARCH_CARDS = [
     category: 'Gas Giant Science',
     status: 'synced',
     description: 'New gravity field measurements revealing Jupiter\'s deep interior structure and composition.',
+    link: 'https://science.nasa.gov/mission/juno/',
   },
   {
     title: 'Europa Subsurface Ocean Modeling',
@@ -44,6 +48,7 @@ const RESEARCH_CARDS = [
     category: 'Astrobiology',
     status: 'published',
     description: 'Hydrothermal vent simulation models for Europa\'s subsurface ocean habitability assessment.',
+    link: 'https://science.nasa.gov/mission/europa-clipper/',
   },
   {
     title: 'Asteroid Mining Resource Assessment',
@@ -52,6 +57,7 @@ const RESEARCH_CARDS = [
     category: 'Resource Analysis',
     status: 'synced',
     description: 'Comprehensive survey of asteroid compositions and potential mining targets in the main belt.',
+    link: 'https://science.nasa.gov/asteroids/',
   },
 ]
 
@@ -267,6 +273,9 @@ export function ResearchSection() {
                 </div>
 
                 <button
+                  onClick={() => {
+                    if (card.link) window.open(card.link, '_blank', 'noopener,noreferrer')
+                  }}
                   className="w-full py-2 rounded-lg text-[10px] tracking-wider font-semibold transition-all group-hover:scale-[1.01]"
                   style={{
                     background: `${status.color}08`,

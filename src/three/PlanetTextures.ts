@@ -105,31 +105,32 @@ export function createCloudTexture(size = 512): THREE.CanvasTexture {
   canvas.width = size
   canvas.height = size
   const ctx = canvas.getContext('2d')!
-  ctx.clearRect(0, 0, size, size)
+  ctx.fillStyle = '#000000'
+  ctx.fillRect(0, 0, size, size)
 
-  const drawBlob = (cx: number, cy: number, r: number, alpha: number) => {
+  const drawBlob = (cx: number, cy: number, r: number, grey: number) => {
     ctx.beginPath()
     ctx.arc(cx, cy, r, 0, Math.PI * 2)
-    ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`
+    ctx.fillStyle = `rgba(255, 255, 255, ${grey})`
     ctx.fill()
     for (let i = 0; i < 6; i++) {
       const a = Math.random() * Math.PI * 2
       const dr = r * (0.5 + Math.random() * 0.9)
       ctx.beginPath()
       ctx.arc(cx + Math.cos(a) * dr * 0.4, cy + Math.sin(a) * dr * 0.4, r * (0.4 + Math.random() * 0.4), 0, Math.PI * 2)
-      ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.7})`
+      ctx.fillStyle = `rgba(255, 255, 255, ${grey * 0.55})`
       ctx.fill()
     }
   }
 
   const bands = [0.12, 0.24, 0.38, 0.52, 0.68, 0.8, 0.9]
   bands.forEach((by) => {
-    const count = 14 + by * 20
+    const count = 10 + by * 16
     for (let i = 0; i < count; i++) {
       const x = Math.random() * size
-      const y = (by + (Math.random() - 0.5) * 0.14) * size
-      const r = (Math.random() * 0.05 + 0.02) * size
-      drawBlob(x, y, r, Math.random() * 0.35)
+      const y = (by + (Math.random() - 0.5) * 0.12) * size
+      const r = (Math.random() * 0.045 + 0.015) * size
+      drawBlob(x, y, r, Math.random() * 0.85)
     }
   })
 

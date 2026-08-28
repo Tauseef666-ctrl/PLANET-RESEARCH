@@ -12,7 +12,7 @@ export function Sun() {
     const pos = new Float32Array(count * 3)
     for (let i = 0; i < count; i++) {
       const i3 = i * 3
-      const r = 3.2 + Math.random() * 1.5
+      const r = 5.4 + Math.random() * 2.4
       const theta = Math.random() * Math.PI * 2
       const phi = Math.acos(2 * Math.random() - 1)
       pos[i3] = r * Math.sin(phi) * Math.cos(theta)
@@ -28,7 +28,7 @@ export function Sun() {
       meshRef.current.rotation.y = t * 0.05
     }
     if (glowRef.current) {
-      const scale = 3.8 + Math.sin(t * 0.5) * 0.15
+      const scale = 6.3 + Math.sin(t * 0.5) * 0.25
       glowRef.current.scale.setScalar(scale)
     }
     if (coronaRef.current) {
@@ -41,7 +41,7 @@ export function Sun() {
     <group>
       {/* Sun core */}
       <mesh ref={meshRef}>
-        <sphereGeometry args={[3, 64, 64]} />
+        <sphereGeometry args={[5, 64, 64]} />
         <meshStandardMaterial
           color="#FDB813"
           emissive="#ff6600"

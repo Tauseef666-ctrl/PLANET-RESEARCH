@@ -237,7 +237,7 @@ export function ExoplanetSection() {
                 >
                   <td className="px-4 py-3">
                     <a
-                      href={`https://exoplanetarchive.ipac.caltech.edu/Overview/${e.pl_name.replace(/\s/g, '')}`}
+                      href={`https://exoplanetarchive.ipac.caltech.edu/overview/${e.pl_name.replace(/\s/g, '')}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm text-cyan-300 hover:text-cyan-200 flex items-center gap-1"

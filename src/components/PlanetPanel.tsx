@@ -359,6 +359,10 @@ export function PlanetPanel() {
                 </button>
                 <div className="flex gap-2.5">
                   <button
+                    onClick={() => {
+                      sounds.play('navigate')
+                      document.getElementById('missions')?.scrollIntoView({ behavior: 'smooth' })
+                    }}
                     className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs tracking-wider transition-all hover:bg-white/5"
                     style={{
                       fontFamily: '"Space Grotesk", sans-serif',
@@ -370,6 +374,10 @@ export function PlanetPanel() {
                     <Rocket size={11} /> MISSIONS
                   </button>
                   <button
+                    onClick={() => {
+                      sounds.play('navigate')
+                      window.open(`https://science.nasa.gov/${planet.name.toLowerCase()}/`, '_blank', 'noopener,noreferrer')
+                    }}
                     className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs tracking-wider transition-all hover:bg-white/5"
                     style={{
                       fontFamily: '"Space Grotesk", sans-serif',

@@ -316,7 +316,7 @@ export function ExoplanetGlobe({ exoplanet }: { exoplanet: ExoplanetData }) {
           )}
 
           <a
-            href={`https://exoplanetarchive.ipac.caltech.edu/Overview/${exoplanet.pl_name.replace(/\s/g, '')}`}
+            href={`https://exoplanetarchive.ipac.caltech.edu/overview/${exoplanet.pl_name.replace(/\s/g, '')}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-xs tracking-wider font-semibold transition-all hover:scale-[1.02]"

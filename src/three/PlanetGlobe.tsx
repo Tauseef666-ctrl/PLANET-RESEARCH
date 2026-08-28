@@ -124,12 +124,13 @@ function GlobeMesh({ bodyId, bodyType, isSpinning }: { bodyId: string; bodyType:
 
       {/* Clouds for Earth */}
       {hasClouds && (
-        <mesh ref={cloudsRef} scale={1.015}>
+        <mesh ref={cloudsRef} scale={1.008}>
           <sphereGeometry args={[size, 64, 64]} />
           <meshStandardMaterial
-            map={cloudMap || cloudTexture}
+            color="#ffffff"
+            alphaMap={cloudMap || cloudTexture}
             transparent
-            opacity={0.5}
+            opacity={0.45}
             roughness={1}
             depthWrite={false}
           />
@@ -438,7 +439,7 @@ function InfoPanel({ planetId, onClose, onSelectMoon }: { planetId: string; onCl
               <ExternalLink size={12} color="#556677" />
             </a>
             <a
-              href={`https://www.jpl.nasa.gov/solarsystem/${planet.id}`}
+              href={`https://science.nasa.gov/${planet.name.toLowerCase()}/`}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => sounds.play('click')}
@@ -446,8 +447,8 @@ function InfoPanel({ planetId, onClose, onSelectMoon }: { planetId: string; onCl
               style={{ background: 'rgba(0, 212, 255, 0.04)', border: '1px solid rgba(0, 212, 255, 0.08)' }}
             >
               <div>
-                <div className="text-[11px] text-gray-300 group-hover/link:text-white transition-colors">JPL Photojournal</div>
-                <div className="text-[9px] text-gray-600">Images & media library</div>
+                <div className="text-[11px] text-gray-300 group-hover/link:text-white transition-colors">NASA Science</div>
+                <div className="text-[9px] text-gray-600">Official NASA facts & images</div>
               </div>
               <ExternalLink size={12} color="#556677" />
             </a>
