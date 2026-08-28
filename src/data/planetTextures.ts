@@ -1,33 +1,52 @@
 const TEXTURE_BASE = 'https://upload.wikimedia.org/wikipedia/commons'
+const THREEJS_BASE = 'https://threejs.org/examples/textures/planets'
+const WIKI = 'https://commons.wikimedia.org/wiki/Special:FilePath'
 
-export const PLANET_TEXTURES: Record<string, { map: string; bump?: string; normal?: string; emissive?: string }> = {
+export const PLANET_TEXTURES: Record<string, { map: string; clouds?: string; night?: string; bump?: string; normal?: string; emissive?: string }> = {
   mercury: {
-    map: `${TEXTURE_BASE}/9/9f/Mercury_Globe-MESSENGER_mosaic_at_polar_quadrangle.jpg`,
-    bump: `${TEXTURE_BASE}/3/3f/Mercury_hillshade.png`,
+    map: `${WIKI}/${encodeURIComponent('Mercury_in_color_-_Prockter07-edit1.jpg')}`,
   },
   venus: {
-    map: `${TEXTURE_BASE}/a/a9/Venus-mariner10-sinlelasimosa.jpg`,
+    map: `${WIKI}/${encodeURIComponent('Venus_globe.jpg')}`,
   },
   earth: {
-    map: `${TEXTURE_BASE}/b/b4/The_blue_marble_%28remastered%29.jpg`,
-    emissive: `${TEXTURE_BASE}/4/4d/Blackmarble_2016.jpg`,
+    map: `${THREEJS_BASE}/earth_day_4096.jpg`,
+    clouds: `${THREEJS_BASE}/earth_clouds_1024.png`,
+    night: `${THREEJS_BASE}/earth_night_4096.jpg`,
+    emissive: `${THREEJS_BASE}/earth_night_4096.jpg`,
+    normal: `${THREEJS_BASE}/earth_normal_2048.jpg`,
+    bump: `${THREEJS_BASE}/earth_specular_2048.jpg`,
   },
   mars: {
-    map: `${TEXTURE_BASE}/7/70/Mars_Cloudless.jpg`,
-    bump: `${TEXTURE_BASE}/7/70/Mars_Cloudless.jpg`,
+    map: `${WIKI}/${encodeURIComponent('Mars_Valles_Marineris.jpeg')}`,
   },
   jupiter: {
-    map: `${TEXTURE_BASE}/4/4f/Jupiter_New_Horizons.jpg`,
+    map: `${WIKI}/${encodeURIComponent('Jupiter_and_its_shrunken_Great_Red_Spot.jpg')}`,
   },
   saturn: {
-    map: `${TEXTURE_BASE}/6/66/Saturn%2C_its_rings%2C_and_a_few_of_its_moons.jpg`,
+    map: `${WIKI}/${encodeURIComponent('Saturn_during_Equinox.jpg')}`,
   },
   uranus: {
-    map: `${TEXTURE_BASE}/5/56/Uranus_Voyager2_color_calibrated.png`,
+    map: `${WIKI}/${encodeURIComponent('Uranus2.jpg')}`,
   },
   neptune: {
-    map: `${TEXTURE_BASE}/6/60/Neptune_Voyager2_color_calibrated.png`,
+    map: `${WIKI}/${encodeURIComponent('Neptune_Full.jpg')}`,
   },
 }
 
-export const MOON_TEXTURE_URL = `${TEXTURE_BASE}/e/e1/FullMoon2010.jpg`
+export const MOON_TEXTURE_URL = `${THREEJS_BASE}/moon_1024.jpg`
+
+export const MOON_TEXTURES: Record<string, string> = {
+  moon: `${THREEJS_BASE}/moon_1024.jpg`,
+  phobos: `${WIKI}/${encodeURIComponent('Phobos_colour_2008.jpg')}`,
+  deimos: `${WIKI}/${encodeURIComponent('Deimos-MRO.jpg')}`,
+  io: `${WIKI}/${encodeURIComponent('Io_highest_resolution_true_color.jpg')}`,
+  europa: `${WIKI}/${encodeURIComponent('Europa-moon.jpg')}`,
+  ganymede: `${WIKI}/${encodeURIComponent('Ganymede_g1_true-edit1.jpg')}`,
+  callisto: `${WIKI}/${encodeURIComponent('Callisto.jpg')}`,
+  titan: `${WIKI}/${encodeURIComponent('Titan_in_true_color.jpg')}`,
+  enceladus: `https://upload.wikimedia.org/wikipedia/commons/1/1a/Enceladus_-_April_14_2012_%2851858537468%29.png`,
+  triton: `https://upload.wikimedia.org/wikipedia/commons/9/91/Triton_%28moon%29.jpg`,
+  titania: `${WIKI}/${encodeURIComponent('Titania.jpg')}`,
+  oberon: `${WIKI}/${encodeURIComponent('Oberon.jpg')}`,
+}

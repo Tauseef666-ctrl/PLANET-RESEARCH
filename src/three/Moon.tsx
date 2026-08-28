@@ -12,7 +12,7 @@ interface OrbitingMoonProps {
   color?: string
 }
 
-export function OrbitingMoon({ moon, planetSize, orbitRadius, speed, color = '#c8c8c8' }: OrbitingMoonProps) {
+export function OrbitingMoon({ moon, planetSize, orbitRadius, speed }: OrbitingMoonProps) {
   const orbitRef = useRef<THREE.Group>(null!)
   const meshRef = useRef<THREE.Mesh>(null!)
 
@@ -23,11 +23,11 @@ export function OrbitingMoon({ moon, planetSize, orbitRadius, speed, color = '#c
 
   useEffect(() => {
     let cancelled = false
-    getMoonTexture().then((tex) => {
+    getMoonTexture(moon.id).then((tex) => {
       if (!cancelled && tex) setTexture(tex)
     })
     return () => { cancelled = true }
-  }, [])
+  }, [moon.id])
 
   const phaseOffset = useMemo(() => Math.random() * Math.PI * 2, [])
 
@@ -46,7 +46,7 @@ export function OrbitingMoon({ moon, planetSize, orbitRadius, speed, color = '#c
       <group position={[orbitRadius, 0, 0]}>
         <mesh ref={meshRef}>
           <sphereGeometry args={[moonSize, 24, 24]} />
-          <meshStandardMaterial map={texture} color={color} roughness={0.85} metalness={0.05} />
+          <meshStandardMaterial map={texture} color="#ffffff" roughness={0.85} metalness={0.05} />
         </mesh>
       </group>
     </group>

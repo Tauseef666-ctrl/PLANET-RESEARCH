@@ -6,7 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { X, RotateCcw, ZoomIn, ZoomOut, ArrowLeft, ChevronRight, Zap, Rocket, Globe, Wind, Ruler, ExternalLink, Navigation } from 'lucide-react'
 import { useStore } from '../store/useStore'
 import { PLANETS } from '../data/planets'
-import { createProceduralTexture, createCloudTexture, getPlanetTexture, getPlanetBump } from './PlanetTextures'
+import { MOONS } from '../data/moons'
+import { createProceduralTexture, createCloudTexture, getPlanetTexture, getPlanetAux, getMoonTexture } from './PlanetTextures'
 import { sounds } from '../utils/sounds'
 
 function CameraAnimation() {
@@ -20,38 +21,46 @@ function CameraAnimation() {
   return null
 }
 
-function GlobeMesh({ planetId, isSpinning }: { planetId: string; isSpinning: boolean }) {
+function GlobeMesh({ bodyId, bodyType, isSpinning }: { bodyId: string; bodyType: 'planet' | 'moon'; isSpinning: boolean }) {
   const meshRef = useRef<THREE.Mesh>(null!)
   const atmosRef = useRef<THREE.Mesh>(null!)
   const cloudsRef = useRef<THREE.Mesh>(null!)
   const atmosGlowRef = useRef<THREE.Mesh>(null!)
 
-  const planet = PLANETS.find((p) => p.id === planetId)
+  const isPlanet = bodyType === 'planet'
+  const baseColor = isPlanet ? (PLANETS.find((p) => p.id === bodyId)?.color || '#8899aa') : (MOONS.find((m) => m.id === bodyId)?.color || '#c8c8c8')
   const size = 2.2
 
-  const fallbackTexture = useMemo(() => createProceduralTexture(planetId, 1024), [planetId])
-  const fallbackBump = useMemo(() => createProceduralTexture(planetId + '_bump', 512), [planetId])
+  const fallbackTexture = useMemo(() => createProceduralTexture(isPlanet ? bodyId : 'moon', 1024), [isPlanet, bodyId])
+  const fallbackBump = useMemo(() => createProceduralTexture((isPlanet ? bodyId : 'moon') + '_bump', 512), [isPlanet, bodyId])
   const cloudTexture = useMemo(() => createCloudTexture(1024), [])
 
   const [texture, setTexture] = useState<THREE.Texture>(fallbackTexture)
   const [bumpMap, setBumpMap] = useState<THREE.Texture | null>(fallbackBump)
+  const [cloudMap, setCloudMap] = useState<THREE.Texture | null>(null)
+  const [nightMap, setNightMap] = useState<THREE.Texture | null>(null)
 
   useEffect(() => {
     let cancelled = false
     setTexture(fallbackTexture)
     setBumpMap(fallbackBump)
-    getPlanetTexture(planetId).then((tex) => {
-      if (!cancelled) setTexture(tex)
-    })
-    getPlanetBump(planetId).then((bmp) => {
-      if (!cancelled && bmp) setBumpMap(bmp)
-    })
+    setCloudMap(null)
+    setNightMap(null)
+
+    if (isPlanet) {
+      getPlanetTexture(bodyId).then((tex) => { if (!cancelled) setTexture(tex) })
+      getPlanetAux(bodyId, 'bump').then((bmp) => { if (!cancelled && bmp) setBumpMap(bmp) })
+      getPlanetAux(bodyId, 'clouds').then((cx) => { if (!cancelled && cx) setCloudMap(cx) })
+      getPlanetAux(bodyId, 'night').then((nt) => { if (!cancelled && nt) setNightMap(nt) })
+    } else {
+      getMoonTexture(bodyId).then((tex) => { if (!cancelled && tex) setTexture(tex) })
+    }
     return () => { cancelled = true }
-  }, [planetId])
+  }, [isPlanet, bodyId, fallbackTexture, fallbackBump])
 
   useFrame((_, delta) => {
     if (meshRef.current && isSpinning) {
-      meshRef.current.rotation.y += delta * 0.3
+      meshRef.current.rotation.y += delta * (isPlanet ? 0.3 : 0.12)
     }
     if (cloudsRef.current && isSpinning) {
       cloudsRef.current.rotation.y += delta * 0.15
@@ -61,20 +70,23 @@ function GlobeMesh({ planetId, isSpinning }: { planetId: string; isSpinning: boo
     }
   })
 
-  const hasAtmosphere = ['earth', 'venus', 'jupiter', 'saturn', 'uranus', 'neptune'].includes(planetId)
-  const hasClouds = planetId === 'earth'
+  const hasAtmosphere = isPlanet && ['earth', 'venus', 'jupiter', 'saturn', 'uranus', 'neptune'].includes(bodyId)
+  const hasClouds = isPlanet && bodyId === 'earth'
   const atmosphereColor =
-    planetId === 'earth' ? '#4a90d9' : planetId === 'venus' ? '#e8cda0' : planetId === 'jupiter' ? '#c88b3a' : planetId === 'saturn' ? '#e8d5a3' : planetId === 'neptune' ? '#3f54ba' : '#00d4ff'
+    bodyId === 'earth' ? '#4a90d9' : bodyId === 'venus' ? '#e8cda0' : bodyId === 'jupiter' ? '#c88b3a' : bodyId === 'saturn' ? '#e8d5a3' : bodyId === 'neptune' ? '#3f54ba' : '#00d4ff'
 
   return (
     <group>
-      {/* Main planet */}
+      {/* Main body */}
       <mesh ref={meshRef}>
         <sphereGeometry args={[size, 64, 64]} />
         <meshStandardMaterial
           map={texture}
           bumpMap={bumpMap}
-          bumpScale={0.05}
+          bumpScale={isPlanet ? 0.05 : 0.08}
+          emissiveMap={nightMap}
+          emissive={nightMap ? '#ffffff' : '#000000'}
+          emissiveIntensity={nightMap ? 1.5 : 0}
           roughness={0.8}
           metalness={0.1}
         />
@@ -87,7 +99,7 @@ function GlobeMesh({ planetId, isSpinning }: { planetId: string; isSpinning: boo
           <meshBasicMaterial
             color={atmosphereColor}
             transparent
-            opacity={planetId === 'earth' ? 0.15 : planetId === 'venus' ? 0.12 : planetId === 'jupiter' ? 0.08 : 0.06}
+            opacity={bodyId === 'earth' ? 0.15 : bodyId === 'venus' ? 0.12 : bodyId === 'jupiter' ? 0.08 : 0.06}
             side={THREE.BackSide}
             blending={THREE.AdditiveBlending}
             depthWrite={false}
@@ -102,7 +114,7 @@ function GlobeMesh({ planetId, isSpinning }: { planetId: string; isSpinning: boo
           <meshBasicMaterial
             color={atmosphereColor}
             transparent
-            opacity={planetId === 'earth' ? 0.08 : planetId === 'venus' ? 0.06 : 0.04}
+            opacity={bodyId === 'earth' ? 0.08 : bodyId === 'venus' ? 0.06 : 0.04}
             side={THREE.BackSide}
             blending={THREE.AdditiveBlending}
             depthWrite={false}
@@ -115,9 +127,9 @@ function GlobeMesh({ planetId, isSpinning }: { planetId: string; isSpinning: boo
         <mesh ref={cloudsRef} scale={1.015}>
           <sphereGeometry args={[size, 64, 64]} />
           <meshStandardMaterial
-            map={cloudTexture}
+            map={cloudMap || cloudTexture}
             transparent
-            opacity={0.55}
+            opacity={0.5}
             roughness={1}
             depthWrite={false}
           />
@@ -125,7 +137,7 @@ function GlobeMesh({ planetId, isSpinning }: { planetId: string; isSpinning: boo
       )}
 
       {/* Saturn rings - multi-layered with real colors */}
-      {planetId === 'saturn' && (
+      {bodyId === 'saturn' && isPlanet && (
         <group rotation={[Math.PI / 2.3, 0, 0.2]}>
           {/* Ring D (innermost, faint) */}
           <mesh>
@@ -161,7 +173,7 @@ function GlobeMesh({ planetId, isSpinning }: { planetId: string; isSpinning: boo
       )}
 
       {/* Uranus ring */}
-      {planetId === 'uranus' && (
+      {bodyId === 'uranus' && isPlanet && (
         <mesh rotation={[Math.PI / 2.2, 0.3, 0]}>
           <ringGeometry args={[size * 1.2, size * 1.5, 64]} />
           <meshStandardMaterial
@@ -174,7 +186,7 @@ function GlobeMesh({ planetId, isSpinning }: { planetId: string; isSpinning: boo
       )}
 
       {/* Jupiter Great Red Spot */}
-      {planetId === 'jupiter' && (
+      {bodyId === 'jupiter' && isPlanet && (
         <mesh position={[size * 0.52, -size * 0.15, size * 0.85]} rotation={[0.1, 0.9, 0.1]}>
           <sphereGeometry args={[size * 0.2, 24, 16]} />
           <meshStandardMaterial color="#cc4422" emissive="#991100" emissiveIntensity={0.3} roughness={0.6} />
@@ -182,7 +194,7 @@ function GlobeMesh({ planetId, isSpinning }: { planetId: string; isSpinning: boo
       )}
 
       {/* Neptune dark spot */}
-      {planetId === 'neptune' && (
+      {bodyId === 'neptune' && isPlanet && (
         <mesh position={[-size * 0.3, size * 0.2, size * 0.9]} rotation={[0.2, -0.5, 0]}>
           <sphereGeometry args={[size * 0.12, 16, 16]} />
           <meshStandardMaterial color="#223388" emissive="#112266" emissiveIntensity={0.2} roughness={0.7} />
@@ -218,10 +230,21 @@ const sectionStyle = {
 const labelClass = "text-[9px] tracking-[0.15em] uppercase text-gray-600"
 const valueClass = "text-[11px] text-gray-300 leading-relaxed"
 
-function InfoPanel({ planetId, onClose }: { planetId: string; onClose: () => void }) {
+function InfoPanel({ planetId, onClose, onSelectMoon }: { planetId: string; onClose: () => void; onSelectMoon?: (moonId: string) => void }) {
   const planet = PLANETS.find((p) => p.id === planetId)
   const setSelectedPlanet = useStore((s) => s.setSelectedPlanet)
   if (!planet) return null
+
+  const planetMoons = MOONS.filter((m) => {
+    const ids: Record<string, string[]> = {
+      earth: ['moon'],
+      mars: ['phobos', 'deimos'],
+      jupiter: ['io', 'europa', 'ganymede', 'callisto'],
+      saturn: ['titan', 'enceladus'],
+      neptune: ['triton'],
+    }
+    return (ids[planetId] || []).includes(m.id)
+  })
 
   return (
     <motion.div
@@ -310,27 +333,39 @@ function InfoPanel({ planetId, onClose }: { planetId: string; onClose: () => voi
         </div>
 
         {/* Moons */}
-        {planet.moons.length > 0 && (
+        {planetMoons.length > 0 && (
           <div className="rounded-xl p-3" style={sectionStyle}>
             <h4
-              className="text-[9px] tracking-[0.2em] uppercase mb-1.5"
+              className="text-[9px] tracking-[0.2em] uppercase mb-2"
               style={{ fontFamily: '"Space Grotesk", sans-serif', color: '#00d4ff' }}
             >
-              Moons ({planet.moons.length})
+              Moons ({planetMoons.length})
             </h4>
-            <div className="flex flex-wrap gap-1">
-              {planet.moons.map((moon) => (
-                <span
-                  key={moon}
-                  className="px-2 py-0.5 rounded-full text-[10px]"
+            <div className="flex flex-col gap-1.5">
+              {planetMoons.map((moon) => (
+                <button
+                  key={moon.id}
+                  onClick={() => { sounds.play('navigate'); onSelectMoon?.(moon.id) }}
+                  className="w-full flex items-center justify-between px-2.5 py-2 rounded-lg transition-all hover:scale-[1.02] group/moon"
                   style={{
-                    background: 'rgba(0, 212, 255, 0.08)',
-                    border: '1px solid rgba(0, 212, 255, 0.15)',
-                    color: '#88aacc',
+                    background: 'rgba(0, 212, 255, 0.05)',
+                    border: '1px solid rgba(0, 212, 255, 0.12)',
                   }}
                 >
-                  {moon}
-                </span>
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="w-2 h-2 rounded-full"
+                      style={{ background: moon.color, boxShadow: `0 0 8px ${moon.color}` }}
+                    />
+                    <span className="text-[11px] text-gray-300">{moon.name}</span>
+                  </div>
+                  <span
+                    className="text-[9px] tracking-wider uppercase flex items-center gap-1"
+                    style={{ color: '#556677', fontFamily: '"Space Grotesk", sans-serif' }}
+                  >
+                    Explore <ChevronRight size={10} className="group-hover/moon:translate-x-0.5 transition-transform" />
+                  </span>
+                </button>
               ))}
             </div>
           </div>
@@ -454,10 +489,155 @@ function InfoPanel({ planetId, onClose }: { planetId: string; onClose: () => voi
   )
 }
 
+function MoonInfoPanel({ moonId, onBack, onClose }: { moonId: string; onBack: () => void; onClose: () => void }) {
+  const moon = MOONS.find((m) => m.id === moonId)
+  if (!moon) return null
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -40 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: 0.5, type: 'spring', damping: 25 }}
+      className="absolute left-0 top-0 bottom-0 w-[340px] overflow-y-auto z-10"
+      style={{
+        background: 'rgba(5, 5, 16, 0.9)',
+        backdropFilter: 'blur(30px)',
+        borderRight: '1px solid rgba(0, 212, 255, 0.1)',
+      }}
+    >
+      <div className="p-5 space-y-4">
+        {/* Header */}
+        <div>
+          <h3
+            className="text-2xl font-bold tracking-wider"
+            style={{
+              fontFamily: '"Space Grotesk", sans-serif',
+              color: '#00d4ff',
+              textShadow: '0 0 20px rgba(0, 212, 255, 0.4)',
+            }}
+          >
+            {moon.name}
+          </h3>
+          <p className="text-[10px] tracking-[0.25em] uppercase mt-1" style={{ color: '#556677' }}>
+            Moon of {moon.parentPlanet}
+          </p>
+        </div>
+
+        {/* Description */}
+        <p className="text-[12px] text-gray-400 leading-relaxed">{moon.scientificSignificance}</p>
+
+        {/* Data */}
+        <div className="rounded-xl p-3" style={sectionStyle}>
+          <h4
+            className="text-[9px] tracking-[0.2em] uppercase mb-2.5 flex items-center gap-1.5"
+            style={{ fontFamily: '"Space Grotesk", sans-serif', color: '#00d4ff' }}
+          >
+            <Globe size={10} /> Moon Data
+          </h4>
+          <div className="grid grid-cols-2 gap-x-3 gap-y-2">
+            {[
+              { label: 'Diameter', value: `${moon.diameter.toLocaleString()} km` },
+              { label: 'Gravity', value: `${moon.gravity} m/s²` },
+            ].map((item) => (
+              <div key={item.label} className="space-y-0.5">
+                <div className={labelClass}>{item.label}</div>
+                <div className={valueClass}>{item.value}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Surface */}
+        <div className="rounded-xl p-3" style={sectionStyle}>
+          <h4
+            className="text-[9px] tracking-[0.2em] uppercase mb-1.5 flex items-center gap-1.5"
+            style={{ fontFamily: '"Space Grotesk", sans-serif', color: '#00d4ff' }}
+          >
+            <Ruler size={10} /> Surface
+          </h4>
+          <p className="text-[11px] text-gray-400 leading-relaxed">{moon.surfaceInfo}</p>
+        </div>
+
+        {/* Atmosphere */}
+        <div className="rounded-xl p-3" style={sectionStyle}>
+          <h4
+            className="text-[9px] tracking-[0.2em] uppercase mb-1.5 flex items-center gap-1.5"
+            style={{ fontFamily: '"Space Grotesk", sans-serif', color: '#00d4ff' }}
+          >
+            <Wind size={10} /> Atmosphere
+          </h4>
+          <p className="text-[11px] text-gray-400 leading-relaxed">{moon.atmosphere}</p>
+        </div>
+
+        {/* Significance */}
+        <div className="rounded-xl p-3" style={sectionStyle}>
+          <h4
+            className="text-[9px] tracking-[0.2em] uppercase mb-2 flex items-center gap-1.5"
+            style={{ fontFamily: '"Space Grotesk", sans-serif', color: '#00d4ff' }}
+          >
+            <Zap size={10} /> Scientific Significance
+          </h4>
+          <p className="text-[11px] text-gray-400 leading-relaxed">{moon.scientificSignificance}</p>
+        </div>
+
+        {/* Missions */}
+        <div className="rounded-xl p-3" style={sectionStyle}>
+          <h4
+            className="text-[9px] tracking-[0.2em] uppercase mb-2 flex items-center gap-1.5"
+            style={{ fontFamily: '"Space Grotesk", sans-serif', color: '#00d4ff' }}
+          >
+            <Rocket size={10} /> Missions
+          </h4>
+          <div className="flex flex-wrap gap-1">
+            {moon.missions.map((m) => (
+              <span
+                key={m}
+                className="px-2 py-0.5 rounded-full text-[10px]"
+                style={{ background: 'rgba(0, 212, 255, 0.08)', border: '1px solid rgba(0, 212, 255, 0.15)', color: '#88aacc' }}
+              >
+                {m}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Back to planet */}
+        <button
+          onClick={() => { sounds.play('click'); onBack() }}
+          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs tracking-wider transition-all hover:bg-white/5"
+          style={{
+            fontFamily: '"Space Grotesk", sans-serif',
+            background: 'rgba(255, 255, 255, 0.03)',
+            border: '1px solid rgba(0, 212, 255, 0.2)',
+            color: '#00d4ff',
+          }}
+        >
+          <ArrowLeft size={12} /> Back to {MOONS.find((m) => m.id === moonId)?.parentPlanet || 'Planet'}
+        </button>
+
+        {/* Close */}
+        <button
+          onClick={() => { sounds.play('click'); onClose() }}
+          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs tracking-wider transition-all hover:bg-white/5"
+          style={{
+            fontFamily: '"Space Grotesk", sans-serif',
+            background: 'rgba(255, 255, 255, 0.03)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            color: '#8899aa',
+          }}
+        >
+          <X size={12} /> Close
+        </button>
+      </div>
+    </motion.div>
+  )
+}
+
 export function PlanetGlobe() {
   const { selectedPlanet, setSelectedPlanet, setActiveView } = useStore()
   const [isSpinning, setIsSpinning] = useState(true)
   const [zoom, setZoom] = useState(5.5)
+  const [body, setBody] = useState<{ id: string; type: 'planet' | 'moon' }>({ id: selectedPlanet || '', type: 'planet' })
   const planet = PLANETS.find((p) => p.id === selectedPlanet)
 
   const planetIds = PLANETS.map((p) => p.id)
@@ -469,6 +649,7 @@ export function PlanetGlobe() {
     if (selectedPlanet) {
       document.body.style.cursor = 'default'
       setZoom(5.5)
+      setBody({ id: selectedPlanet, type: 'planet' })
     }
   }, [selectedPlanet])
 
@@ -476,20 +657,36 @@ export function PlanetGlobe() {
   useEffect(() => {
     if (!selectedPlanet) return
     const handler = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft' && prevPlanet) navigatePlanet(prevPlanet.id)
-      if (e.key === 'ArrowRight' && nextPlanet) navigatePlanet(nextPlanet.id)
-      if (e.key === 'Escape') { sounds.play('click'); setSelectedPlanet(null) }
+      if (e.key === 'ArrowLeft' && prevPlanet && body.type === 'planet') navigatePlanet(prevPlanet.id)
+      if (e.key === 'ArrowRight' && nextPlanet && body.type === 'planet') navigatePlanet(nextPlanet.id)
+      if (e.key === 'Escape') {
+        sounds.play('click')
+        if (body.type === 'moon') backToPlanet()
+        else setSelectedPlanet(null)
+      }
     }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
-  }, [selectedPlanet, prevPlanet, nextPlanet])
+  }, [selectedPlanet, prevPlanet, nextPlanet, body.type])
 
   const navigatePlanet = (id: string) => {
     sounds.play('navigate')
     setSelectedPlanet(id)
   }
 
+  const selectMoon = (moonId: string) => {
+    setZoom(5.5)
+    setBody({ id: moonId, type: 'moon' })
+  }
+
+  const backToPlanet = () => {
+    if (selectedPlanet) setBody({ id: selectedPlanet, type: 'planet' })
+  }
+
   if (!selectedPlanet || !planet) return null
+
+  const currentMoon = body.type === 'moon' ? MOONS.find((m) => m.id === body.id) : null
+  const showLabel = body.type === 'moon' && currentMoon ? currentMoon : planet
 
   return (
     <AnimatePresence>
@@ -508,7 +705,7 @@ export function PlanetGlobe() {
             <fog attach="fog" args={['#050510', 14, 30]} />
 
             <CameraAnimation />
-            <GlobeMesh planetId={selectedPlanet} isSpinning={isSpinning} />
+            <GlobeMesh bodyId={body.id} bodyType={body.type} isSpinning={isSpinning} />
             <OrbitControls
               enablePan={false}
               enableZoom={true}
@@ -522,9 +719,13 @@ export function PlanetGlobe() {
           </Canvas>
 
           {/* Info Panel - left */}
-          <InfoPanel planetId={selectedPlanet} onClose={() => { setSelectedPlanet(null); setActiveView('solar-system') }} />
+          {body.type === 'moon' ? (
+            <MoonInfoPanel moonId={body.id} onBack={backToPlanet} onClose={() => { setSelectedPlanet(null); setActiveView('solar-system') }} />
+          ) : (
+            <InfoPanel planetId={selectedPlanet} onClose={() => { setSelectedPlanet(null); setActiveView('solar-system') }} onSelectMoon={selectMoon} />
+          )}
 
-          {/* Planet name - top center */}
+          {/* Body name - top center */}
           <motion.div
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -539,10 +740,10 @@ export function PlanetGlobe() {
                 textShadow: '0 0 40px rgba(0, 212, 255, 0.3), 0 0 80px rgba(0, 212, 255, 0.1)',
               }}
             >
-              {planet.name}
+              {showLabel.name}
             </h1>
             <p className="text-xs tracking-[0.3em] uppercase mt-2" style={{ color: '#556677' }}>
-              {planet.classification} · Click and drag to rotate · Scroll to zoom
+              {body.type === 'moon' ? `Moon of ${(currentMoon as typeof MOONS[number]).parentPlanet}` : (planet.classification)} · Click and drag to rotate · Scroll to zoom
             </p>
           </motion.div>
 
@@ -669,27 +870,35 @@ export function PlanetGlobe() {
             }}
           >
             <div className="flex items-center gap-1.5 mb-2">
-              <ChevronRight size={10} style={{ color: planet.color }} />
+              <ChevronRight size={10} style={{ color: body.type === 'moon' ? (currentMoon?.color || '#00d4ff') : planet.color }} />
               <span
                 className="text-[9px] tracking-[0.2em] uppercase"
-                style={{ fontFamily: '"Space Grotesk", sans-serif', color: planet.color }}
+                style={{ fontFamily: '"Space Grotesk", sans-serif', color: body.type === 'moon' ? (currentMoon?.color || '#00d4ff') : planet.color }}
               >
-                {planet.notableFeature}
+                {body.type === 'moon' ? (currentMoon ? `Moon of ${currentMoon.parentPlanet}` : 'Moon') : planet.notableFeature}
               </span>
             </div>
-            <p className="text-[11px] text-gray-400 leading-relaxed mb-3">{planet.description}</p>
+            <p className="text-[11px] text-gray-400 leading-relaxed mb-3">
+              {body.type === 'moon' ? currentMoon?.scientificSignificance : planet.description}
+            </p>
             <div className="grid grid-cols-3 gap-2 pt-2" style={{ borderTop: '1px solid rgba(0, 212, 255, 0.06)' }}>
               <div>
-                <div className="text-[8px] text-gray-600 tracking-wider uppercase">Orbit</div>
-                <div className="text-[10px] text-gray-400">{planet.orbitalPeriod}</div>
+                <div className="text-[8px] text-gray-600 tracking-wider uppercase">Diameter</div>
+                <div className="text-[10px] text-gray-400">
+                  {body.type === 'moon' ? `${currentMoon?.diameter || 0} km` : `${planet.diameter.toLocaleString()} km`}
+                </div>
               </div>
               <div>
-                <div className="text-[8px] text-gray-600 tracking-wider uppercase">Day</div>
-                <div className="text-[10px] text-gray-400">{planet.rotationPeriod}</div>
+                <div className="text-[8px] text-gray-600 tracking-wider uppercase">Gravity</div>
+                <div className="text-[10px] text-gray-400">
+                  {body.type === 'moon' ? `${currentMoon?.gravity || 0} m/s²` : `${planet.gravity} m/s²`}
+                </div>
               </div>
               <div>
-                <div className="text-[8px] text-gray-600 tracking-wider uppercase">Moons</div>
-                <div className="text-[10px] text-gray-400">{planet.moons.length}</div>
+                <div className="text-[8px] text-gray-600 tracking-wider uppercase">{body.type === 'moon' ? 'Parent' : 'Moons'}</div>
+                <div className="text-[10px] text-gray-400">
+                  {body.type === 'moon' ? currentMoon?.parentPlanet : planet.moons.length}
+                </div>
               </div>
             </div>
           </motion.div>

@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { PLANET_TEXTURES, MOON_TEXTURE_URL } from '../data/planetTextures'
+import { PLANET_TEXTURES, MOON_TEXTURE_URL, MOON_TEXTURES } from '../data/planetTextures'
 
 const textureLoader = new THREE.TextureLoader()
 const loadedTextures: Map<string, THREE.Texture> = new Map()
@@ -33,14 +33,16 @@ export async function getPlanetTexture(planetId: string): Promise<THREE.Texture>
   return createProceduralTexture(planetId, 512)
 }
 
-export async function getPlanetBump(planetId: string): Promise<THREE.Texture | null> {
-  const cacheKey = `bump_${planetId}`
+export async function getPlanetAux(planetId: string, kind: 'clouds' | 'night' | 'bump' | 'normal'): Promise<THREE.Texture | null> {
+  const cacheKey = `${kind}_${planetId}`
   if (loadedTextures.has(cacheKey)) return loadedTextures.get(cacheKey)!
 
   const config = PLANET_TEXTURES[planetId]
-  if (config?.bump) {
-    const tex = await loadTexture(config.bump)
+  const url = config?.[kind]
+  if (url) {
+    const tex = await loadTexture(url)
     if (tex) {
+      tex.colorSpace = THREE.SRGBColorSpace
       loadedTextures.set(cacheKey, tex)
       return tex
     }
@@ -49,15 +51,28 @@ export async function getPlanetBump(planetId: string): Promise<THREE.Texture | n
 }
 
 let moonTexturePromise: Promise<THREE.Texture | null> | null = null
+const moonTexturePromises: Map<string, Promise<THREE.Texture | null>> = new Map()
 
-export function getMoonTexture(): Promise<THREE.Texture | null> {
-  if (!moonTexturePromise) {
-    moonTexturePromise = loadTexture(MOON_TEXTURE_URL).then((tex) => {
-      if (tex) tex.colorSpace = THREE.SRGBColorSpace
-      return tex
-    })
+export function getMoonTexture(id = 'moon'): Promise<THREE.Texture | null> {
+  if (id === 'moon') {
+    if (!moonTexturePromise) {
+      moonTexturePromise = loadTexture(MOON_TEXTURE_URL).then((tex) => {
+        if (tex) tex.colorSpace = THREE.SRGBColorSpace
+        return tex
+      })
+    }
+    return moonTexturePromise
   }
-  return moonTexturePromise
+
+  if (moonTexturePromises.has(id)) return moonTexturePromises.get(id)!
+  const url = MOON_TEXTURES[id]
+  if (!url) return Promise.resolve(null)
+  const p = loadTexture(url).then((tex) => {
+    if (tex) tex.colorSpace = THREE.SRGBColorSpace
+    return tex
+  })
+  moonTexturePromises.set(id, p)
+  return p
 }
 
 export function createProceduralTexture(type: string, size = 512): THREE.CanvasTexture {
