@@ -11,17 +11,14 @@ import { sounds } from '../utils/sounds'
 function MiniPlanet({ planetId }: { planetId: string }) {
   const meshRef = useRef<THREE.Mesh>(null!)
   const atmosphereRef = useRef<THREE.Mesh>(null!)
-  const cloudsRef = useRef<THREE.Mesh>(null!)
 
   const texture = useMemo(() => createProceduralTexture(planetId, 512), [planetId])
 
   useFrame((_, delta) => {
     if (meshRef.current) meshRef.current.rotation.y += delta * 0.25
-    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.12
   })
 
   const hasAtmosphere = ['earth', 'venus', 'jupiter', 'saturn', 'uranus', 'neptune'].includes(planetId)
-  const hasClouds = planetId === 'earth'
   const atmosphereColor =
     planetId === 'earth' ? '#4a90d9' : planetId === 'venus' ? '#e8cda0' : '#00d4ff'
 
@@ -40,19 +37,6 @@ function MiniPlanet({ planetId }: { planetId: string }) {
             transparent
             opacity={planetId === 'earth' ? 0.12 : 0.06}
             side={THREE.BackSide}
-            blending={THREE.AdditiveBlending}
-            depthWrite={false}
-          />
-        </mesh>
-      )}
-
-      {hasClouds && (
-        <mesh ref={cloudsRef} scale={1.015}>
-          <sphereGeometry args={[1.6, 32, 32]} />
-          <meshBasicMaterial
-            color="#ffffff"
-            transparent
-            opacity={0.08}
             blending={THREE.AdditiveBlending}
             depthWrite={false}
           />

@@ -7,12 +7,12 @@ import { X, RotateCcw, ZoomIn, ZoomOut, ArrowLeft, ChevronRight, Zap, Rocket, Gl
 import { useStore } from '../store/useStore'
 import { PLANETS } from '../data/planets'
 import { MOONS } from '../data/moons'
-import { createProceduralTexture, createCloudTexture, getPlanetTexture, getPlanetAux, getMoonTexture, sphereSegments, proceduralSize } from './PlanetTextures'
+import { createProceduralTexture, getPlanetTexture, getPlanetAux, getMoonTexture, sphereSegments, proceduralSize } from './PlanetTextures'
 import { sounds } from '../utils/sounds'
 
-function CameraAnimation() {
+function CameraAnimation({ zoom }: { zoom: number }) {
   const { camera } = useThree()
-  const targetPos = useMemo(() => new THREE.Vector3(0, 0, 5.5), [])
+  const targetPos = useMemo(() => new THREE.Vector3(0, 0, zoom), [zoom])
 
   useFrame(() => {
     camera.position.lerp(targetPos, 0.04)
@@ -24,7 +24,6 @@ function CameraAnimation() {
 function GlobeMesh({ bodyId, bodyType, isSpinning }: { bodyId: string; bodyType: 'planet' | 'moon'; isSpinning: boolean }) {
   const meshRef = useRef<THREE.Mesh>(null!)
   const atmosRef = useRef<THREE.Mesh>(null!)
-  const cloudsRef = useRef<THREE.Mesh>(null!)
   const atmosGlowRef = useRef<THREE.Mesh>(null!)
 
   const isPlanet = bodyType === 'planet'
@@ -34,7 +33,6 @@ function GlobeMesh({ bodyId, bodyType, isSpinning }: { bodyId: string; bodyType:
 
   const fallbackTexture = useMemo(() => createProceduralTexture(isPlanet ? bodyId : 'moon', proceduralSize(quality)), [isPlanet, bodyId, quality])
   const fallbackBump = useMemo(() => createProceduralTexture((isPlanet ? bodyId : 'moon') + '_bump', proceduralSize(quality)), [isPlanet, bodyId, quality])
-  const cloudTexture = useMemo(() => createCloudTexture(proceduralSize(quality)), [quality])
 
   const [texture, setTexture] = useState<THREE.Texture>(fallbackTexture)
   const [bumpMap, setBumpMap] = useState<THREE.Texture | null>(fallbackBump)
@@ -63,16 +61,12 @@ function GlobeMesh({ bodyId, bodyType, isSpinning }: { bodyId: string; bodyType:
     if (meshRef.current && isSpinning) {
       meshRef.current.rotation.y += delta * (isPlanet ? 0.3 : 0.12)
     }
-    if (cloudsRef.current && isSpinning) {
-      cloudsRef.current.rotation.y += delta * 0.15
-    }
     if (atmosGlowRef.current) {
       atmosGlowRef.current.rotation.y += delta * 0.02
     }
   })
 
   const hasAtmosphere = isPlanet && ['earth', 'venus', 'jupiter', 'saturn', 'uranus', 'neptune'].includes(bodyId)
-  const hasClouds = isPlanet && bodyId === 'earth'
   const atmosphereColor =
     bodyId === 'earth' ? '#4a90d9' : bodyId === 'venus' ? '#e8cda0' : bodyId === 'jupiter' ? '#c88b3a' : bodyId === 'saturn' ? '#e8d5a3' : bodyId === 'neptune' ? '#3f54ba' : '#00d4ff'
 
@@ -120,21 +114,6 @@ function GlobeMesh({ bodyId, bodyType, isSpinning }: { bodyId: string; bodyType:
             opacity={bodyId === 'earth' ? 0.08 : bodyId === 'venus' ? 0.06 : 0.04}
             side={THREE.BackSide}
             blending={THREE.AdditiveBlending}
-            depthWrite={false}
-          />
-        </mesh>
-      )}
-
-      {/* Clouds for Earth - fixed subtle layer, never swaps */}
-      {hasClouds && (
-        <mesh ref={cloudsRef} scale={1.008}>
-          <sphereGeometry args={[size, sphereSegments(quality), sphereSegments(quality)]} />
-          <meshStandardMaterial
-            color="#eef2f6"
-            alphaMap={cloudTexture}
-            transparent
-            opacity={0.15}
-            roughness={1}
             depthWrite={false}
           />
         </mesh>
@@ -615,7 +594,7 @@ function MoonInfoPanel({ moonId, onBack, onClose }: { moonId: string; onBack: ()
 export function PlanetGlobe() {
   const { selectedPlanet, setSelectedPlanet, setActiveView } = useStore()
   const [isSpinning, setIsSpinning] = useState(true)
-  const [zoom, setZoom] = useState(5.5)
+  const [zoom, setZoom] = useState(7.5)
   const [body, setBody] = useState<{ id: string; type: 'planet' | 'moon' }>({ id: selectedPlanet || '', type: 'planet' })
   const planet = PLANETS.find((p) => p.id === selectedPlanet)
 
@@ -631,7 +610,7 @@ export function PlanetGlobe() {
   useEffect(() => {
     if (selectedPlanet) {
       document.body.style.cursor = 'default'
-      setZoom(5.5)
+      setZoom(7.5)
       setBody({ id: selectedPlanet, type: 'planet' })
     }
   }, [selectedPlanet])
@@ -664,7 +643,7 @@ export function PlanetGlobe() {
   }
 
   const selectMoon = (moonId: string) => {
-    setZoom(5.5)
+    setZoom(7.5)
     setBody({ id: moonId, type: 'moon' })
   }
 
@@ -693,7 +672,7 @@ export function PlanetGlobe() {
             <color attach="background" args={['#050510']} />
             <fog attach="fog" args={['#050510', 14, 30]} />
 
-            <CameraAnimation />
+            <CameraAnimation zoom={zoom} />
             <GlobeMesh bodyId={body.id} bodyType={body.type} isSpinning={isSpinning} />
             <OrbitControls
               enablePan={false}
