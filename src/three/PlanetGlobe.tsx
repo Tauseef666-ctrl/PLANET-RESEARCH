@@ -39,6 +39,7 @@ function GlobeMesh({ bodyId, bodyType, isSpinning }: { bodyId: string; bodyType:
   const [bumpMap, setBumpMap] = useState<THREE.Texture | null>(fallbackBump)
   const [cloudMap, setCloudMap] = useState<THREE.Texture | null>(null)
   const [nightMap, setNightMap] = useState<THREE.Texture | null>(null)
+  const [normalMap, setNormalMap] = useState<THREE.Texture | null>(null)
 
   useEffect(() => {
     let cancelled = false
@@ -46,12 +47,14 @@ function GlobeMesh({ bodyId, bodyType, isSpinning }: { bodyId: string; bodyType:
     setBumpMap(fallbackBump)
     setCloudMap(null)
     setNightMap(null)
+    setNormalMap(null)
 
     if (isPlanet) {
       getPlanetTexture(bodyId).then((tex) => { if (!cancelled) setTexture(tex) })
       getPlanetAux(bodyId, 'bump').then((bmp) => { if (!cancelled && bmp) setBumpMap(bmp) })
       getPlanetAux(bodyId, 'clouds').then((cx) => { if (!cancelled && cx) setCloudMap(cx) })
       getPlanetAux(bodyId, 'night').then((nt) => { if (!cancelled && nt) setNightMap(nt) })
+      getPlanetAux(bodyId, 'normal').then((nrm) => { if (!cancelled && nrm) setNormalMap(nrm) })
     } else {
       getMoonTexture(bodyId).then((tex) => { if (!cancelled && tex) setTexture(tex) })
     }
@@ -84,6 +87,8 @@ function GlobeMesh({ bodyId, bodyType, isSpinning }: { bodyId: string; bodyType:
           map={texture}
           bumpMap={bumpMap}
           bumpScale={isPlanet ? 0.05 : 0.08}
+          normalMap={normalMap}
+          normalScale={new THREE.Vector2(0.6, 0.6)}
           emissiveMap={nightMap}
           emissive={nightMap ? '#ffffff' : '#000000'}
           emissiveIntensity={nightMap ? 1.5 : 0}
@@ -99,7 +104,7 @@ function GlobeMesh({ bodyId, bodyType, isSpinning }: { bodyId: string; bodyType:
           <meshBasicMaterial
             color={atmosphereColor}
             transparent
-            opacity={bodyId === 'earth' ? 0.15 : bodyId === 'venus' ? 0.12 : bodyId === 'jupiter' ? 0.08 : 0.06}
+            opacity={bodyId === 'earth' ? 0.1 : bodyId === 'venus' ? 0.12 : bodyId === 'jupiter' ? 0.08 : 0.06}
             side={THREE.BackSide}
             blending={THREE.AdditiveBlending}
             depthWrite={false}
@@ -122,15 +127,15 @@ function GlobeMesh({ bodyId, bodyType, isSpinning }: { bodyId: string; bodyType:
         </mesh>
       )}
 
-      {/* Clouds for Earth */}
+      {/* Clouds for Earth - subtle, lets surface show through */}
       {hasClouds && (
         <mesh ref={cloudsRef} scale={1.008}>
           <sphereGeometry args={[size, 64, 64]} />
           <meshStandardMaterial
-            color="#ffffff"
+            color="#eef2f6"
             alphaMap={cloudMap || cloudTexture}
             transparent
-            opacity={0.45}
+            opacity={0.22}
             roughness={1}
             depthWrite={false}
           />
@@ -183,22 +188,6 @@ function GlobeMesh({ bodyId, bodyType, isSpinning }: { bodyId: string; bodyType:
             opacity={0.2}
             side={THREE.DoubleSide}
           />
-        </mesh>
-      )}
-
-      {/* Jupiter Great Red Spot */}
-      {bodyId === 'jupiter' && isPlanet && (
-        <mesh position={[size * 0.52, -size * 0.15, size * 0.85]} rotation={[0.1, 0.9, 0.1]}>
-          <sphereGeometry args={[size * 0.2, 24, 16]} />
-          <meshStandardMaterial color="#cc4422" emissive="#991100" emissiveIntensity={0.3} roughness={0.6} />
-        </mesh>
-      )}
-
-      {/* Neptune dark spot */}
-      {bodyId === 'neptune' && isPlanet && (
-        <mesh position={[-size * 0.3, size * 0.2, size * 0.9]} rotation={[0.2, -0.5, 0]}>
-          <sphereGeometry args={[size * 0.12, 16, 16]} />
-          <meshStandardMaterial color="#223388" emissive="#112266" emissiveIntensity={0.2} roughness={0.7} />
         </mesh>
       )}
 

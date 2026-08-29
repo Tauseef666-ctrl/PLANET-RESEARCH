@@ -137,10 +137,10 @@ export function Planet({ data, onClick }: PlanetProps) {
               <mesh ref={cloudsRef} scale={1.0}>
                 <sphereGeometry args={[planetSize * 1.02, 48, 48]} />
                 <meshStandardMaterial
-                  color="#ffffff"
+                  color="#eef2f6"
                   alphaMap={cloudMap}
                   transparent
-                  opacity={0.5}
+                  opacity={0.3}
                   roughness={1}
                   depthWrite={false}
                 />

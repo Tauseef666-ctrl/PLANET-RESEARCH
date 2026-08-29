@@ -108,29 +108,40 @@ export function createCloudTexture(size = 512): THREE.CanvasTexture {
   ctx.fillStyle = '#000000'
   ctx.fillRect(0, 0, size, size)
 
-  const drawBlob = (cx: number, cy: number, r: number, grey: number) => {
+  const drawBlob = (cx: number, cy: number, r: number, peak: number) => {
+    const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r)
+    grad.addColorStop(0, `rgba(255, 255, 255, ${peak})`)
+    grad.addColorStop(0.5, `rgba(255, 255, 255, ${peak * 0.45})`)
+    grad.addColorStop(1, 'rgba(255, 255, 255, 0)')
+    ctx.fillStyle = grad
     ctx.beginPath()
     ctx.arc(cx, cy, r, 0, Math.PI * 2)
-    ctx.fillStyle = `rgba(255, 255, 255, ${grey})`
     ctx.fill()
-    for (let i = 0; i < 6; i++) {
+
+    for (let i = 0; i < 5; i++) {
       const a = Math.random() * Math.PI * 2
       const dr = r * (0.5 + Math.random() * 0.9)
+      const sx = cx + Math.cos(a) * dr * 0.4
+      const sy = cy + Math.sin(a) * dr * 0.4
+      const sr = r * (0.5 + Math.random() * 0.5)
+      const sub = ctx.createRadialGradient(sx, sy, 0, sx, sy, sr)
+      sub.addColorStop(0, `rgba(255, 255, 255, ${peak * 0.3})`)
+      sub.addColorStop(1, 'rgba(255, 255, 255, 0)')
+      ctx.fillStyle = sub
       ctx.beginPath()
-      ctx.arc(cx + Math.cos(a) * dr * 0.4, cy + Math.sin(a) * dr * 0.4, r * (0.4 + Math.random() * 0.4), 0, Math.PI * 2)
-      ctx.fillStyle = `rgba(255, 255, 255, ${grey * 0.55})`
+      ctx.arc(sx, sy, sr, 0, Math.PI * 2)
       ctx.fill()
     }
   }
 
-  const bands = [0.12, 0.24, 0.38, 0.52, 0.68, 0.8, 0.9]
+  const bands = [0.12, 0.26, 0.42, 0.58, 0.74, 0.9]
   bands.forEach((by) => {
-    const count = 10 + by * 16
+    const count = 5 + by * 7
     for (let i = 0; i < count; i++) {
       const x = Math.random() * size
-      const y = (by + (Math.random() - 0.5) * 0.12) * size
-      const r = (Math.random() * 0.045 + 0.015) * size
-      drawBlob(x, y, r, Math.random() * 0.85)
+      const y = (by + (Math.random() - 0.5) * 0.16) * size
+      const r = (Math.random() * 0.04 + 0.02) * size
+      drawBlob(x, y, r, Math.random() * 0.5)
     }
   })
 
@@ -172,24 +183,59 @@ function drawVenus(ctx: CanvasRenderingContext2D, size: number) {
 }
 
 function drawEarth(ctx: CanvasRenderingContext2D, size: number) {
-  ctx.fillStyle = '#1a3a5c'
+  const ocean = ctx.createLinearGradient(0, 0, 0, size)
+  ocean.addColorStop(0, '#1e5aa8')
+  ocean.addColorStop(0.5, '#163f7f')
+  ocean.addColorStop(1, '#1e5aa8')
+  ctx.fillStyle = ocean
   ctx.fillRect(0, 0, size, size)
+
+  for (let i = 0; i < 900; i++) {
+    ctx.beginPath()
+    ctx.arc(Math.random() * size, Math.random() * size, Math.random() * 2 + 0.5, 0, Math.PI * 2)
+    ctx.fillStyle = `rgba(${Math.random() > 0.5 ? '12, 58, 118' : '58, 118, 196'}, ${Math.random() * 0.25})`
+    ctx.fill()
+  }
+
   const continents = [
-    { x: 0.5, y: 0.35, w: 0.15, h: 0.25 },
-    { x: 0.55, y: 0.6, w: 0.1, h: 0.2 },
-    { x: 0.3, y: 0.3, w: 0.2, h: 0.3 },
-    { x: 0.7, y: 0.3, w: 0.1, h: 0.15 },
+    { x: 0.52, y: 0.28, w: 0.17, h: 0.3 },
+    { x: 0.28, y: 0.32, w: 0.15, h: 0.26 },
+    { x: 0.46, y: 0.55, w: 0.11, h: 0.2 },
+    { x: 0.63, y: 0.76, w: 0.09, h: 0.09 },
+    { x: 0.71, y: 0.38, w: 0.09, h: 0.12 },
+    { x: 0.5, y: 0.95, w: 0.2, h: 0.05 },
   ]
   continents.forEach((c) => {
     ctx.beginPath()
-    ctx.ellipse(c.x * size, c.y * size, c.w * size, c.h * size, Math.random() * 0.5, 0, Math.PI * 2)
-    ctx.fillStyle = '#2d6b3a'
+    ctx.ellipse(c.x * size, c.y * size, c.w * size, c.h * size, (Math.random() - 0.5) * 0.6, 0, Math.PI * 2)
+    const land = ctx.createRadialGradient(c.x * size, c.y * size, 0, c.x * size, c.y * size, c.w * size)
+    land.addColorStop(0, '#4a9448')
+    land.addColorStop(0.6, '#357c3c')
+    land.addColorStop(1, '#7d8f43')
+    ctx.fillStyle = land
     ctx.fill()
+    for (let i = 0; i < 80; i++) {
+      const a = Math.random() * Math.PI * 2
+      const d = Math.random() * c.w * size
+      ctx.beginPath()
+      ctx.arc(c.x * size + Math.cos(a) * d, c.y * size + Math.sin(a) * d, Math.random() * 4 + 1, 0, Math.PI * 2)
+      ctx.fillStyle = `rgba(${Math.random() > 0.5 ? '62,122,42' : '150,112,70'}, ${Math.random() * 0.4})`
+      ctx.fill()
+    }
   })
-  for (let i = 0; i < 60; i++) {
+
+  ctx.fillStyle = '#e8f4ff'
+  ctx.beginPath()
+  ctx.ellipse(size * 0.5, size * 0.03, size * 0.3, size * 0.04, 0, 0, Math.PI * 2)
+  ctx.fill()
+  ctx.beginPath()
+  ctx.ellipse(size * 0.5, size * 0.97, size * 0.3, size * 0.04, 0, 0, Math.PI * 2)
+  ctx.fill()
+
+  for (let i = 0; i < 50; i++) {
     ctx.beginPath()
-    ctx.ellipse(Math.random() * size, Math.random() * size, Math.random() * size * 0.15, Math.random() * size * 0.04, Math.random() * Math.PI, 0, Math.PI * 2)
-    ctx.fillStyle = `rgba(255, 255, 255, ${Math.random() * 0.15})`
+    ctx.ellipse(Math.random() * size, Math.random() * size, Math.random() * size * 0.1 + 4, Math.random() * 3 + 1, Math.random() * Math.PI, 0, Math.PI * 2)
+    ctx.fillStyle = `rgba(255, 255, 255, ${Math.random() * 0.12})`
     ctx.fill()
   }
 }
