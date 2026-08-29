@@ -12,7 +12,7 @@ export function Sun() {
     const pos = new Float32Array(count * 3)
     for (let i = 0; i < count; i++) {
       const i3 = i * 3
-      const r = 5.4 + Math.random() * 2.4
+      const r = 5.3 + Math.random() * 1.3
       const theta = Math.random() * Math.PI * 2
       const phi = Math.acos(2 * Math.random() - 1)
       pos[i3] = r * Math.sin(phi) * Math.cos(theta)

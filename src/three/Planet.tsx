@@ -5,7 +5,7 @@ import * as THREE from 'three'
 import { PlanetData } from '../data/planets'
 import { MOONS } from '../data/moons'
 import { useStore } from '../store/useStore'
-import { createProceduralTexture, createCloudTexture, getPlanetTexture } from './PlanetTextures'
+import { createProceduralTexture, createCloudTexture, getPlanetTexture, getPlanetAux } from './PlanetTextures'
 import { OrbitingMoon } from './Moon'
 import { sounds } from '../utils/sounds'
 
@@ -45,12 +45,18 @@ export function Planet({ data, onClick }: PlanetProps) {
   const fallbackTexture = useMemo(() => createProceduralTexture(data.id, 512), [data.id])
   const cloudTexture = useMemo(() => createCloudTexture(512), [])
   const [texture, setTexture] = useState<THREE.Texture>(fallbackTexture)
+  const [cloudMap, setCloudMap] = useState<THREE.Texture>(cloudTexture)
 
   useEffect(() => {
     let cancelled = false
     getPlanetTexture(data.id).then((tex) => {
       if (!cancelled) setTexture(tex)
     })
+    if (data.id === 'earth') {
+      getPlanetAux('earth', 'clouds').then((tex) => {
+        if (!cancelled && tex) setCloudMap(tex)
+      })
+    }
     return () => { cancelled = true }
   }, [data.id])
 
@@ -65,11 +71,10 @@ export function Planet({ data, onClick }: PlanetProps) {
     return tilts[data.id] ?? 0
   }, [data.id])
 
-  const activeMoons = useMemo(() => {
-    const ids = data.id === 'earth' ? ['moon'] : data.id === 'mars' ? ['phobos', 'deimos'] : data.id === 'jupiter' ? ['io', 'europa', 'ganymede', 'callisto'] : data.id === 'saturn' ? ['titan', 'enceladus'] : data.id === 'neptune' ? ['triton'] : []
-    if (ids.length === 0) return []
-    return MOONS.filter((m) => ids.includes(m.id))
-  }, [data.id])
+  const activeMoons = useMemo(
+    () => MOONS.filter((m) => m.parentPlanet.toLowerCase() === data.name.toLowerCase()),
+    [data.name]
+  )
 
   useFrame((state) => {
     const t = state.clock.elapsedTime
@@ -130,12 +135,12 @@ export function Planet({ data, onClick }: PlanetProps) {
             {/* Earth cloud layer */}
             {data.id === 'earth' && (
               <mesh ref={cloudsRef} scale={1.0}>
-                <sphereGeometry args={[planetSize * 1.008, 32, 32]} />
+                <sphereGeometry args={[planetSize * 1.02, 48, 48]} />
                 <meshStandardMaterial
                   color="#ffffff"
-                  alphaMap={cloudTexture}
+                  alphaMap={cloudMap}
                   transparent
-                  opacity={0.35}
+                  opacity={0.5}
                   roughness={1}
                   depthWrite={false}
                 />

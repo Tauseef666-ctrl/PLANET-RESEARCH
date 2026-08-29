@@ -36,16 +36,6 @@ function PlanetQuickView({ planet }: { planet: PlanetData }) {
 }
 
 function getPlanetMoons(planetId: string, planetName: string): MoonData[] {
-  const ids: Record<string, string[]> = {
-    earth: ['moon'],
-    mars: ['phobos', 'deimos'],
-    jupiter: ['io', 'europa', 'ganymede', 'callisto'],
-    saturn: ['titan', 'enceladus'],
-    neptune: ['triton'],
-  }
-  const list = (ids[planetId] || []).map((id) => MOONS.find((m) => m.id === id)).filter(Boolean) as MoonData[]
-  if (list.length > 0) return list
-  // fallback: any moon whose parent matches the planet name
   return MOONS.filter((m) => m.parentPlanet.toLowerCase() === planetName.toLowerCase())
 }
 

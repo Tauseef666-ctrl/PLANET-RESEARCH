@@ -236,16 +236,7 @@ function InfoPanel({ planetId, onClose, onSelectMoon }: { planetId: string; onCl
   const setSelectedPlanet = useStore((s) => s.setSelectedPlanet)
   if (!planet) return null
 
-  const planetMoons = MOONS.filter((m) => {
-    const ids: Record<string, string[]> = {
-      earth: ['moon'],
-      mars: ['phobos', 'deimos'],
-      jupiter: ['io', 'europa', 'ganymede', 'callisto'],
-      saturn: ['titan', 'enceladus'],
-      neptune: ['triton'],
-    }
-    return (ids[planetId] || []).includes(m.id)
-  })
+  const planetMoons = MOONS.filter((m) => m.parentPlanet.toLowerCase() === planet.name.toLowerCase())
 
   return (
     <motion.div
