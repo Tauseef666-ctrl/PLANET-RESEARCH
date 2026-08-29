@@ -1,5 +1,24 @@
 import * as THREE from 'three'
 import { PLANET_TEXTURES, MOON_TEXTURE_URL, MOON_TEXTURES } from '../data/planetTextures'
+import type { GraphicsQuality } from '../store/useStore'
+
+export function sphereSegments(quality: GraphicsQuality): number {
+  switch (quality) {
+    case 'ultra': return 96
+    case 'high': return 64
+    case 'medium': return 48
+    case 'low': return 32
+  }
+}
+
+export function proceduralSize(quality: GraphicsQuality): number {
+  switch (quality) {
+    case 'ultra': return 1024
+    case 'high': return 512
+    case 'medium': return 256
+    case 'low': return 128
+  }
+}
 
 const textureLoader = new THREE.TextureLoader()
 const loadedTextures: Map<string, THREE.Texture> = new Map()

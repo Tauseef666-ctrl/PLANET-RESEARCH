@@ -5,7 +5,7 @@ import * as THREE from 'three'
 import { PlanetData } from '../data/planets'
 import { MOONS } from '../data/moons'
 import { useStore } from '../store/useStore'
-import { createProceduralTexture, createCloudTexture, getPlanetTexture, getPlanetAux } from './PlanetTextures'
+import { createProceduralTexture, createCloudTexture, getPlanetTexture, sphereSegments, proceduralSize } from './PlanetTextures'
 import { OrbitingMoon } from './Moon'
 import { sounds } from '../utils/sounds'
 
@@ -41,22 +41,17 @@ export function Planet({ data, onClick }: PlanetProps) {
   const isSelected = selectedPlanet === data.id
 
   const planetSize = data.size * 0.38
+  const quality = useStore((s) => s.quality)
 
-  const fallbackTexture = useMemo(() => createProceduralTexture(data.id, 512), [data.id])
-  const cloudTexture = useMemo(() => createCloudTexture(512), [])
+  const fallbackTexture = useMemo(() => createProceduralTexture(data.id, proceduralSize(quality)), [data.id, quality])
+  const cloudTexture = useMemo(() => createCloudTexture(proceduralSize(quality)), [quality])
   const [texture, setTexture] = useState<THREE.Texture>(fallbackTexture)
-  const [cloudMap, setCloudMap] = useState<THREE.Texture>(cloudTexture)
 
   useEffect(() => {
     let cancelled = false
     getPlanetTexture(data.id).then((tex) => {
       if (!cancelled) setTexture(tex)
     })
-    if (data.id === 'earth') {
-      getPlanetAux('earth', 'clouds').then((tex) => {
-        if (!cancelled && tex) setCloudMap(tex)
-      })
-    }
     return () => { cancelled = true }
   }, [data.id])
 
@@ -122,7 +117,7 @@ export function Planet({ data, onClick }: PlanetProps) {
                 document.body.style.cursor = 'default'
               }}
             >
-              <sphereGeometry args={[planetSize, 48, 48]} />
+              <sphereGeometry args={[planetSize, sphereSegments(quality), sphereSegments(quality)]} />
               <meshStandardMaterial
                 map={texture}
                 roughness={0.75}
@@ -132,15 +127,15 @@ export function Planet({ data, onClick }: PlanetProps) {
               />
             </mesh>
 
-            {/* Earth cloud layer */}
+            {/* Earth cloud layer - fixed subtle layer, never swaps */}
             {data.id === 'earth' && (
               <mesh ref={cloudsRef} scale={1.0}>
-                <sphereGeometry args={[planetSize * 1.02, 48, 48]} />
+                <sphereGeometry args={[planetSize * 1.02, sphereSegments(quality), sphereSegments(quality)]} />
                 <meshStandardMaterial
                   color="#eef2f6"
-                  alphaMap={cloudMap}
+                  alphaMap={cloudTexture}
                   transparent
-                  opacity={0.3}
+                  opacity={0.2}
                   roughness={1}
                   depthWrite={false}
                 />

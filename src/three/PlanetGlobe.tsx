@@ -3,11 +3,11 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, RotateCcw, ZoomIn, ZoomOut, ArrowLeft, ChevronRight, Zap, Rocket, Globe, Wind, Ruler, ExternalLink, Navigation } from 'lucide-react'
+import { X, RotateCcw, ZoomIn, ZoomOut, ArrowLeft, ChevronRight, Zap, Rocket, Globe, Wind, Ruler, ExternalLink, Navigation, Moon } from 'lucide-react'
 import { useStore } from '../store/useStore'
 import { PLANETS } from '../data/planets'
 import { MOONS } from '../data/moons'
-import { createProceduralTexture, createCloudTexture, getPlanetTexture, getPlanetAux, getMoonTexture } from './PlanetTextures'
+import { createProceduralTexture, createCloudTexture, getPlanetTexture, getPlanetAux, getMoonTexture, sphereSegments, proceduralSize } from './PlanetTextures'
 import { sounds } from '../utils/sounds'
 
 function CameraAnimation() {
@@ -29,15 +29,15 @@ function GlobeMesh({ bodyId, bodyType, isSpinning }: { bodyId: string; bodyType:
 
   const isPlanet = bodyType === 'planet'
   const baseColor = isPlanet ? (PLANETS.find((p) => p.id === bodyId)?.color || '#8899aa') : (MOONS.find((m) => m.id === bodyId)?.color || '#c8c8c8')
+  const quality = useStore((s) => s.quality)
   const size = 2.2
 
-  const fallbackTexture = useMemo(() => createProceduralTexture(isPlanet ? bodyId : 'moon', 1024), [isPlanet, bodyId])
-  const fallbackBump = useMemo(() => createProceduralTexture((isPlanet ? bodyId : 'moon') + '_bump', 512), [isPlanet, bodyId])
-  const cloudTexture = useMemo(() => createCloudTexture(1024), [])
+  const fallbackTexture = useMemo(() => createProceduralTexture(isPlanet ? bodyId : 'moon', proceduralSize(quality)), [isPlanet, bodyId, quality])
+  const fallbackBump = useMemo(() => createProceduralTexture((isPlanet ? bodyId : 'moon') + '_bump', proceduralSize(quality)), [isPlanet, bodyId, quality])
+  const cloudTexture = useMemo(() => createCloudTexture(proceduralSize(quality)), [quality])
 
   const [texture, setTexture] = useState<THREE.Texture>(fallbackTexture)
   const [bumpMap, setBumpMap] = useState<THREE.Texture | null>(fallbackBump)
-  const [cloudMap, setCloudMap] = useState<THREE.Texture | null>(null)
   const [nightMap, setNightMap] = useState<THREE.Texture | null>(null)
   const [normalMap, setNormalMap] = useState<THREE.Texture | null>(null)
 
@@ -45,14 +45,12 @@ function GlobeMesh({ bodyId, bodyType, isSpinning }: { bodyId: string; bodyType:
     let cancelled = false
     setTexture(fallbackTexture)
     setBumpMap(fallbackBump)
-    setCloudMap(null)
     setNightMap(null)
     setNormalMap(null)
 
     if (isPlanet) {
       getPlanetTexture(bodyId).then((tex) => { if (!cancelled) setTexture(tex) })
       getPlanetAux(bodyId, 'bump').then((bmp) => { if (!cancelled && bmp) setBumpMap(bmp) })
-      getPlanetAux(bodyId, 'clouds').then((cx) => { if (!cancelled && cx) setCloudMap(cx) })
       getPlanetAux(bodyId, 'night').then((nt) => { if (!cancelled && nt) setNightMap(nt) })
       getPlanetAux(bodyId, 'normal').then((nrm) => { if (!cancelled && nrm) setNormalMap(nrm) })
     } else {
@@ -82,7 +80,7 @@ function GlobeMesh({ bodyId, bodyType, isSpinning }: { bodyId: string; bodyType:
     <group>
       {/* Main body */}
       <mesh ref={meshRef}>
-        <sphereGeometry args={[size, 64, 64]} />
+        <sphereGeometry args={[size, sphereSegments(quality), sphereSegments(quality)]} />
         <meshStandardMaterial
           map={texture}
           bumpMap={bumpMap}
@@ -127,15 +125,15 @@ function GlobeMesh({ bodyId, bodyType, isSpinning }: { bodyId: string; bodyType:
         </mesh>
       )}
 
-      {/* Clouds for Earth - subtle, lets surface show through */}
+      {/* Clouds for Earth - fixed subtle layer, never swaps */}
       {hasClouds && (
         <mesh ref={cloudsRef} scale={1.008}>
-          <sphereGeometry args={[size, 64, 64]} />
+          <sphereGeometry args={[size, sphereSegments(quality), sphereSegments(quality)]} />
           <meshStandardMaterial
             color="#eef2f6"
-            alphaMap={cloudMap || cloudTexture}
+            alphaMap={cloudTexture}
             transparent
-            opacity={0.22}
+            opacity={0.15}
             roughness={1}
             depthWrite={false}
           />
@@ -625,6 +623,10 @@ export function PlanetGlobe() {
   const currentIdx = selectedPlanet ? planetIds.indexOf(selectedPlanet) : -1
   const prevPlanet = currentIdx > 0 ? PLANETS[currentIdx - 1] : null
   const nextPlanet = currentIdx < planetIds.length - 1 ? PLANETS[currentIdx + 1] : null
+  const planetMoons = planet ? MOONS.filter((m) => m.parentPlanet.toLowerCase() === planet.name.toLowerCase()) : []
+  const moonIdx = body.type === 'moon' ? planetMoons.findIndex((m) => m.id === body.id) : -1
+  const prevMoon = body.type === 'moon' && planetMoons.length > 0 ? planetMoons[(moonIdx - 1 + planetMoons.length) % planetMoons.length] : null
+  const nextMoon = body.type === 'moon' && planetMoons.length > 0 ? planetMoons[(moonIdx + 1) % planetMoons.length] : null
 
   useEffect(() => {
     if (selectedPlanet) {
@@ -638,8 +640,14 @@ export function PlanetGlobe() {
   useEffect(() => {
     if (!selectedPlanet) return
     const handler = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft' && prevPlanet && body.type === 'planet') navigatePlanet(prevPlanet.id)
-      if (e.key === 'ArrowRight' && nextPlanet && body.type === 'planet') navigatePlanet(nextPlanet.id)
+      if (e.key === 'ArrowLeft') {
+        if (body.type === 'moon' && prevMoon) selectMoon(prevMoon.id)
+        else if (body.type === 'planet' && prevPlanet) navigatePlanet(prevPlanet.id)
+      }
+      if (e.key === 'ArrowRight') {
+        if (body.type === 'moon' && nextMoon) selectMoon(nextMoon.id)
+        else if (body.type === 'planet' && nextPlanet) navigatePlanet(nextPlanet.id)
+      }
       if (e.key === 'Escape') {
         sounds.play('click')
         if (body.type === 'moon') backToPlanet()
@@ -648,7 +656,7 @@ export function PlanetGlobe() {
     }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
-  }, [selectedPlanet, prevPlanet, nextPlanet, body.type])
+  }, [selectedPlanet, prevPlanet, nextPlanet, prevMoon, nextMoon, body.type])
 
   const navigatePlanet = (id: string) => {
     sounds.play('navigate')
@@ -735,8 +743,23 @@ export function PlanetGlobe() {
             transition={{ delay: 0.8 }}
             className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20"
           >
-            {/* Prev planet */}
-            {prevPlanet && (
+            {/* Prev body - moon or planet */}
+            {body.type === 'moon' && prevMoon ? (
+              <button
+                onClick={() => { sounds.play('navigate'); selectMoon(prevMoon.id) }}
+                className="px-3 py-2 rounded-xl text-[10px] tracking-wider transition-all hover:scale-105"
+                style={{
+                  fontFamily: '"Space Grotesk", sans-serif',
+                  background: 'rgba(13, 27, 42, 0.85)',
+                  border: `1px solid ${prevMoon.color}44`,
+                  color: prevMoon.color,
+                  backdropFilter: 'blur(10px)',
+                }}
+                title={`Previous: ${prevMoon.name}`}
+              >
+                ← {prevMoon.name}
+              </button>
+            ) : prevPlanet ? (
               <button
                 onClick={() => navigatePlanet(prevPlanet.id)}
                 className="px-3 py-2 rounded-xl text-[10px] tracking-wider transition-all hover:scale-105"
@@ -751,7 +774,7 @@ export function PlanetGlobe() {
               >
                 ← {prevPlanet.name}
               </button>
-            )}
+            ) : null}
 
             {/* Zoom out */}
             <button
@@ -798,8 +821,23 @@ export function PlanetGlobe() {
               <ZoomIn size={16} />
             </button>
 
-            {/* Next planet */}
-            {nextPlanet && (
+            {/* Next body - moon or planet */}
+            {body.type === 'moon' && nextMoon ? (
+              <button
+                onClick={() => { sounds.play('navigate'); selectMoon(nextMoon.id) }}
+                className="px-3 py-2 rounded-xl text-[10px] tracking-wider transition-all hover:scale-105"
+                style={{
+                  fontFamily: '"Space Grotesk", sans-serif',
+                  background: 'rgba(13, 27, 42, 0.85)',
+                  border: `1px solid ${nextMoon.color}44`,
+                  color: nextMoon.color,
+                  backdropFilter: 'blur(10px)',
+                }}
+                title={`Next: ${nextMoon.name}`}
+              >
+                {nextMoon.name} →
+              </button>
+            ) : nextPlanet ? (
               <button
                 onClick={() => navigatePlanet(nextPlanet.id)}
                 className="px-3 py-2 rounded-xl text-[10px] tracking-wider transition-all hover:scale-105"
@@ -814,28 +852,49 @@ export function PlanetGlobe() {
               >
                 {nextPlanet.name} →
               </button>
-            )}
+            ) : null}
           </motion.div>
 
-          {/* Back button - top right */}
-          <motion.button
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.7 }}
-            onClick={() => {
-              sounds.play('click')
-              setSelectedPlanet(null)
-            }}
-            className="absolute top-6 right-6 p-3 rounded-xl transition-all hover:scale-110 z-20"
-            style={{
-              background: 'rgba(13, 27, 42, 0.85)',
-              border: '1px solid rgba(0, 212, 255, 0.2)',
-              color: '#00d4ff',
-              backdropFilter: 'blur(10px)',
-            }}
-          >
-            <X size={18} />
-          </motion.button>
+          {/* Top right actions */}
+          <div className="absolute top-6 right-6 flex flex-col items-end gap-2 z-20">
+            {body.type === 'planet' && planetMoons.length > 0 && (
+              <motion.button
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.7 }}
+                onClick={() => { sounds.play('navigate'); selectMoon(planetMoons[0].id) }}
+                className="px-4 py-2.5 rounded-xl text-[11px] font-semibold tracking-wider transition-all hover:scale-105 flex items-center gap-2"
+                style={{
+                  fontFamily: '"Space Grotesk", sans-serif',
+                  background: 'rgba(13, 27, 42, 0.85)',
+                  border: `1px solid ${planet.color}55`,
+                  color: '#00d4ff',
+                  backdropFilter: 'blur(10px)',
+                }}
+                title={`View ${planet.name}'s moons in 3D`}
+              >
+                <Moon size={14} /> EXPLORE MOONS
+              </motion.button>
+            )}
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.75 }}
+              onClick={() => {
+                sounds.play('click')
+                setSelectedPlanet(null)
+              }}
+              className="p-3 rounded-xl transition-all hover:scale-110"
+              style={{
+                background: 'rgba(13, 27, 42, 0.85)',
+                border: '1px solid rgba(0, 212, 255, 0.2)',
+                color: '#00d4ff',
+                backdropFilter: 'blur(10px)',
+              }}
+            >
+              <X size={18} />
+            </motion.button>
+          </div>
 
           {/* Description badge - bottom right */}
           <motion.div
