@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
-import { Filter, X, Download, Copy, ExternalLink, ArrowUpDown } from 'lucide-react'
+import { Filter, Download, ExternalLink, ArrowUpDown } from 'lucide-react'
 import { SAMPLE_EXOPLANETS, EXOPLANET_METHODS, EXOPLANET_FACILITIES, ExoplanetData } from '../data/exoplanets'
 
 type SortKey = keyof ExoplanetData
@@ -229,7 +229,7 @@ export function ExoplanetSection() {
               </tr>
             </thead>
             <tbody>
-              {paged.map((e, i) => (
+              {paged.map((e) => (
                 <tr
                   key={e.pl_name}
                   className="transition-colors hover:bg-white/[0.02]"

@@ -7,7 +7,6 @@ import { HeroSection } from './components/HeroSection'
 import { SearchPanel } from './components/SearchPanel'
 import { Footer } from './components/Footer'
 import { MissionsSection } from './components/MissionsSection'
-import { ResearchDashboard } from './components/ResearchDashboard'
 import { MoonSection } from './components/MoonSection'
 import { AsteroidSection } from './components/AsteroidSection'
 import { AboutSection } from './components/AboutSection'
@@ -152,7 +151,7 @@ function SectionDivider() {
 }
 
 export default function App() {
-  const { isLoading, activeView } = useStore()
+  const { activeView } = useStore()
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {

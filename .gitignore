@@ -1,9 +1,12 @@
 # Dependencies
 node_modules/
+.pnp/
+.pnp.js
 
 # Build
 dist/
 dist-ssr/
+*.local
 
 # Environment
 .env
@@ -11,11 +14,13 @@ dist-ssr/
 .env.*.local
 
 # Editor
-.vscode/
+.vscode/*
+!.vscode/extensions.json
 .idea/
 *.sw?
 *.swo
 *~
+*.local.swp
 
 # OS
 .DS_Store
@@ -36,3 +41,5 @@ yarn-error.log*
 *.tgz
 coverage/
 .nyc_output/
+*.log
+logs/

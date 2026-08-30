@@ -43,7 +43,7 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [scrolledSection, setScrolledSection] = useState<string>('home')
   const {
-    activeView, setActiveView,
+    setActiveView,
     soundEnabled, toggleSound,
     quality, setQuality,
     reducedMotion, toggleReducedMotion,

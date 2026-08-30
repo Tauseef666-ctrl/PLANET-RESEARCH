@@ -55,29 +55,6 @@ function AgencyBadge({ agency }: { agency: string }) {
   )
 }
 
-function TimelineDot({ status, isLast }: { status: typeof MISSIONS[0]['status']; isLast: boolean }) {
-  const colors = { completed: '#00d4ff', active: '#00ff64', future: '#ffb400' }
-  return (
-    <div className="flex flex-col items-center">
-      <div
-        className="w-3 h-3 rounded-full z-10"
-        style={{
-          background: colors[status],
-          boxShadow: `0 0 8px ${colors[status]}55`,
-        }}
-      />
-      {!isLast && (
-        <div
-          className="w-px flex-1 min-h-[20px]"
-          style={{
-            background: `linear-gradient(180deg, ${colors[status]}44, rgba(0, 212, 255, 0.08))`,
-          }}
-        />
-      )}
-    </div>
-  )
-}
-
 export function MissionsSection() {
   const [filter, setFilter] = useState<FilterType>('all')
 

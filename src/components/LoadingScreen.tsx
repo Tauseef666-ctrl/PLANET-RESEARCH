@@ -14,23 +14,21 @@ const BOOT_SEQUENCE = [
 
 export function LoadingScreen() {
   const { isLoading, setIsLoading, loadProgress, setLoadProgress } = useStore()
-  const [currentStep, setCurrentStep] = useState(0)
   const [completedSteps, setCompletedSteps] = useState<string[]>([])
 
   useEffect(() => {
     if (!isLoading) return
 
+    let step = 0
     const interval = setInterval(() => {
-      setCurrentStep((prev) => {
-        if (prev < BOOT_SEQUENCE.length) {
-          setCompletedSteps((steps) => [...steps, BOOT_SEQUENCE[prev]])
-          setLoadProgress(Math.min(100, ((prev + 1) / BOOT_SEQUENCE.length) * 100))
-          return prev + 1
-        }
+      if (step < BOOT_SEQUENCE.length) {
+        setCompletedSteps((steps) => [...steps, BOOT_SEQUENCE[step]])
+        setLoadProgress(Math.min(100, ((step + 1) / BOOT_SEQUENCE.length) * 100))
+        step += 1
+      } else {
         clearInterval(interval)
         setTimeout(() => setIsLoading(false), 600)
-        return prev
-      })
+      }
     }, 400)
 
     return () => clearInterval(interval)

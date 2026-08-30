@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Search, Command, ArrowUp, ArrowDown, CornerDownLeft, Globe, Rocket, Database } from 'lucide-react'
+import { X, Search, Command, ArrowUp, CornerDownLeft, Globe, Rocket, Database } from 'lucide-react'
 
 const SHORTCUTS = [
   { keys: ['⌘', 'K'], label: 'Open Search', icon: Search },

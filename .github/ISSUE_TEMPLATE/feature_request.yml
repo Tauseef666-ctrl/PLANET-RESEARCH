@@ -1,0 +1,35 @@
+name: Feature Request
+description: Suggest an idea or enhancement for PLANET-RESEARCH
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a feature! Please search
+        [existing issues](https://github.com/Tauseef666-ctrl/PLANET-RESEARCH/issues)
+        first to make sure it hasn't already been proposed.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / motivation
+      description: Describe the problem you're trying to solve. What is missing today?
+      placeholder: "I can see planets face-on, but there is no way to view a planet's orbit path from above…"
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: Describe the behaviour or UI you would like to see.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any alternative solutions or workarounds you've considered.
+  - type: textarea
+    id: scope
+    attributes:
+      label: Impact & scope
+      description: Any notes on where in the app this lives, performance considerations, etc.

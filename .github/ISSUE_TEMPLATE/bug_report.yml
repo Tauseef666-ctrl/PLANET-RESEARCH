@@ -1,0 +1,78 @@
+name: Bug Report
+description: Report a reproducible bug in PLANET-RESEARCH
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+        Before submitting, please search [existing issues](https://github.com/Tauseef666-ctrl/PLANET-RESEARCH/issues) to avoid duplicates.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: What commit/branch/version are you on? (GitHub SHA or release tag)
+      placeholder: "e.g. 8a97099 (main)"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+      placeholder: "When I switch from Jupiter back to Earth, the globe renders completely white…"
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Exact steps to trigger the bug.
+      placeholder: |
+        1. Open the site
+        2. Click a planet to open the 3D explorer
+        3. Use → to navigate to Jupiter, then back to Earth
+        4. See the error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What actually happened?
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser & OS
+      placeholder: "Chrome 126 / Windows 11"
+    validations:
+      required: true
+  - type: dropdown
+    id: quality
+    attributes:
+      label: Graphics quality setting
+      options:
+        - Ultra
+        - High
+        - Medium
+        - Low
+      default: 1
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots / recordings
+      description: If applicable, add screenshots or a screen recording to help explain your problem.
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Any other details that might help (e.g., browser console errors).

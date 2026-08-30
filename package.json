@@ -1,14 +1,46 @@
 {
-  "name": "space-research-platform",
-  "private": true,
+  "name": "planet-research",
   "version": "1.0.0",
+  "private": true,
   "type": "module",
+  "description": "Immersive 3D space exploration and research platform — interactive Solar System, exoplanet, asteroid, and moon databases built with React, Three.js, and TypeScript.",
+  "keywords": [
+    "space",
+    "nasa",
+    "solar-system",
+    "planet",
+    "three.js",
+    "react",
+    "typescript",
+    "threejs",
+    "3d",
+    "data-visualization"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Tauseef Khan",
+    "url": "https://github.com/Tauseef666-ctrl"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tauseef666-ctrl/PLANET-RESEARCH.git"
+  },
+  "homepage": "https://planet-research.vercel.app",
+  "bugs": {
+    "url": "https://github.com/Tauseef666-ctrl/PLANET-RESEARCH/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm run lint && npm run build",
+    "clean": "node -e \"fs.rmSync('dist',{recursive:true,force:true})\""
   },
   "dependencies": {
     "@react-three/drei": "^9.117.3",

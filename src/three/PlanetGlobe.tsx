@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useMemo } from 'react'
+import { useRef, useState, useEffect, useMemo, useCallback } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
@@ -28,7 +28,6 @@ function GlobeMesh({ bodyId, bodyType, isSpinning }: { bodyId: string; bodyType:
   const atmosGlowRef = useRef<THREE.Mesh>(null!)
 
   const isPlanet = bodyType === 'planet'
-  const baseColor = isPlanet ? (PLANETS.find((p) => p.id === bodyId)?.color || '#8899aa') : (MOONS.find((m) => m.id === bodyId)?.color || '#c8c8c8')
   const quality = useStore((s) => s.quality)
   const size = 2.2
 
@@ -201,7 +200,7 @@ const sectionStyle = {
 const labelClass = "text-[9px] tracking-[0.15em] uppercase text-gray-600"
 const valueClass = "text-[11px] text-gray-300 leading-relaxed"
 
-function InfoPanel({ planetId, onClose, onSelectMoon }: { planetId: string; onClose: () => void; onSelectMoon?: (moonId: string) => void }) {
+function InfoPanel({ planetId, onSelectMoon }: { planetId: string; onSelectMoon?: (moonId: string) => void }) {
   const planet = PLANETS.find((p) => p.id === planetId)
   const setSelectedPlanet = useStore((s) => s.setSelectedPlanet)
   if (!planet) return null
@@ -619,6 +618,20 @@ export function PlanetGlobe() {
     }
   }, [selectedPlanet])
 
+  const navigatePlanet = useCallback((id: string) => {
+    sounds.play('navigate')
+    setSelectedPlanet(id)
+  }, [setSelectedPlanet])
+
+  const selectMoon = useCallback((moonId: string) => {
+    setZoom(7.5)
+    setBody({ id: moonId, type: 'moon' })
+  }, [])
+
+  const backToPlanet = useCallback(() => {
+    if (selectedPlanet) setBody({ id: selectedPlanet, type: 'planet' })
+  }, [selectedPlanet])
+
   // Keyboard navigation
   useEffect(() => {
     if (!selectedPlanet) return
@@ -639,21 +652,7 @@ export function PlanetGlobe() {
     }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
-  }, [selectedPlanet, prevPlanet, nextPlanet, prevMoon, nextMoon, body.type])
-
-  const navigatePlanet = (id: string) => {
-    sounds.play('navigate')
-    setSelectedPlanet(id)
-  }
-
-  const selectMoon = (moonId: string) => {
-    setZoom(7.5)
-    setBody({ id: moonId, type: 'moon' })
-  }
-
-  const backToPlanet = () => {
-    if (selectedPlanet) setBody({ id: selectedPlanet, type: 'planet' })
-  }
+  }, [selectedPlanet, prevPlanet, nextPlanet, prevMoon, nextMoon, body.type, navigatePlanet, selectMoon, backToPlanet, setSelectedPlanet])
 
   if (!selectedPlanet || !planet) return null
 
@@ -694,7 +693,7 @@ export function PlanetGlobe() {
           {body.type === 'moon' ? (
             <MoonInfoPanel moonId={body.id} onBack={backToPlanet} onClose={() => { setSelectedPlanet(null); setActiveView('solar-system') }} />
           ) : (
-            <InfoPanel planetId={selectedPlanet} onClose={() => { setSelectedPlanet(null); setActiveView('solar-system') }} onSelectMoon={selectMoon} />
+            <InfoPanel planetId={selectedPlanet} onSelectMoon={selectMoon} />
           )}
 
           {/* Body name - top center */}

@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Live Site
+    url: https://planet-research.vercel.app/
+    about: "Check the production build for the version you're reporting against."
+  - name: Repository Discussions
+    url: https://github.com/Tauseef666-ctrl/PLANET-RESEARCH/discussions
+    about: "Open-ended questions, ideas, and general discussion."
+  - name: Security Issues
+    url: https://github.com/Tauseef666-ctrl/PLANET-RESEARCH/security/advisories/new
+    about: "Please report security vulnerabilities privately — see SECURITY.md."

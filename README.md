@@ -1,66 +1,92 @@
-# Space Research Platform
+<div align="center">
 
-An immersive, interactive 3D space exploration and research website built with React, Three.js, and modern web technologies. Explore the Solar System, exoplanets, asteroids, moons, and NASA research data in a cinematic mission-control-inspired interface.
+# 🌍 PLANET-RESEARCH
 
-## Live Demo
+**An immersive 3D space exploration and research platform**
 
-**[View Live Site](https://planet-research.vercel.app/)**
+Explore the Solar System, exoplanets, asteroids, and moons through a cinematic,
+mission-control-inspired interface — powered by React, Three.js, and TypeScript.
 
-## Features
+[**🌐 Live Demo**](https://planet-research.vercel.app/) ·
+[**📖 Documentation**](#-features) ·
+[**🐛 Report a Bug**](https://github.com/Tauseef666-ctrl/PLANET-RESEARCH/issues/new/choose)
 
-### 3D Solar System
-- Realistic Sun with glow and corona effects
-- 8 planets with orbital mechanics, rotation, and atmospheric effects
-- Saturn's rings, Earth's atmosphere, and planet-specific details
-- Cinematic camera transitions and click-to-zoom interactions
+---
 
-### Exoplanet Database
-- NASA Exoplanet Archive integration
-- Advanced filtering by year, discovery method, host star, and facility
-- Sortable data table with pagination
-- CSV/JSON export functionality
-- Direct links to NASA Confirmed Planet pages
+[![Vercel Deployment](https://img.shields.io/badge/deployment-Vercel-000000?logo=vercel&logoColor=white)](https://planet-research.vercel.app/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.6-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-18-61dafb?logo=react&logoColor=white)](https://reactjs.org/)
+[![Three.js](https://img.shields.io/badge/Three.js-r170-000000?logo=three.js&logoColor=white)](https://threejs.org/)
+[![Build](https://img.shields.io/badge/build-passing-brightgreen)](#-getting-started)
+[![License](https://img.shields.io/badge/license-MIT-4caf50)](#-license)
 
-### Asteroid Explorer
-- Searchable asteroid database with orbital data
+</div>
+
+---
+
+## ✨ Features
+
+### 🪐 3D Solar System
+- Realistic Sun with animated glow and corona effects
+- 8 planets with authentic orbital mechanics, axial tilt, and rotation
+- Saturn's layered rings, Earth's atmosphere, and per-planet surface details
+- Cinematic camera transitions, click-to-zoom, and drag-to-orbit interaction
+- **Explore Moons** — dive into 3D views of 12 natural satellites from any planet
+
+### 🔭 Exoplanet Database
+- NASA Exoplanet Archive–inspired dataset with thousands of confirmed planets
+- Advanced filtering by discovery year, method, host star, and facility
+- Sortable, paginated data table
+- CSV export and direct links to NASA Confirmed Planet pages
+
+### ☄️ Asteroid Explorer
+- Searchable asteroid catalog with orbital and physical data
 - Size, velocity, classification, and discovery information
 
-### Moon Explorer
-- 8 major moons with scientific data
-- Surface information, gravity, atmosphere, and mission history
+### 🌙 Moon Explorer
+- 12 major moons across the Solar System with scientific data
+- Surface properties, gravity, atmosphere, and mission history
 
-### Mission Control
+### 🚀 Mission Control
 - Past, active, and future space missions
-- Detailed mission data including objectives and discoveries
+- Detailed objectives, payloads, and discovery timelines
 
-### Research Dashboard
-- Animated counters and data visualization
+### 📊 Research Dashboard
+- Animated counters and data visualizations
 - Research sync status and GitHub integration
 
-### Interactive Search
-- Fuzzy search across all celestial objects
-- Keyboard navigation (Cmd/Ctrl+K)
-- Categorized results with instant filtering
+### 🔍 Interactive Search
+- Fuzzy search across every celestial object (`Ctrl/⌘ + K`)
+- Keyboard-navigable, categorized results with instant filtering
 
-## Tech Stack
+### 🎨 Graphics Quality
+Four profiles (Ultra / High / Medium / Low) that tune texture resolution,
+geometry tessellation, particles, and device pixel ratio.
 
-| Layer | Technology |
-|-------|-----------|
-| Framework | React 18 + TypeScript |
-| Build Tool | Vite 5 |
-| 3D Engine | Three.js + React Three Fiber + Drei |
-| Animation | Framer Motion + GSAP |
-| Styling | Tailwind CSS |
-| Search | Fuse.js (fuzzy search) |
-| State | Zustand |
-| Deployment | Vercel |
+---
 
-## Getting Started
+## 🛠 Tech Stack
+
+| Layer          | Technology                                              |
+| -------------- | ------------------------------------------------------- |
+| Framework      | [React 18](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/) |
+| Build Tool     | [Vite 5](https://vitejs.dev/)                           |
+| 3D Engine      | [Three.js](https://threejs.org/) · [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/) · [Drei](https://drei.pmnd.rs/) |
+| Animation      | [Framer Motion](https://www.framer.com/motion/) · [GSAP](https://gsap.com/) |
+| Styling        | [Tailwind CSS](https://tailwindcss.com/)                |
+| State          | [Zustand](https://zustand-demo.pmnd.rs/)                |
+| Charts         | [Recharts](https://recharts.org/)                       |
+| Search         | [Fuse.js](https://www.fusejs.io/)                       |
+| Deployment     | [Vercel](https://vercel.com/)                           |
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js 18+ 
-- npm or yarn
+- **Node.js ≥ 18** (LTS recommended) — manage versions with [nvm](https://github.com/nvm-sh/nvm) (see `.nvmrc`)
+- **npm** or your package manager of choice
 
 ### Installation
 
@@ -72,108 +98,157 @@ npm install
 
 ### Development
 
+Start the Vite dev server with HMR:
+
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+Open [http://localhost:5173](http://localhost:5173).
 
-### Build
+### Production Build
+
+```bash
+npm run build      # type-check + bundle to dist/
+npm run preview    # serve the production build locally
+```
+
+### Available Scripts
+
+| Script                | Description                                   |
+| --------------------- | --------------------------------------------- |
+| `npm run dev`         | Start the development server                  |
+| `npm run build`       | Type-check (`tsc -b`) and bundle (`vite build`) |
+| `npm run preview`     | Preview the production build                  |
+| `npm run lint`        | Run ESLint on the codebase                    |
+| `npm run lint:fix`    | Run ESLint with autofix                       |
+| `npm run typecheck`   | Type-check without emitting                    |
+| `npm run check`       | Full quality gate: typecheck + lint + build   |
+| `npm run clean`       | Remove the `dist/` output directory           |
+
+---
+
+## 📁 Project Structure
+
+```
+PLANET-RESEARCH/
+├── public/                 # Static assets (favicon, etc.)
+├── src/
+│   ├── components/         # UI components
+│   │   ├── Navbar.tsx          # Navigation & settings
+│   │   ├── LoadingScreen.tsx   # Boot sequence animation
+│   │   ├── HeroSection.tsx     # Landing hero
+│   │   ├── SearchPanel.tsx     # Global fuzzy search
+│   │   ├── PlanetPanel.tsx     # Planet detail sidebar
+│   │   ├── PlanetExplorer.tsx  # Planet explorer
+│   │   ├── PlanetCompare.tsx   # Planet comparison view
+│   │   ├── ExoplanetSection.tsx   # Exoplanet database
+│   │   ├── MissionsSection.tsx   # Mission control
+│   │   ├── MoonSection.tsx       # Moon explorer
+│   │   ├── AsteroidSection.tsx   # Asteroid explorer
+│   │   ├── ResearchDashboard.tsx # Data visualization
+│   │   ├── SpaceMap.tsx          # Interstellar map
+│   │   ├── SearchPanel.tsx       # Global search modal
+│   │   └── Footer.tsx            # Footer
+│   ├── three/              # 3D components (React Three Fiber)
+│   │   ├── SolarSystem.tsx     # Solar system layout
+│   │   ├── Scene.tsx           # Main Canvas scene
+│   │   ├── Planet.tsx          # Orbiting planet
+│   │   ├── PlanetGlobe.tsx     # 3D planet/moon explorer view
+│   │   ├── PlanetTextures.ts   # Procedural textures & texture loader
+│   │   ├── Sun.tsx             # Sun with glow/corona
+│   │   ├── Moon.tsx            # Moon mesh
+│   │   ├── Stars.tsx           # Star field
+│   │   └── ...                 # Supporting 3D effects
+│   ├── data/               # Static datasets
+│   │   ├── planets.ts      # Planet data
+│   │   ├── exoplanets.ts   # Exoplanet data
+│   │   ├── missions.ts     # Mission data
+│   │   ├── moons.ts        # Moon data
+│   │   └── planetTextures.ts   # Texture URL config
+│   ├── store/
+│   │   └── useStore.ts     # Zustand global state
+│   ├── utils/
+│   │   └── sounds.ts       # UI sound utilities
+│   ├── App.tsx             # Main application shell
+│   ├── main.tsx            # Entry point
+│   └── index.css           # Global styles
+├── public/
+├── vercel.json            # Vercel deployment config
+├── vite.config.ts         # Vite configuration
+├── tsconfig.json          # TypeScript configuration
+└── eslint.config.js       # ESLint flat configuration
+```
+
+---
+
+## 🧭 Keyboard Shortcuts
+
+| Action                | Key             |
+| --------------------- | --------------- |
+| Open global search    | `Ctrl/⌘ + K`    |
+| Close / navigate back | `Esc`            |
+| Switch planet/moon    | `←` / `→` arrows |
+| Zoom in / out         | Scroll wheel    |
+
+---
+
+## 📜 Deployment
+
+### Vercel (recommended)
+
+1. Push this repository to GitHub
+2. Import it at [vercel.com/new](https://vercel.com/new)
+3. Framework preset: **Vite** (auto-detected; `vercel.json` is included)
+
+Every push to `main` triggers an automatic production deployment.
+
+### Manual / static hosting
 
 ```bash
 npm run build
+# host the dist/ folder anywhere
 ```
 
-### Preview Production Build
+---
 
-```bash
-npm run preview
-```
+## 🤝 Contributing
 
-## Deployment
+Contributions are what make the open-source community amazing. Please read our
+[**Contributing Guide**](./CONTRIBUTING.md) before submitting a pull request,
+and review the [**Code of Conduct**](./CODE_OF_CONDUCT.md).
 
-### Vercel (Recommended)
+- Want a feature? → [Open a feature request](https://github.com/Tauseef666-ctrl/PLANET-RESEARCH/issues/new?assignees=&labels=enhancement&template=feature_request.yml)
+- Found a bug? → [Open a bug report](https://github.com/Tauseef666-ctrl/PLANET-RESEARCH/issues/new?assignees=&labels=bug&template=bug_report.yml)
 
-1. Push to GitHub
-2. Go to [vercel.com/new](https://vercel.com/new)
-3. Import `Tauseef666-ctrl/PLANET-RESEARCH`
-4. Framework: Vite (auto-detected)
-5. Deploy
+---
 
-Every push to `main` auto-deploys via GitHub Actions.
+## 🔒 Security
 
-### Manual Deployment
+Found a vulnerability? Please report it privately — see [**SECURITY.md**](./SECURITY.md).
 
-```bash
-npm run build
-# Upload dist/ folder to any static hosting provider
-```
+---
 
-## Project Structure
+## 📚 Data Sources
 
-```
-src/
-├── components/          # UI components
-│   ├── Navbar.tsx       # Navigation with settings
-│   ├── LoadingScreen.tsx # Boot sequence animation
-│   ├── HeroSection.tsx  # Landing hero
-│   ├── SearchPanel.tsx  # Global search
-│   ├── PlanetPanel.tsx  # Planet detail sidebar
-│   ├── ExoplanetSection.tsx  # Exoplanet database
-│   ├── MissionsSection.tsx   # Mission control
-│   ├── MoonSection.tsx  # Moon explorer
-│   ├── AsteroidSection.tsx   # Asteroid explorer
-│   ├── ResearchDashboard.tsx # Data visualization
-│   ├── AboutSection.tsx # About page
-│   └── Footer.tsx       # Footer
-├── three/               # 3D components
-│   ├── Scene.tsx        # Main Canvas
-│   ├── SolarSystem.tsx  # Solar system layout
-│   ├── Sun.tsx          # Sun with effects
-│   ├── Planet.tsx       # Planet with orbit
-│   └── Stars.tsx        # Star field
-├── data/                # Static data
-│   ├── planets.ts       # Planet data
-│   ├── exoplanets.ts    # Exoplanet data
-│   ├── missions.ts      # Mission data
-│   └── moons.ts         # Moon data
-├── store/
-│   └── useStore.ts      # Zustand state
-├── App.tsx              # Main app
-├── main.tsx             # Entry point
-└── index.css            # Global styles
-```
+- **NASA** — Planetary fact sheets and mission data
+- **NASA Exoplanet Archive** — Confirmed exoplanet catalog
+- **Wikimedia Commons / Three.js examples** — Planet surface textures (loaded at runtime; procedural fallbacks are bundled)
 
-## Configuration
+---
 
-### Graphics Quality
+## 📝 License
 
-The app supports 4 quality modes:
-- **Ultra**: Full quality with high DPR
-- **High**: Default balanced mode
-- **Medium**: Reduced particles and effects
-- **Low**: Mobile/weak device optimized
+Distributed under the **MIT License**. See [**LICENSE**](./LICENSE) for more information.
 
-### Accessibility
+---
 
-- Keyboard navigation throughout
-- Reduced motion mode
-- High contrast mode
-- Screen reader support
+## 🙏 Acknowledgments
 
-## Data Sources
+- [NASA](https://www.nasa.gov/) for planetary, exoplanet, and mission data
+- [Three.js](https://threejs.org/) for real-time 3D rendering
+- [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/) for React bindings to Three.js
+- [Vercel](https://vercel.com/) for hosting and continuous deployment
+- [Shields.io](https://shields.io/) for badges
 
-- **NASA** — Planetary fact sheets
-- **NASA Exoplanet Archive** — Confirmed exoplanet data
-- **Research Repository** — Project-specific research data
-
-## License
-
-MIT License
-
-## Acknowledgments
-
-- [NASA](https://www.nasa.gov/) for planetary data
-- [Three.js](https://threejs.org/) for 3D rendering
-- [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/) for React 3D integration
-- [Vercel](https://vercel.com/) for hosting and deployment
+<sub>Built with ❤️ for space enthusiasts and researchers.</sub>

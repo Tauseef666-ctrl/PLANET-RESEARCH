@@ -1,4 +1,3 @@
-const TEXTURE_BASE = 'https://upload.wikimedia.org/wikipedia/commons'
 const THREEJS_BASE = 'https://threejs.org/examples/textures/planets'
 const WIKI = 'https://commons.wikimedia.org/wiki/Special:FilePath'
 

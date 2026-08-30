@@ -204,7 +204,7 @@ function PlanetLabel({
   planetSize: number
   startAngle: number
 }) {
-  const ref = useRef<THREE.Mesh>(null!)
+  const ref = useRef<THREE.Group>(null!)
   const angleRef = useRef(startAngle)
 
   useFrame((_, delta) => {
@@ -217,24 +217,26 @@ function PlanetLabel({
   })
 
   return (
-    <Html ref={ref as any} center distanceFactor={40} style={{ pointerEvents: 'none' }}>
-      <div
-        style={{
-          background: 'rgba(5, 16, 31, 0.85)',
-          backdropFilter: 'blur(8px)',
-          border: '1px solid rgba(0, 212, 255, 0.2)',
-          borderRadius: '6px',
-          padding: '2px 8px',
-          fontFamily: '"Space Grotesk", sans-serif',
-          fontSize: '10px',
-          color: '#c0d8ee',
-          whiteSpace: 'nowrap',
-          userSelect: 'none',
-        }}
-      >
-        {planet.name}
-      </div>
-    </Html>
+    <group ref={ref}>
+      <Html center distanceFactor={40} style={{ pointerEvents: 'none' }}>
+        <div
+          style={{
+            background: 'rgba(5, 16, 31, 0.85)',
+            backdropFilter: 'blur(8px)',
+            border: '1px solid rgba(0, 212, 255, 0.2)',
+            borderRadius: '6px',
+            padding: '2px 8px',
+            fontFamily: '"Space Grotesk", sans-serif',
+            fontSize: '10px',
+            color: '#c0d8ee',
+            whiteSpace: 'nowrap',
+            userSelect: 'none',
+          }}
+        >
+          {planet.name}
+        </div>
+      </Html>
+    </group>
   )
 }
 
@@ -296,11 +298,6 @@ function SceneContent({
         const orbitR = REAL_ORBIT_RADII[planet.id] || planet.orbitRadius
         const pSize = REAL_SIZES[planet.id] || planet.size * 0.4
         const angle = planetAngles[planet.id]
-        const labelPos: [number, number, number] = [
-          Math.cos(angle) * orbitR,
-          pSize + 0.6,
-          Math.sin(angle) * orbitR,
-        ]
         return (
           <group key={planet.id}>
             <PlanetSphere
@@ -542,11 +539,11 @@ function Minimap({ hoveredPlanet }: { hoveredPlanet: string | null }) {
 }
 
 export function SpaceMap() {
-  const { setSelectedPlanet, setActiveView } = useStore()
+  const { setSelectedPlanet } = useStore()
   const [search, setSearch] = useState('')
   const [hoveredPlanet, setHoveredPlanet] = useState<string | null>(null)
   const [selectedInfo, setSelectedInfo] = useState<string | null>(null)
-  const [flyTarget, setFlyTarget] = useState<THREE.Vector3 | null>(null)
+  const [, setFlyTarget] = useState<THREE.Vector3 | null>(null)
 
   const filteredPlanets = useMemo(() => {
     if (!search) return PLANETS

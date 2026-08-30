@@ -8,7 +8,8 @@ class SoundManager {
   init() {
     if (this.initialized) return
     try {
-      this.ctx = new (window.AudioContext || (window as any).webkitAudioContext)()
+      const AudioCtor = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+      this.ctx = new AudioCtor()
       this.initialized = true
     } catch {
       console.warn('Web Audio API not available')

@@ -206,7 +206,6 @@ export function DataHub() {
               <div
                 className="w-36 h-36 rounded-full flex-shrink-0"
                 style={{
-                  // @ts-ignore
                   background: (() => {
                     let acc = 0
                     return `conic-gradient(${PLANET_TYPES.map((t) => {

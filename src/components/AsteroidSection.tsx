@@ -210,7 +210,6 @@ export function AsteroidSection() {
   const neoAsteroids = ASTEROIDS.filter((a) => a.isNeo)
 
   const displayAsteroids = showNearEarth ? neoAsteroids : filtered
-  const expandedData = expandedAsteroid ? ASTEROIDS.find((a) => a.name === expandedAsteroid) : null
 
   return (
     <section className="relative z-10 max-w-7xl mx-auto px-4 py-16">
