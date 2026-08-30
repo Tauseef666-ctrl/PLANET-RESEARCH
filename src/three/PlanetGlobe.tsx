@@ -7,7 +7,7 @@ import { X, RotateCcw, ZoomIn, ZoomOut, ArrowLeft, ChevronRight, Zap, Rocket, Gl
 import { useStore } from '../store/useStore'
 import { PLANETS } from '../data/planets'
 import { MOONS } from '../data/moons'
-import { createProceduralTexture, getPlanetTexture, getPlanetAux, getMoonTexture, sphereSegments, proceduralSize } from './PlanetTextures'
+import { createProceduralTexture, createCloudTexture, getPlanetTexture, getMoonTexture, sphereSegments, proceduralSize } from './PlanetTextures'
 import { sounds } from '../utils/sounds'
 
 function CameraAnimation({ zoom }: { zoom: number }) {
@@ -23,6 +23,7 @@ function CameraAnimation({ zoom }: { zoom: number }) {
 
 function GlobeMesh({ bodyId, bodyType, isSpinning }: { bodyId: string; bodyType: 'planet' | 'moon'; isSpinning: boolean }) {
   const meshRef = useRef<THREE.Mesh>(null!)
+  const cloudsRef = useRef<THREE.Mesh>(null!)
   const atmosRef = useRef<THREE.Mesh>(null!)
   const atmosGlowRef = useRef<THREE.Mesh>(null!)
 
@@ -32,34 +33,28 @@ function GlobeMesh({ bodyId, bodyType, isSpinning }: { bodyId: string; bodyType:
   const size = 2.2
 
   const fallbackTexture = useMemo(() => createProceduralTexture(isPlanet ? bodyId : 'moon', proceduralSize(quality)), [isPlanet, bodyId, quality])
-  const fallbackBump = useMemo(() => createProceduralTexture((isPlanet ? bodyId : 'moon') + '_bump', proceduralSize(quality)), [isPlanet, bodyId, quality])
+  const cloudTexture = useMemo(() => createCloudTexture(proceduralSize(quality)), [quality])
 
   const [texture, setTexture] = useState<THREE.Texture>(fallbackTexture)
-  const [bumpMap, setBumpMap] = useState<THREE.Texture | null>(fallbackBump)
-  const [nightMap, setNightMap] = useState<THREE.Texture | null>(null)
-  const [normalMap, setNormalMap] = useState<THREE.Texture | null>(null)
 
   useEffect(() => {
     let cancelled = false
     setTexture(fallbackTexture)
-    setBumpMap(fallbackBump)
-    setNightMap(null)
-    setNormalMap(null)
 
     if (isPlanet) {
       getPlanetTexture(bodyId).then((tex) => { if (!cancelled) setTexture(tex) })
-      getPlanetAux(bodyId, 'bump').then((bmp) => { if (!cancelled && bmp) setBumpMap(bmp) })
-      getPlanetAux(bodyId, 'night').then((nt) => { if (!cancelled && nt) setNightMap(nt) })
-      getPlanetAux(bodyId, 'normal').then((nrm) => { if (!cancelled && nrm) setNormalMap(nrm) })
     } else {
       getMoonTexture(bodyId).then((tex) => { if (!cancelled && tex) setTexture(tex) })
     }
     return () => { cancelled = true }
-  }, [isPlanet, bodyId, fallbackTexture, fallbackBump])
+  }, [isPlanet, bodyId, fallbackTexture])
 
   useFrame((_, delta) => {
     if (meshRef.current && isSpinning) {
       meshRef.current.rotation.y += delta * (isPlanet ? 0.3 : 0.12)
+    }
+    if (cloudsRef.current && isSpinning) {
+      cloudsRef.current.rotation.y += delta * 0.1
     }
     if (atmosGlowRef.current) {
       atmosGlowRef.current.rotation.y += delta * 0.02
@@ -67,6 +62,7 @@ function GlobeMesh({ bodyId, bodyType, isSpinning }: { bodyId: string; bodyType:
   })
 
   const hasAtmosphere = isPlanet && ['earth', 'venus', 'jupiter', 'saturn', 'uranus', 'neptune'].includes(bodyId)
+  const hasClouds = isPlanet && bodyId === 'earth'
   const atmosphereColor =
     bodyId === 'earth' ? '#4a90d9' : bodyId === 'venus' ? '#e8cda0' : bodyId === 'jupiter' ? '#c88b3a' : bodyId === 'saturn' ? '#e8d5a3' : bodyId === 'neptune' ? '#3f54ba' : '#00d4ff'
 
@@ -77,17 +73,25 @@ function GlobeMesh({ bodyId, bodyType, isSpinning }: { bodyId: string; bodyType:
         <sphereGeometry args={[size, sphereSegments(quality), sphereSegments(quality)]} />
         <meshStandardMaterial
           map={texture}
-          bumpMap={bumpMap}
-          bumpScale={isPlanet ? 0.05 : 0.08}
-          normalMap={normalMap}
-          normalScale={new THREE.Vector2(0.6, 0.6)}
-          emissiveMap={nightMap}
-          emissive={nightMap ? '#ffffff' : '#000000'}
-          emissiveIntensity={nightMap ? 1.5 : 0}
           roughness={0.8}
           metalness={0.1}
         />
       </mesh>
+
+      {/* Earth clouds - subtle permanent procedural layer */}
+      {hasClouds && (
+        <mesh ref={cloudsRef} scale={1.008}>
+          <sphereGeometry args={[size, sphereSegments(quality), sphereSegments(quality)]} />
+          <meshStandardMaterial
+            color="#eef2f6"
+            alphaMap={cloudTexture}
+            transparent
+            opacity={0.16}
+            roughness={1}
+            depthWrite={false}
+          />
+        </mesh>
+      )}
 
       {/* Inner atmosphere */}
       {hasAtmosphere && (

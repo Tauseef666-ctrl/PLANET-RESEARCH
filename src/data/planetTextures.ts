@@ -11,11 +11,6 @@ export const PLANET_TEXTURES: Record<string, { map: string; clouds?: string; nig
   },
   earth: {
     map: `${THREEJS_BASE}/earth_day_4096.jpg`,
-    clouds: `${THREEJS_BASE}/earth_clouds_1024.png`,
-    night: `${THREEJS_BASE}/earth_night_4096.jpg`,
-    emissive: `${THREEJS_BASE}/earth_night_4096.jpg`,
-    normal: `${THREEJS_BASE}/earth_normal_2048.jpg`,
-    bump: `${THREEJS_BASE}/earth_specular_2048.jpg`,
   },
   mars: {
     map: `${WIKI}/${encodeURIComponent('Mars_Valles_Marineris.jpeg')}`,

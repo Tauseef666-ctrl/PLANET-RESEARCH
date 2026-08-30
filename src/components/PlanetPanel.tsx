@@ -5,20 +5,24 @@ import { X, Globe, Rocket, ExternalLink, Droplets, Wind, Zap, AlertTriangle, Clo
 import * as THREE from 'three'
 import { useStore } from '../store/useStore'
 import { PLANETS } from '../data/planets'
-import { createProceduralTexture } from '../three/PlanetTextures'
+import { createProceduralTexture, createCloudTexture } from '../three/PlanetTextures'
 import { sounds } from '../utils/sounds'
 
 function MiniPlanet({ planetId }: { planetId: string }) {
   const meshRef = useRef<THREE.Mesh>(null!)
   const atmosphereRef = useRef<THREE.Mesh>(null!)
+  const cloudsRef = useRef<THREE.Mesh>(null!)
 
   const texture = useMemo(() => createProceduralTexture(planetId, 512), [planetId])
+  const cloudTexture = useMemo(() => createCloudTexture(256), [])
 
   useFrame((_, delta) => {
     if (meshRef.current) meshRef.current.rotation.y += delta * 0.25
+    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.1
   })
 
   const hasAtmosphere = ['earth', 'venus', 'jupiter', 'saturn', 'uranus', 'neptune'].includes(planetId)
+  const hasClouds = planetId === 'earth'
   const atmosphereColor =
     planetId === 'earth' ? '#4a90d9' : planetId === 'venus' ? '#e8cda0' : '#00d4ff'
 
@@ -38,6 +42,19 @@ function MiniPlanet({ planetId }: { planetId: string }) {
             opacity={planetId === 'earth' ? 0.12 : 0.06}
             side={THREE.BackSide}
             blending={THREE.AdditiveBlending}
+            depthWrite={false}
+          />
+        </mesh>
+      )}
+
+      {hasClouds && (
+        <mesh ref={cloudsRef} scale={1.01}>
+          <sphereGeometry args={[1.6, 48, 48]} />
+          <meshStandardMaterial
+            color="#eef2f6"
+            alphaMap={cloudTexture}
+            transparent
+            opacity={0.12}
             depthWrite={false}
           />
         </mesh>

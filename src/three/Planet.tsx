@@ -5,7 +5,7 @@ import * as THREE from 'three'
 import { PlanetData } from '../data/planets'
 import { MOONS } from '../data/moons'
 import { useStore } from '../store/useStore'
-import { createProceduralTexture, getPlanetTexture, sphereSegments, proceduralSize } from './PlanetTextures'
+import { createProceduralTexture, createCloudTexture, getPlanetTexture, sphereSegments, proceduralSize } from './PlanetTextures'
 import { OrbitingMoon } from './Moon'
 import { sounds } from '../utils/sounds'
 
@@ -31,6 +31,7 @@ function OrbitLine({ radius, color = '#ffffff', opacity = 0.15 }: { radius: numb
 
 export function Planet({ data, onClick }: PlanetProps) {
   const meshRef = useRef<THREE.Mesh>(null!)
+  const cloudsRef = useRef<THREE.Mesh>(null!)
   const groupRef = useRef<THREE.Group>(null!)
   const orbitRef = useRef<THREE.Group>(null!)
   const glowRef = useRef<THREE.Mesh>(null!)
@@ -43,6 +44,7 @@ export function Planet({ data, onClick }: PlanetProps) {
   const quality = useStore((s) => s.quality)
 
   const fallbackTexture = useMemo(() => createProceduralTexture(data.id, proceduralSize(quality)), [data.id, quality])
+  const cloudTexture = useMemo(() => createCloudTexture(proceduralSize(quality)), [quality])
   const [texture, setTexture] = useState<THREE.Texture>(fallbackTexture)
 
   useEffect(() => {
@@ -73,6 +75,9 @@ export function Planet({ data, onClick }: PlanetProps) {
     const t = state.clock.elapsedTime
     if (meshRef.current) {
       meshRef.current.rotation.y += data.rotationSpeed * 0.1
+    }
+    if (cloudsRef.current && data.id === 'earth') {
+      cloudsRef.current.rotation.y += data.rotationSpeed * 0.12
     }
     if (orbitRef.current) {
       orbitRef.current.rotation.y = t * data.orbitSpeed * 0.1
@@ -121,6 +126,21 @@ export function Planet({ data, onClick }: PlanetProps) {
                 emissiveIntensity={isSelected ? 0.5 : hovered ? 0.3 : 0.08}
               />
             </mesh>
+
+            {/* Earth cloud layer - subtle permanent procedural layer */}
+            {data.id === 'earth' && (
+              <mesh ref={cloudsRef} scale={1.02}>
+                <sphereGeometry args={[planetSize, sphereSegments(quality), sphereSegments(quality)]} />
+                <meshStandardMaterial
+                  color="#eef2f6"
+                  alphaMap={cloudTexture}
+                  transparent
+                  opacity={0.2}
+                  roughness={1}
+                  depthWrite={false}
+                />
+              </mesh>
+            )}
 
             {/* Atmosphere glow */}
             {hasAtmosphere && (
