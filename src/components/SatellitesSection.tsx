@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, X } from 'lucide-react'
+import { Search, X, ChevronDown } from 'lucide-react'
 import { SATELLITES, ORBIT_TYPES } from '../data/satellites'
 
 const ACCENT = '#00d4ff'
@@ -29,6 +29,8 @@ export function SatellitesSection() {
   const [searchTerm, setSearchTerm] = useState('')
   const [activeFilter, setActiveFilter] = useState<typeof ORBIT_TYPES[number]>('All')
   const [expandedSatellite, setExpandedSatellite] = useState<string | null>(null)
+  const [visibleCount, setVisibleCount] = useState(8)
+  const PAGE_SIZE = 8
 
   const filtered = SATELLITES.filter((s) => {
     const matchesSearch =
@@ -38,6 +40,9 @@ export function SatellitesSection() {
     const matchesFilter = activeFilter === 'All' || s.orbitType === activeFilter
     return matchesSearch && matchesFilter
   })
+
+  const visible = filtered.slice(0, visibleCount)
+  const hasMore = visibleCount < filtered.length
 
   return (
     <section className="relative z-10 max-w-7xl mx-auto px-4 py-16">
@@ -82,7 +87,7 @@ export function SatellitesSection() {
             return (
               <button
                 key={f}
-                onClick={() => setActiveFilter(f)}
+                onClick={() => { setActiveFilter(f); setVisibleCount(PAGE_SIZE) }}
                 className="px-3 py-1.5 rounded-lg text-[10px] tracking-wider uppercase transition-all"
                 style={{
                   background: isActive ? `${fColor}12` : 'rgba(255,255,255,0.02)',
@@ -99,7 +104,7 @@ export function SatellitesSection() {
 
         {/* Satellites grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {filtered.map((satellite, i) => {
+          {visible.map((satellite, i) => {
             const typeColor = ORBIT_COLORS[satellite.orbitType] || '#888888'
             const isExpanded = expandedSatellite === satellite.noradId
             return (
@@ -196,6 +201,24 @@ export function SatellitesSection() {
             )
           })}
         </div>
+
+        {/* Load More */}
+        {hasMore && (
+          <div className="flex justify-center mt-8">
+            <button
+              onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
+              className="px-6 py-2.5 rounded-lg text-[10px] tracking-wider uppercase transition-all flex items-center gap-2"
+              style={{
+                background: 'rgba(0, 212, 255, 0.1)',
+                border: '1px solid rgba(0, 212, 255, 0.3)',
+                color: ACCENT,
+                fontFamily: '"Space Grotesk", sans-serif',
+              }}
+            >
+              Load More <ChevronDown size={12} />
+            </button>
+          </div>
+        )}
       </motion.div>
     </section>
   )
