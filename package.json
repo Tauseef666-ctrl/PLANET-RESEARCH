@@ -39,6 +39,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit",
+    "fetch:satellites": "node scripts/fetch-satellites.mjs",
     "check": "npm run typecheck && npm run lint && npm run build",
     "clean": "node -e \"fs.rmSync('dist',{recursive:true,force:true})\""
   },
