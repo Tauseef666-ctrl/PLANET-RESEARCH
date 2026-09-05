@@ -12,7 +12,7 @@ const NAV_ITEMS: { id: ActiveView; label: string; sectionId?: string }[] = [
   { id: 'exoplanet', label: 'EXOPLANETS', sectionId: 'exoplanets' },
   { id: 'asteroid', label: 'ASTEROIDS', sectionId: 'asteroids' },
   { id: 'missions', label: 'MISSIONS', sectionId: 'missions' },
-  { id: 'satellites', label: 'SATELLITES', sectionId: 'satellites' },
+  { id: 'satellites', label: 'SATELLITES' },
   { id: 'research', label: 'RESEARCH', sectionId: 'research' },
   { id: 'data', label: 'DATA', sectionId: 'data-hub' },
   { id: 'planet-explorer', label: 'PLANET EXPLORER', sectionId: 'planet-explorer' },
@@ -25,7 +25,6 @@ const SECTION_TO_NAV: Record<string, string> = {
   'exoplanets': 'exoplanet',
   'asteroids': 'asteroid',
   'missions': 'missions',
-  'satellites': 'satellites',
   'research': 'research',
   'data-hub': 'data',
   'planet-explorer': 'planet-explorer',
@@ -45,6 +44,7 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [scrolledSection, setScrolledSection] = useState<string>('home')
   const {
+    activeView,
     setActiveView,
     soundEnabled, toggleSound,
     quality, setQuality,
@@ -94,6 +94,9 @@ export function Navbar() {
     sounds.play('click')
     if (item.id === 'home') {
       setActiveView('home')
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else if (item.id === 'satellites') {
+      setActiveView('satellites')
       window.scrollTo({ top: 0, behavior: 'smooth' })
     } else if (item.sectionId) {
       scrollToSection(item.sectionId)
@@ -151,9 +154,9 @@ export function Navbar() {
                 className="px-3 py-1.5 text-[11px] tracking-[0.15em] uppercase rounded-md transition-all duration-300"
                 style={{
                   fontFamily: '"Space Grotesk", sans-serif',
-                  color: scrolledSection === item.id ? '#00d4ff' : '#667788',
-                  background: scrolledSection === item.id ? 'rgba(0, 212, 255, 0.08)' : 'transparent',
-                  textShadow: scrolledSection === item.id ? '0 0 8px rgba(0, 212, 255, 0.3)' : 'none',
+                  color: (scrolledSection === item.id || (activeView === 'satellites' && item.id === 'satellites')) ? '#00d4ff' : '#667788',
+                  background: (scrolledSection === item.id || (activeView === 'satellites' && item.id === 'satellites')) ? 'rgba(0, 212, 255, 0.08)' : 'transparent',
+                  textShadow: (scrolledSection === item.id || (activeView === 'satellites' && item.id === 'satellites')) ? '0 0 8px rgba(0, 212, 255, 0.3)' : 'none',
                 }}
               >
                 {item.label}
@@ -303,8 +306,8 @@ export function Navbar() {
                   className="block w-full text-left py-3 px-4 text-sm tracking-[0.15em] uppercase rounded-lg transition-all"
                   style={{
                     fontFamily: '"Space Grotesk", sans-serif',
-                    color: scrolledSection === item.id ? '#00d4ff' : '#667788',
-                    background: scrolledSection === item.id ? 'rgba(0, 212, 255, 0.08)' : 'transparent',
+                    color: (scrolledSection === item.id || (activeView === 'satellites' && item.id === 'satellites')) ? '#00d4ff' : '#667788',
+                    background: (scrolledSection === item.id || (activeView === 'satellites' && item.id === 'satellites')) ? 'rgba(0, 212, 255, 0.08)' : 'transparent',
                   }}
                 >
                   {item.label}

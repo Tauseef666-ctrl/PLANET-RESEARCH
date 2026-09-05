@@ -24,7 +24,7 @@ const ExoplanetGlobe = lazy(() => import('./components/ExoplanetGlobe').then(m =
 const ExoplanetSection = lazy(() => import('./components/ExoplanetSection').then(m => ({ default: m.ExoplanetSection })))
 const ResearchSection = lazy(() => import('./components/ResearchSection').then(m => ({ default: m.ResearchSection })))
 const DataHub = lazy(() => import('./components/DataHub').then(m => ({ default: m.DataHub })))
-const SatellitesSection = lazy(() => import('./components/SatellitesSection').then(m => ({ default: m.SatellitesSection })))
+const SatellitesPage = lazy(() => import('./components/SatellitesPage').then(m => ({ default: m.SatellitesPage })))
 import { SAMPLE_EXOPLANETS } from './data/exoplanets'
 import { sounds } from './utils/sounds'
 
@@ -186,7 +186,7 @@ export default function App() {
   const showExoplanetSection = activeView === 'exoplanet' || activeView === 'home'
   const showAsteroidSection = activeView === 'asteroid' || activeView === 'home'
   const showMissions = activeView === 'missions' || activeView === 'home'
-  const showSatellites = activeView === 'satellites' || activeView === 'home'
+  const showSatellitesPage = activeView === 'satellites'
   const showResearch = activeView === 'research' || activeView === 'home'
   const showDataHub = activeView === 'data' || activeView === 'home'
   const showPlanetExplorer = activeView === 'planet-explorer' || activeView === 'home'
@@ -212,101 +212,100 @@ export default function App() {
         {showHero && <HeroSection />}
 
         <div className="relative" style={{ marginTop: showHero ? '-100vh' : 0, paddingTop: showHero ? '100vh' : 80 }}>
-          {showSolarSystem && (
-            <SectionReveal>
-              <SolarSystemSection />
-              <SectionDivider />
-            </SectionReveal>
+          {showSatellitesPage ? (
+            <div className="relative">
+              <Suspense fallback={<ShimmerFallback height="h-96" />}><SatellitesPage /></Suspense>
+            </div>
+          ) : (
+            <>
+              {showSolarSystem && (
+                <SectionReveal>
+                  <SolarSystemSection />
+                  <SectionDivider />
+                </SectionReveal>
+              )}
+
+              {showPlanetExplorer && (
+                <SectionReveal>
+                  <section id="planet-explorer">
+                    <Suspense fallback={<ShimmerFallback height="h-96" />}><PlanetExplorer /></Suspense>
+                  </section>
+                  <SectionDivider />
+                </SectionReveal>
+              )}
+
+              {showExoplanetSection && selectedExoplanetData ? (
+                <SectionReveal>
+                  <section id="exoplanets">
+                    <Suspense fallback={<ShimmerFallback height="h-80" />}><ExoplanetGlobe exoplanet={selectedExoplanetData} /></Suspense>
+                  </section>
+                  <SectionDivider />
+                </SectionReveal>
+              ) : showExoplanetSection ? (
+                <SectionReveal>
+                  <section id="exoplanets">
+                    <Suspense fallback={<ShimmerFallback height="h-64" />}><ExoplanetSection /></Suspense>
+                  </section>
+                  <SectionDivider />
+                </SectionReveal>
+              ) : null}
+
+              {showAsteroidSection && (
+                <SectionReveal>
+                  <section id="asteroids">
+                    <AsteroidSection />
+                  </section>
+                  <SectionDivider />
+                </SectionReveal>
+              )}
+
+              {showMoonSection && (
+                <SectionReveal>
+                  <section id="moons">
+                    <MoonSection />
+                  </section>
+                  <SectionDivider />
+                </SectionReveal>
+              )}
+
+              {showMissions && (
+                <SectionReveal>
+                  <section id="missions">
+                    <MissionsSection />
+                  </section>
+                  <SectionDivider />
+                </SectionReveal>
+              )}
+
+              {showResearch && (
+                <SectionReveal>
+                  <section id="research">
+                    <Suspense fallback={<ShimmerFallback />}><ResearchSection /></Suspense>
+                  </section>
+                  <SectionDivider />
+                </SectionReveal>
+              )}
+
+              {showDataHub && (
+                <SectionReveal>
+                  <section id="data-hub">
+                    <Suspense fallback={<ShimmerFallback height="h-80" />}><DataHub /></Suspense>
+                  </section>
+                  <SectionDivider />
+                </SectionReveal>
+              )}
+
+              {showAbout && (
+                <SectionReveal>
+                  <section id="about">
+                    <AboutSection />
+                  </section>
+                </SectionReveal>
+              )}
+
+              <Footer />
+            </>
           )}
-
-          {showPlanetExplorer && (
-            <SectionReveal>
-              <section id="planet-explorer">
-                <Suspense fallback={<ShimmerFallback height="h-96" />}><PlanetExplorer /></Suspense>
-              </section>
-              <SectionDivider />
-            </SectionReveal>
-          )}
-
-          {showExoplanetSection && selectedExoplanetData ? (
-            <SectionReveal>
-              <section id="exoplanets">
-                <Suspense fallback={<ShimmerFallback height="h-80" />}><ExoplanetGlobe exoplanet={selectedExoplanetData} /></Suspense>
-              </section>
-              <SectionDivider />
-            </SectionReveal>
-          ) : showExoplanetSection ? (
-            <SectionReveal>
-              <section id="exoplanets">
-                <Suspense fallback={<ShimmerFallback height="h-64" />}><ExoplanetSection /></Suspense>
-              </section>
-              <SectionDivider />
-            </SectionReveal>
-          ) : null}
-
-          {showAsteroidSection && (
-            <SectionReveal>
-              <section id="asteroids">
-                <AsteroidSection />
-              </section>
-              <SectionDivider />
-            </SectionReveal>
-          )}
-
-          {showMoonSection && (
-            <SectionReveal>
-              <section id="moons">
-                <MoonSection />
-              </section>
-              <SectionDivider />
-            </SectionReveal>
-          )}
-
-          {showMissions && (
-            <SectionReveal>
-              <section id="missions">
-                <MissionsSection />
-              </section>
-              <SectionDivider />
-            </SectionReveal>
-          )}
-
-          {showSatellites && (
-            <SectionReveal>
-              <section id="satellites">
-                <Suspense fallback={<ShimmerFallback height="h-80" />}><SatellitesSection /></Suspense>
-              </section>
-              <SectionDivider />
-            </SectionReveal>
-          )}
-
-          {showResearch && (
-            <SectionReveal>
-              <section id="research">
-                <Suspense fallback={<ShimmerFallback />}><ResearchSection /></Suspense>
-              </section>
-              <SectionDivider />
-            </SectionReveal>
-          )}
-
-          {showDataHub && (
-            <SectionReveal>
-              <section id="data-hub">
-                <Suspense fallback={<ShimmerFallback height="h-80" />}><DataHub /></Suspense>
-              </section>
-              <SectionDivider />
-            </SectionReveal>
-          )}
-
-          {showAbout && (
-            <SectionReveal>
-              <section id="about">
-                <AboutSection />
-              </section>
-            </SectionReveal>
-          )}
-
-          <Footer />
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { sounds } from '../utils/sounds'
+import { useStore } from '../store/useStore'
 
 const NAV_ITEMS = [
   { id: 'solar-system', label: 'SOLAR SYSTEM' },
@@ -10,6 +11,7 @@ const NAV_ITEMS = [
   { id: 'asteroids', label: 'ASTEROIDS' },
   { id: 'moons', label: 'MOONS' },
   { id: 'missions', label: 'MISSIONS' },
+  { id: 'satellites', label: 'SATELLITES' },
   { id: 'research', label: 'RESEARCH' },
   { id: 'data-hub', label: 'DATA HUB' },
   { id: 'about', label: 'ABOUT' },
@@ -18,6 +20,7 @@ const NAV_ITEMS = [
 export function MobileMenu() {
   const [open, setOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const { setActiveView } = useStore()
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768)
@@ -73,9 +76,14 @@ export function MobileMenu() {
                 onClick={() => {
                   sounds.play('navigate')
                   setOpen(false)
-                  setTimeout(() => {
-                    document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' })
-                  }, 200)
+                  if (item.id === 'satellites') {
+                    setActiveView('satellites')
+                    window.scrollTo({ top: 0, behavior: 'smooth' })
+                  } else {
+                    setTimeout(() => {
+                      document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' })
+                    }, 200)
+                  }
                 }}
                 className="text-lg tracking-[0.3em] uppercase transition-all"
                 style={{
