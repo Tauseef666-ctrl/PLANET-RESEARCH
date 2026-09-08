@@ -24,6 +24,36 @@ interface Asteroid {
 
 const ASTEROIDS: Asteroid[] = [
   {
+    name: 'Pluto', designation: '134340 Pluto', diameter: 2376, classification: 'Dwarf Planet (Kuiper Belt)',
+    orbit: '39.48 AU', velocity: '4.67 km/s', discovered: '1930', type: 'Dwarf Planet',
+    mass: '1.303 × 10²² kg', albedo: '0.52', period: '248 years',
+    description: 'Largest dwarf planet, with a heart-shaped nitrogen ice plain (Sputnik Planitia) and five moons. Visited by New Horizons in 2015.',
+  },
+  {
+    name: 'Charon', designation: '(134340) Pluto I', diameter: 1212, classification: 'Icy Moon of Pluto',
+    orbit: '39.48 AU', velocity: '4.67 km/s', discovered: '1978', type: 'Dwarf Planet',
+    mass: '1.586 × 10²¹ kg', albedo: '0.35', period: '248 years',
+    description: 'Largest moon of Pluto. Distinct reddish-brown Mordor Macula cap and deep equatorial canyon seen by New Horizons.',
+  },
+  {
+    name: 'Eris', designation: '136199 Eris', diameter: 2326, classification: 'Dwarf Planet (Scattered Disc)',
+    orbit: '67.70 AU', velocity: '3.43 km/s', discovered: '2005', type: 'Dwarf Planet',
+    mass: '1.66 × 10²² kg', albedo: '0.96', period: '559 years',
+    description: 'Most massive dwarf planet, coated in highly reflective methane frost. Never visited by a spacecraft; imaged by JWST.',
+  },
+  {
+    name: 'Haumea', designation: '136108 Haumea', diameter: 1560, classification: 'Dwarf Planet (Kuiper Belt)',
+    orbit: '43.13 AU', velocity: '4.53 km/s', discovered: '2004', type: 'Dwarf Planet',
+    mass: '4.01 × 10²¹ kg', albedo: '0.51', period: '285 years',
+    description: 'Rapidly spinning, elongated icy body with a dark red spot, two moons, and a faint ring. Known for its unusual shape.',
+  },
+  {
+    name: 'Makemake', designation: '136472 Makemake', diameter: 1430, classification: 'Dwarf Planet (Kuiper Belt)',
+    orbit: '45.79 AU', velocity: '4.42 km/s', discovered: '2005', type: 'Dwarf Planet',
+    mass: '3.05 × 10²¹ kg', albedo: '0.82', period: '309 years',
+    description: 'Glossy methane-ice coating gives it a reddish-brown shine. One small moon spotted by Hubble.',
+  },
+  {
     name: 'Ceres', designation: '1 Ceres', diameter: 940, classification: 'Dwarf Planet (Asteroid Belt)',
     orbit: '2.77 AU', velocity: '17.9 km/s', discovered: '1801', type: 'Dwarf Planet',
     mass: '9.39 × 10²⁰ kg', albedo: '0.09', period: '4.6 years',
@@ -118,6 +148,12 @@ const ASTEROIDS: Asteroid[] = [
     orbit: '0.97 AU', velocity: '29.1 km/s', discovered: '1976', type: 'S-type', isNeo: true,
     mass: '8.40 × 10⁸ kg', albedo: '0.22', period: '0.96 years',
     description: 'Gives its name to the Aten group of near-Earth asteroids with Earth-crossing orbits.',
+  },
+  {
+    name: '67P', designation: '67P/Churyumov–Gerasimenko', diameter: 4.3, classification: 'Jupiter-family Comet',
+    orbit: '3.46 AU', velocity: '37.5 km/s', discovered: '1969', type: 'C-type',
+    mass: '1.00 × 10¹³ kg', albedo: '0.06', period: '6.45 years',
+    description: 'Contact-binary comet landed on by Rosetta/Philae. The Rosetta probe orbited it for two years, mapping the duck-shaped surface.',
   },
 ]
 

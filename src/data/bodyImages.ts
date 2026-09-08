@@ -46,6 +46,12 @@ export const MOON_IMAGES: Record<string, string> = {
 }
 
 export const ASTEROID_IMAGES: Record<string, string> = {
+  Pluto: thumb(`${U}c/ca/Pluto_in_True_Color_-_High-Res.png`),
+  Charon: thumb(`${U}0/0e/Charon_in_True_Color_-_High-Res.png`),
+  Eris: thumb(`${U}6/63/Eris_and_moon_Dysnomia_JWST_NIRCam.jpg`),
+  Haumea: thumb(`${U}2/2b/Haumea_Hubble.png`),
+  Makemake: thumb(`${U}2/29/Makemake_and_its_moon.jpg`),
+  '67P': thumb(`${U}f/f9/Comet_67P_True_color.jpg`),
   Ceres: thumb(`${U}7/76/Ceres_-_RC3_-_Haulani_Crater_%2822381131691%29_%28cropped%29.jpg`),
   Vesta: thumb(`${U}5/51/Vesta_in_natural_color.jpg`),
   Pallas: thumb(`${U}d/d4/Potw1749a_Pallas_crop.png`),

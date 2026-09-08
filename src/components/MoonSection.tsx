@@ -1,37 +1,42 @@
-﻿import { useRef, Suspense } from 'react'
+﻿import { Suspense, useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 import { MOONS } from '../data/moons'
+import { MOON_TEXTURES } from '../data/planetTextures'
 import { ExternalLink } from 'lucide-react'
 import { sounds } from '../utils/sounds'
 
-function MoonSphere({ color, hasCraters }: { color: string; hasCraters: boolean }) {
+function MoonSphere({ textureUrl, fallbackColor }: { textureUrl: string; fallbackColor: string }) {
   const ref = useRef<THREE.Mesh>(null!)
+  const [map, setMap] = useState<THREE.Texture | null>(null)
+
+  useEffect(() => {
+    let alive = true
+    setMap(null)
+    if (!textureUrl) return
+    const loader = new THREE.TextureLoader()
+    loader.crossOrigin = 'anonymous'
+    loader.load(
+      textureUrl,
+      (t) => { if (alive) setMap(t) },
+      undefined,
+      () => { if (alive) setMap(null) },
+    )
+    return () => { alive = false }
+  }, [textureUrl])
+
   useFrame((_, delta) => { if (ref.current) ref.current.rotation.y += delta * 0.2 })
 
   return (
     <group>
       <mesh ref={ref}>
-        <sphereGeometry args={[1.2, 32, 32]} />
-        <meshStandardMaterial color={color} roughness={0.85} metalness={0.05} />
+        <sphereGeometry args={[1.2, 48, 48]} />
+        <meshStandardMaterial map={map ?? undefined} color={map ? '#ffffff' : fallbackColor} roughness={0.9} metalness={0.02} />
       </mesh>
-      {hasCraters && Array.from({ length: 12 }).map((_, i) => {
-        const theta = Math.random() * Math.PI * 2
-        const phi = Math.acos(2 * Math.random() - 1)
-        const x = 1.21 * Math.sin(phi) * Math.cos(theta)
-        const y = 1.21 * Math.sin(phi) * Math.sin(theta)
-        const z = 1.21 * Math.cos(phi)
-        return (
-          <mesh key={i} position={[x, y, z]} scale={[1, 1, 0.3]} rotation={[phi, theta, 0]}>
-            <circleGeometry args={[0.08 + Math.random() * 0.12, 12]} />
-            <meshStandardMaterial color="#555555" roughness={1} />
-          </mesh>
-        )
-      })}
-      <ambientLight intensity={0.3} />
-      <directionalLight position={[3, 2, 4]} intensity={1.5} />
+      <ambientLight intensity={0.35} />
+      <directionalLight position={[3, 2, 4]} intensity={1.6} />
     </group>
   )
 }
@@ -62,11 +67,10 @@ export function MoonSection() {
                 border: '1px solid rgba(0, 212, 255, 0.08)',
               }}
             >
-              {/* 3D Moon Globe */}
               <div className="w-full h-32 overflow-hidden" style={{ background: 'rgba(5,5,16,0.6)' }}>
                 <Canvas camera={{ position: [0, 0, 3.2], fov: 35 }} gl={{ antialias: true, alpha: true }}>
                   <Suspense fallback={null}>
-                    <MoonSphere color={moon.color} hasCraters={moon.id === 'moon' || moon.id === 'titan'} />
+                    <MoonSphere textureUrl={MOON_TEXTURES[moon.id]} fallbackColor={moon.color ?? '#8899aa'} />
                   </Suspense>
                   <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.8} />
                 </Canvas>
@@ -88,7 +92,7 @@ export function MoonSection() {
                   </div>
                   <div>
                     <div className="text-[8px] tracking-wider uppercase text-gray-600">Gravity</div>
-                    <div className="text-[11px] text-gray-400">{moon.gravity} m/s┬▓</div>
+                    <div className="text-[11px] text-gray-400">{moon.gravity} m/s²</div>
                   </div>
                 </div>
 
