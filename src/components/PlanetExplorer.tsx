@@ -4,6 +4,8 @@ import { useStore } from '../store/useStore'
 import { PLANETS, PlanetData } from '../data/planets'
 import { MOONS, MoonData } from '../data/moons'
 import { sounds } from '../utils/sounds'
+import { BodyThumb } from './BodyThumb'
+import { PLANET_IMAGES, MOON_IMAGES } from '../data/bodyImages'
 
 const labelClass = "text-[9px] tracking-[0.15em] uppercase text-gray-600"
 const valueClass = "text-[11px] text-gray-300 leading-relaxed"
@@ -16,12 +18,12 @@ const sectionStyle = {
 function PlanetQuickView({ planet }: { planet: PlanetData }) {
   return (
     <div className="flex items-center gap-4 mb-6 p-4 rounded-xl" style={{ background: `${planet.color}08`, border: `1px solid ${planet.color}20` }}>
-      <div
-        className="w-16 h-16 rounded-full shrink-0"
-        style={{
-          background: `radial-gradient(circle at 35% 35%, ${planet.color}, ${planet.color}88, ${planet.color}44)`,
-          boxShadow: `0 0 30px ${planet.color}33`,
-        }}
+      <BodyThumb
+        src={PLANET_IMAGES[planet.id]}
+        alt={planet.name}
+        className="w-16 h-16 shrink-0"
+        fallbackBackground={planet.color}
+        boxShadow={`0 0 30px ${planet.color}33`}
       />
       <div>
         <h3 className="text-xl font-bold tracking-wider" style={{ fontFamily: '"Space Grotesk", sans-serif', color: planet.color }}>
@@ -181,12 +183,12 @@ function PlanetDetailsPanel({ planet, onSelectMoon }: { planet: PlanetData; onSe
 function MoonQuickView({ moon }: { moon: MoonData }) {
   return (
     <div className="flex items-center gap-4 mb-6 p-4 rounded-xl" style={{ background: `${moon.color}08`, border: `1px solid ${moon.color}20` }}>
-      <div
-        className="w-16 h-16 rounded-full shrink-0"
-        style={{
-          background: `radial-gradient(circle at 35% 35%, ${moon.color}, ${moon.color}88, ${moon.color}44)`,
-          boxShadow: `0 0 30px ${moon.color}33`,
-        }}
+      <BodyThumb
+        src={MOON_IMAGES[moon.id]}
+        alt={moon.name}
+        className="w-16 h-16 shrink-0"
+        fallbackBackground={moon.color}
+        boxShadow={`0 0 30px ${moon.color}33`}
       />
       <div>
         <div className="flex items-center gap-2 mb-1">
@@ -374,7 +376,13 @@ export function PlanetExplorer() {
                 border: `1px solid ${selected === p.id ? p.color + '44' : 'rgba(0,212,255,0.06)'}`,
               }}
             >
-              <div className="w-8 h-8 rounded-full shrink-0" style={{ background: `radial-gradient(circle at 35% 35%, ${p.color}, ${p.color}88)`, boxShadow: `0 0 10px ${p.color}22` }} />
+              <BodyThumb
+                src={PLANET_IMAGES[p.id]}
+                alt={p.name}
+                className="w-8 h-8 shrink-0"
+                fallbackBackground={p.color}
+                boxShadow={`0 0 10px ${p.color}22`}
+              />
               <div className="flex-1 min-w-0">
                 <div className="text-sm font-semibold truncate" style={{ fontFamily: '"Space Grotesk", sans-serif', color: selected === p.id ? p.color : '#c0d0e0' }}>{p.name}</div>
                 <div className="text-[9px] text-gray-600 tracking-wider">{p.type} · {p.distanceFromSun}M km</div>

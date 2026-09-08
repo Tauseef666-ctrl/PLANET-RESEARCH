@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, X, ChevronDown, AlertTriangle, ExternalLink } from 'lucide-react'
+import { BodyThumb } from './BodyThumb'
+import { ASTEROID_IMAGES } from '../data/bodyImages'
 
 const ACCENT = '#00d4ff'
 
@@ -161,6 +163,7 @@ function SizeComparisonBar({ asteroids }: { asteroids: Asteroid[] }) {
           {top.map((a) => {
             const ratio = a.diameter / maxDiameter
             const size = Math.max(ratio * 80, 8)
+            const aColor = getAsteroidColor(a.diameter)
             return (
               <div key={a.name} className="flex flex-col items-center gap-1.5 min-w-[60px]">
                 <div
@@ -169,15 +172,14 @@ function SizeComparisonBar({ asteroids }: { asteroids: Asteroid[] }) {
                 >
                   {a.diameter > 100 ? a.diameter.toFixed(0) : a.diameter.toFixed(1)} km
                 </div>
-                <div
+                <BodyThumb
+                  src={ASTEROID_IMAGES[a.name]}
+                  alt={a.name}
                   className="rounded-full"
-                  style={{
-                    width: size,
-                    height: size,
-                    background: `radial-gradient(circle at 35% 35%, ${getAsteroidColor(a.diameter)}, ${getAsteroidColor(a.diameter)}88)`,
-                    boxShadow: `0 0 ${size / 4}px ${getAsteroidColor(a.diameter)}33`,
-                    border: `1px solid ${getAsteroidColor(a.diameter)}44`,
-                  }}
+                  style={{ width: size, height: size }}
+                  fallbackBackground={aColor}
+                  boxShadow={`0 0 ${size / 4}px ${aColor}33`}
+                  borderColor={`${aColor}44`}
                 />
                 <div className="text-[9px] text-gray-500" style={{ fontFamily: '"Space Grotesk", sans-serif' }}>
                   {a.name}
@@ -353,12 +355,12 @@ export function AsteroidSection() {
               >
                 <div className="p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <div
-                      className="w-4 h-4 rounded-full"
-                      style={{
-                        background: `radial-gradient(circle at 35% 35%, ${getAsteroidColor(asteroid.diameter)}, ${getAsteroidColor(asteroid.diameter)}88)`,
-                        boxShadow: `0 0 6px ${typeColor}22`,
-                      }}
+                    <BodyThumb
+                      src={ASTEROID_IMAGES[asteroid.name]}
+                      alt={asteroid.name}
+                      className="w-9 h-9 shrink-0"
+                      fallbackBackground={getAsteroidColor(asteroid.diameter)}
+                      boxShadow={`0 0 6px ${typeColor}22`}
                     />
                     <h3
                       className="text-sm font-semibold"

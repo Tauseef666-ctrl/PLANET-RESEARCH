@@ -1,37 +1,26 @@
 import { useRef, Suspense } from 'react'
 import { motion } from 'framer-motion'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 import { MOONS } from '../data/moons'
+import { MOON_TEXTURES } from '../data/planetTextures'
 import { ExternalLink } from 'lucide-react'
 import { sounds } from '../utils/sounds'
 
-function MoonSphere({ color, hasCraters }: { color: string; hasCraters: boolean }) {
+function MoonSphere({ textureUrl }: { textureUrl: string }) {
   const ref = useRef<THREE.Mesh>(null!)
+  const texture = useLoader(THREE.TextureLoader, textureUrl)
   useFrame((_, delta) => { if (ref.current) ref.current.rotation.y += delta * 0.2 })
 
   return (
     <group>
       <mesh ref={ref}>
-        <sphereGeometry args={[1.2, 32, 32]} />
-        <meshStandardMaterial color={color} roughness={0.85} metalness={0.05} />
+        <sphereGeometry args={[1.2, 48, 48]} />
+        <meshStandardMaterial map={texture} roughness={0.9} metalness={0.02} />
       </mesh>
-      {hasCraters && Array.from({ length: 12 }).map((_, i) => {
-        const theta = Math.random() * Math.PI * 2
-        const phi = Math.acos(2 * Math.random() - 1)
-        const x = 1.21 * Math.sin(phi) * Math.cos(theta)
-        const y = 1.21 * Math.sin(phi) * Math.sin(theta)
-        const z = 1.21 * Math.cos(phi)
-        return (
-          <mesh key={i} position={[x, y, z]} scale={[1, 1, 0.3]} rotation={[phi, theta, 0]}>
-            <circleGeometry args={[0.08 + Math.random() * 0.12, 12]} />
-            <meshStandardMaterial color="#555555" roughness={1} />
-          </mesh>
-        )
-      })}
-      <ambientLight intensity={0.3} />
-      <directionalLight position={[3, 2, 4]} intensity={1.5} />
+      <ambientLight intensity={0.35} />
+      <directionalLight position={[3, 2, 4]} intensity={1.6} />
     </group>
   )
 }
@@ -66,7 +55,7 @@ export function MoonSection() {
               <div className="w-full h-32 overflow-hidden" style={{ background: 'rgba(5,5,16,0.6)' }}>
                 <Canvas camera={{ position: [0, 0, 3.2], fov: 35 }} gl={{ antialias: true, alpha: true }}>
                   <Suspense fallback={null}>
-                    <MoonSphere color={moon.color} hasCraters={moon.id === 'moon' || moon.id === 'titan'} />
+                    <MoonSphere textureUrl={MOON_TEXTURES[moon.id]} />
                   </Suspense>
                   <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.8} />
                 </Canvas>

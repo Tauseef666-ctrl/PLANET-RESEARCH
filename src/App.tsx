@@ -19,6 +19,8 @@ import { SoundToggle } from './components/SoundToggle'
 import { QuickNav } from './components/QuickNav'
 import { SectionReveal } from './components/SectionReveal'
 import { ShimmerFallback } from './components/ShimmerFallback'
+import { BodyThumb } from './components/BodyThumb'
+import { PLANET_IMAGES } from './data/bodyImages'
 const PlanetExplorer = lazy(() => import('./components/PlanetExplorer').then(m => ({ default: m.PlanetExplorer })))
 const ExoplanetGlobe = lazy(() => import('./components/ExoplanetGlobe').then(m => ({ default: m.ExoplanetGlobe })))
 const ExoplanetSection = lazy(() => import('./components/ExoplanetSection').then(m => ({ default: m.ExoplanetSection })))
@@ -81,12 +83,12 @@ function SolarSystemSection() {
             }}
           >
             <div className="flex items-center gap-3 mb-3">
-              <div
-                className="w-10 h-10 rounded-full shrink-0 transition-transform duration-300 group-hover:scale-110"
-                style={{
-                  background: `radial-gradient(circle at 35% 35%, ${p.color}, ${p.color}88, ${p.color}44)`,
-                  boxShadow: `0 0 15px ${p.color}33`,
-                }}
+              <BodyThumb
+                src={PLANET_IMAGES[p.id]}
+                alt={p.name}
+                className="w-10 h-10 shrink-0 transition-transform duration-300 group-hover:scale-110"
+                fallbackBackground={p.color}
+                boxShadow={`0 0 15px ${p.color}33`}
               />
               <div>
                 <h3
