@@ -4,7 +4,7 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 import { MOONS } from '../data/moons'
-import { MOON_TEXTURES } from '../data/planetTextures'
+import { MOON_TEXTURE_DATA } from '../data/moonTextureData'
 import { ExternalLink } from 'lucide-react'
 import { sounds } from '../utils/sounds'
 
@@ -17,7 +17,6 @@ function MoonSphere({ textureUrl, fallbackColor }: { textureUrl: string; fallbac
     setMap(null)
     if (!textureUrl) return
     const loader = new THREE.TextureLoader()
-    loader.crossOrigin = 'anonymous'
     loader.load(
       textureUrl,
       (t) => { if (alive) setMap(t) },
@@ -70,7 +69,7 @@ export function MoonSection() {
               <div className="w-full h-32 overflow-hidden" style={{ background: 'rgba(5,5,16,0.6)' }}>
                 <Canvas camera={{ position: [0, 0, 3.2], fov: 35 }} gl={{ antialias: true, alpha: true }}>
                   <Suspense fallback={null}>
-                    <MoonSphere textureUrl={MOON_TEXTURES[moon.id]} fallbackColor={moon.color ?? '#8899aa'} />
+                    <MoonSphere textureUrl={MOON_TEXTURE_DATA[moon.id]} fallbackColor={moon.color ?? '#8899aa'} />
                   </Suspense>
                   <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.8} />
                 </Canvas>
