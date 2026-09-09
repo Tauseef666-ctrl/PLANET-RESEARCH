@@ -72,7 +72,7 @@ export function HeroSection() {
   }
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center text-center px-4 z-10 pointer-events-none">
+    <div className="relative min-h-screen flex flex-col items-start justify-start text-left px-6 md:px-10 pt-32 md:pt-40 z-10 pointer-events-none">
       {/* Nebula gradient backgrounds */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
@@ -105,7 +105,7 @@ export function HeroSection() {
         className="mb-6"
       >
         <h1
-          className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-[0.15em] uppercase leading-tight"
+          className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-[0.1em] uppercase leading-tight"
           style={{
             fontFamily: '"Space Grotesk", sans-serif',
             color: '#e8f0f8',
@@ -122,7 +122,7 @@ export function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 1 }}
-        className="text-sm md:text-base tracking-[0.4em] uppercase mb-10"
+        className="text-[11px] md:text-xs tracking-[0.35em] uppercase mb-10"
         style={{
           fontFamily: '"Space Grotesk", sans-serif',
           color: '#445566',
@@ -136,7 +136,7 @@ export function HeroSection() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 2.2, duration: 0.8 }}
-        className="pointer-events-auto flex flex-wrap items-center justify-center gap-8 md:gap-12 mb-10"
+        className="pointer-events-auto flex flex-wrap items-center justify-start gap-8 md:gap-12 mb-10"
       >
         {STATS.map((stat) => (
           <div key={stat.label} className="flex flex-col items-center gap-1">
@@ -180,7 +180,7 @@ export function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.6, duration: 0.8 }}
-        className="pointer-events-auto flex flex-wrap items-center justify-center gap-3 mt-8"
+        className="pointer-events-auto flex flex-wrap items-center justify-start gap-3 mt-8"
       >
         {['SOLAR SYSTEM', 'PLANETS', 'EXOPLANETS', 'MISSIONS', 'RESEARCH'].map((label) => (
           <button

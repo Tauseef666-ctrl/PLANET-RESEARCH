@@ -115,13 +115,13 @@ export function Navbar() {
         transition={{ delay: 0.5, duration: 0.8 }}
         className="fixed top-0 left-0 right-0 z-50"
       >
-        <div
-          className="mx-4 mt-4 rounded-xl px-4 py-3 flex items-center justify-between transition-all duration-300"
+<div
+          className="px-3 md:px-5 py-2.5 flex items-center justify-between w-full transition-all duration-300"
           style={{
-            background: isScrolled ? 'rgba(5, 5, 16, 0.85)' : 'rgba(5, 5, 16, 0.15)',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
-            border: `1px solid rgba(0, 212, 255, ${isScrolled ? 0.15 : 0.05})`,
+            background: isScrolled ? 'rgba(5, 5, 16, 0.85)' : 'linear-gradient(180deg, rgba(5,5,16,0.6), transparent)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            borderBottom: '1px solid rgba(0, 212, 255, 0.08)',
             boxShadow: isScrolled ? '0 4px 30px rgba(0, 0, 0, 0.5)' : 'none',
           }}
         >
@@ -208,7 +208,7 @@ export function Navbar() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -12, scale: 0.96 }}
               transition={{ type: 'spring', damping: 26, stiffness: 300 }}
-              className="fixed left-4 top-20 z-[60] w-[300px] max-h-[72vh] overflow-y-auto rounded-2xl p-4"
+              className="fixed left-3 md:left-5 top-14 z-[60] w-[300px] max-h-[72vh] overflow-y-auto rounded-2xl p-4"
               style={{
                 background: 'linear-gradient(160deg, rgba(6, 10, 24, 0.97), rgba(3, 6, 18, 0.97))',
                 backdropFilter: 'blur(30px)',
@@ -286,7 +286,7 @@ export function Navbar() {
               initial={{ opacity: 0, y: -10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
-              className="absolute right-4 top-16 w-64 rounded-xl p-4 space-y-4"
+              className="absolute right-3 md:right-5 top-14 w-64 rounded-xl p-4 space-y-4"
               style={{
                 background: 'rgba(5, 5, 16, 0.9)',
                 backdropFilter: 'blur(20px)',
