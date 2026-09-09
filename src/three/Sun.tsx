@@ -1,18 +1,43 @@
 import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
+import { SUN_TEXTURE } from '../data/sunTexture'
 
 export function Sun() {
-  const meshRef = useRef<THREE.Mesh>(null!)
   const glowRef = useRef<THREE.Mesh>(null!)
   const coronaRef = useRef<THREE.Points>(null!)
+
+  const sunTexture = useMemo(() => {
+    const img = new Image()
+    img.src = SUN_TEXTURE
+    img.decoding = 'async'
+    const canvas = document.createElement('canvas')
+    canvas.width = canvas.height = 512
+    const ctx = canvas.getContext('2d')!
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0, 512, 512)
+      ctx.globalCompositeOperation = 'destination-in'
+      const g = ctx.createRadialGradient(256, 256, 190, 256, 256, 256)
+      g.addColorStop(0, 'rgba(255,255,255,1)')
+      g.addColorStop(0.9, 'rgba(255,255,255,1)')
+      g.addColorStop(0.98, 'rgba(255,255,255,0.55)')
+      g.addColorStop(1, 'rgba(255,255,255,0)')
+      ctx.fillStyle = g
+      ctx.fillRect(0, 0, 512, 512)
+      ctx.globalCompositeOperation = 'source-over'
+      texture.needsUpdate = true
+    }
+    const texture = new THREE.CanvasTexture(canvas)
+    texture.colorSpace = THREE.SRGBColorSpace
+    return texture
+  }, [])
 
   const coronaPositions = useMemo(() => {
     const count = 2000
     const pos = new Float32Array(count * 3)
     for (let i = 0; i < count; i++) {
       const i3 = i * 3
-      const r = 5.3 + Math.random() * 1.3
+      const r = 6.1 + Math.random() * 1.5
       const theta = Math.random() * Math.PI * 2
       const phi = Math.acos(2 * Math.random() - 1)
       pos[i3] = r * Math.sin(phi) * Math.cos(theta)
@@ -24,11 +49,8 @@ export function Sun() {
 
   useFrame((state) => {
     const t = state.clock.elapsedTime
-    if (meshRef.current) {
-      meshRef.current.rotation.y = t * 0.05
-    }
     if (glowRef.current) {
-      const scale = 6.3 + Math.sin(t * 0.5) * 0.25
+      const scale = 6.5 + Math.sin(t * 0.5) * 0.3
       glowRef.current.scale.setScalar(scale)
     }
     if (coronaRef.current) {
@@ -39,24 +61,23 @@ export function Sun() {
 
   return (
     <group>
-      {/* Sun core */}
-      <mesh ref={meshRef}>
-        <sphereGeometry args={[5, 64, 64]} />
-        <meshStandardMaterial
-          color="#FDB813"
-          emissive="#ff6600"
-          emissiveIntensity={2}
+      {/* Photosphere core (real sun photo, masked into a disk) */}
+      <sprite scale={[10.8, 10.8, 1]}>
+        <spriteMaterial
+          map={sunTexture}
+          transparent
           toneMapped={false}
+          depthWrite={false}
         />
-      </mesh>
+      </sprite>
 
       {/* Inner glow */}
       <mesh ref={glowRef}>
-        <sphereGeometry args={[1, 32, 32]} />
+        <sphereGeometry args={[5, 32, 32]} />
         <meshBasicMaterial
           color="#ff8800"
           transparent
-          opacity={0.15}
+          opacity={0.18}
           side={THREE.BackSide}
           blending={THREE.AdditiveBlending}
           depthWrite={false}

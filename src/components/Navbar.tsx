@@ -1,6 +1,6 @@
 ﻿import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Volume2, VolumeX, Settings, X, Eye, EyeOff, Monitor, Home, Globe, Moon, Rocket, Satellite, Telescope, Database, Globe2, Info, Sparkles, CircleDot, Sun } from 'lucide-react'
+import { Search, Volume2, VolumeX, Settings, X, Eye, EyeOff, Monitor, Home, Globe, Moon, Rocket, Satellite, Telescope, Database, Globe2, Info, Sparkles, CircleDot, Sun, ChevronDown } from 'lucide-react'
 import { useStore, ActiveView, GraphicsQuality } from '../store/useStore'
 import { sounds } from '../utils/sounds'
 
@@ -39,9 +39,8 @@ const QUALITY_OPTIONS: { value: GraphicsQuality; label: string }[] = [
 ]
 
 export function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false)
+const [menuOpen, setMenuOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
   const [scrolledSection, setScrolledSection] = useState<string>('home')
   const {
     activeView,
@@ -54,9 +53,7 @@ export function Navbar() {
   } = useStore()
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-
+const handleScroll = () => {
       if (window.scrollY < 200) {
         setScrolledSection('home')
         return
@@ -115,16 +112,7 @@ export function Navbar() {
         transition={{ delay: 0.5, duration: 0.8 }}
         className="fixed top-0 left-0 right-0 z-50"
       >
-<div
-          className="px-3 md:px-5 py-2.5 flex items-center justify-between w-full transition-all duration-300"
-          style={{
-            background: isScrolled ? 'rgba(5, 5, 16, 0.85)' : 'linear-gradient(180deg, rgba(5,5,16,0.6), transparent)',
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
-            borderBottom: '1px solid rgba(0, 212, 255, 0.08)',
-            boxShadow: isScrolled ? '0 4px 30px rgba(0, 0, 0, 0.5)' : 'none',
-          }}
-        >
+<div className="px-3 md:px-5 py-2.5 flex items-center justify-between w-full">
           {/* Logo â€” top-left corner + menu trigger */}
           <button
             onClick={() => { sounds.play('click'); setMenuOpen(!menuOpen); setSettingsOpen(false) }}
@@ -150,10 +138,23 @@ export function Navbar() {
               >
                 PLANET <span style={{ color: '#00d4ff', textShadow: '0 0 10px rgba(0, 212, 255, 0.5)' }}>RESEARCH</span>
               </div>
-              <div className="text-[8px] tracking-[0.4em] mt-1" style={{ color: '#445566', fontFamily: '"Space Grotesk", sans-serif' }}>
+<div className="text-[8px] tracking-[0.4em] mt-1" style={{ color: '#445566', fontFamily: '"Space Grotesk", sans-serif' }}>
                 SPACE EXPLORATION
               </div>
             </div>
+            {!menuOpen && (
+              <span
+                className="ml-2 flex items-center gap-1 px-1.5 py-1 rounded-full text-[8px] tracking-[0.18em] uppercase animate-pulse"
+                style={{
+                  border: '1px solid rgba(0, 212, 255, 0.25)',
+                  color: '#00d4ff',
+                  background: 'rgba(0, 212, 255, 0.08)',
+                  fontFamily: '"Space Grotesk", sans-serif',
+                }}
+              >
+                Menu <ChevronDown size={8} />
+              </span>
+            )}
           </button>
 
           {/* Right controls */}

@@ -67,7 +67,11 @@ export function MoonSection() {
               }}
             >
               <div className="w-full h-32 overflow-hidden" style={{ background: 'rgba(5,5,16,0.6)' }}>
-                <Canvas camera={{ position: [0, 0, 3.2], fov: 35 }} gl={{ antialias: true, alpha: true }}>
+                <Canvas
+                  camera={{ position: [0, 0, 3.2], fov: 35 }}
+                  gl={{ antialias: true, alpha: true }}
+                  fallback={null}
+                >
                   <Suspense fallback={null}>
                     <MoonSphere textureUrl={MOON_TEXTURE_DATA[moon.id]} fallbackColor={moon.color ?? '#8899aa'} />
                   </Suspense>
