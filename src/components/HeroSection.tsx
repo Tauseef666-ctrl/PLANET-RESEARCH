@@ -175,26 +175,33 @@ export function HeroSection() {
         </span>
       </motion.button>
 
-      {/* Quick nav */}
+      {/* Quick nav list */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.6, duration: 0.8 }}
-        className="pointer-events-auto flex flex-wrap items-center justify-start gap-3 mt-8"
+        className="pointer-events-auto mt-10 w-full max-w-xs space-y-1"
       >
-        {['SOLAR SYSTEM', 'PLANETS', 'EXOPLANETS', 'MISSIONS', 'RESEARCH'].map((label) => (
+        {['SOLAR SYSTEM', 'PLANETS', 'EXOPLANETS', 'MISSIONS', 'RESEARCH'].map((label, i) => (
           <button
             key={label}
             onClick={() => { sounds.play('click'); scrollToSection(HERO_NAV_MAP[label]) }}
-            className="px-4 py-2 text-[10px] tracking-[0.2em] uppercase rounded-lg transition-all hover:scale-105"
-            style={{
-              fontFamily: '"Space Grotesk", sans-serif',
-              background: 'rgba(0, 212, 255, 0.05)',
-              border: '1px solid rgba(0, 212, 255, 0.12)',
-              color: '#667788',
-            }}
+            className="group flex items-center gap-3 w-full text-left py-2 px-1 rounded-lg transition-all duration-200 hover:px-3 hover:bg-white/[0.02]"
+            style={{ fontFamily: '"Space Grotesk", sans-serif' }}
           >
-            {label}
+            <span
+              className="text-[9px] tracking-widest"
+              style={{ color: '#00d4ff', opacity: 0.5, fontFamily: '"JetBrains Mono", monospace' }}
+            >
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <span className="text-[11px] tracking-[0.25em] uppercase text-[#667788] transition-all duration-200 group-hover:text-[#00d4ff] group-hover:translate-x-1">
+              {label}
+            </span>
+            <span
+              className="ml-auto w-1.5 h-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+              style={{ background: '#00d4ff', boxShadow: '0 0 8px #00d4ff' }}
+            />
           </button>
         ))}
       </motion.div>
