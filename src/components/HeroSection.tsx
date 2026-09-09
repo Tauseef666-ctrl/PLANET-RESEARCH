@@ -72,7 +72,7 @@ export function HeroSection() {
   }
 
   return (
-    <div className="relative min-h-screen flex flex-col items-start justify-start text-left px-6 md:px-10 pt-32 md:pt-40 z-10 pointer-events-none">
+    <div className="relative min-h-screen flex flex-col items-start justify-start text-left px-6 md:px-10 pt-24 md:pt-28 z-10 pointer-events-none">
       {/* Nebula gradient backgrounds */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
@@ -105,7 +105,7 @@ export function HeroSection() {
         className="mb-6"
       >
         <h1
-          className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-[0.1em] uppercase leading-tight"
+          className="text-2xl md:text-4xl lg:text-5xl font-bold tracking-[0.1em] uppercase leading-tight"
           style={{
             fontFamily: '"Space Grotesk", sans-serif',
             color: '#e8f0f8',
