@@ -8,21 +8,59 @@ import { MOON_TEXTURE_DATA } from '../data/moonTextureData'
 import { ExternalLink } from 'lucide-react'
 import { sounds } from '../utils/sounds'
 
+function shuffleColor(color: string): string {
+  const c = new THREE.Color(color)
+  return `#${Math.round(c.r * 0.86).toString(16).padStart(2, '0')}${Math.round(c.g * 0.86).toString(16).padStart(2, '0')}${Math.round(c.b * 0.86).toString(16).padStart(2, '0')}`
+}
+
+function createLunarTexture(baseColor: string): THREE.CanvasTexture {
+  const canvas = document.createElement('canvas')
+  canvas.width = canvas.height = 256
+  const ctx = canvas.getContext('2d')!
+  const g = ctx.createRadialGradient(128, 108, 16, 128, 128, 168)
+  g.addColorStop(0, baseColor)
+  g.addColorStop(1, shuffleColor(baseColor))
+  ctx.fillStyle = g
+  ctx.fillRect(0, 0, 256, 256)
+  for (let i = 0; i < 110; i++) {
+    const x = Math.random() * 256
+    const y = Math.random() * 256
+    const r = 1.5 + Math.random() * 7
+    const rim = ctx.createRadialGradient(x, y, r * 0.2, x, y, r)
+    rim.addColorStop(0, 'rgba(8, 10, 16, 0.28)')
+    rim.addColorStop(0.8, 'rgba(8, 10, 16, 0.12)')
+    rim.addColorStop(1, 'rgba(255, 255, 255, 0.05)')
+    ctx.fillStyle = rim
+    ctx.beginPath()
+    ctx.arc(x, y, r, 0, Math.PI * 2)
+    ctx.fill()
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.10)'
+    ctx.beginPath()
+    ctx.arc(x - r * 0.25, y - r * 0.25, r * 0.35, 0, Math.PI * 2)
+    ctx.fill()
+  }
+  const texture = new THREE.CanvasTexture(canvas)
+  texture.colorSpace = THREE.SRGBColorSpace
+  return texture
+}
+
 function MoonSphere({ textureUrl, fallbackColor }: { textureUrl: string; fallbackColor: string }) {
   const ref = useRef<THREE.Mesh>(null!)
-  const [map, setMap] = useState<THREE.Texture | null>(null)
+  const [map, setMap] = useState<THREE.Texture>(() => createLunarTexture(fallbackColor))
 
   useEffect(() => {
     let alive = true
-    setMap(null)
-    if (!textureUrl) return
     const loader = new THREE.TextureLoader()
-    loader.load(
-      textureUrl,
-      (t) => { if (alive) setMap(t) },
-      undefined,
-      () => { if (alive) setMap(null) },
-    )
+    let attempt = 0
+    const tryLoad = () => {
+      loader.load(
+        textureUrl,
+        (t) => { if (alive) setMap(t) },
+        undefined,
+        () => { if (alive && attempt < 4) { attempt += 1; setTimeout(tryLoad, 600) } },
+      )
+    }
+    tryLoad()
     return () => { alive = false }
   }, [textureUrl])
 
@@ -32,7 +70,7 @@ function MoonSphere({ textureUrl, fallbackColor }: { textureUrl: string; fallbac
     <group>
       <mesh ref={ref}>
         <sphereGeometry args={[1.2, 48, 48]} />
-        <meshStandardMaterial map={map ?? undefined} color={map ? '#ffffff' : fallbackColor} roughness={0.9} metalness={0.02} />
+        <meshStandardMaterial map={map} color="#ffffff" roughness={0.92} metalness={0.02} />
       </mesh>
       <ambientLight intensity={0.35} />
       <directionalLight position={[3, 2, 4]} intensity={1.6} />
