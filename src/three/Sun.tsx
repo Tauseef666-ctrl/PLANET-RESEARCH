@@ -5,7 +5,6 @@ import { SUN_TEXTURE } from '../data/sunTexture'
 
 export function Sun() {
   const diskRef = useRef<THREE.Sprite>(null!)
-  const haloRef = useRef<THREE.Sprite>(null!)
   const glowRef = useRef<THREE.Mesh>(null!)
   const coronaRef = useRef<THREE.Points>(null!)
 
@@ -34,22 +33,6 @@ export function Sun() {
     return texture
   }, [])
 
-  const haloTexture = useMemo(() => {
-    const canvas = document.createElement('canvas')
-    canvas.width = canvas.height = 256
-    const ctx = canvas.getContext('2d')!
-    const g = ctx.createRadialGradient(128, 128, 10, 128, 128, 128)
-    g.addColorStop(0, 'rgba(255, 236, 170, 0.9)')
-    g.addColorStop(0.25, 'rgba(255, 177, 46, 0.5)')
-    g.addColorStop(0.55, 'rgba(255, 106, 0, 0.2)')
-    g.addColorStop(1, 'rgba(255, 60, 0, 0)')
-    ctx.fillStyle = g
-    ctx.fillRect(0, 0, 256, 256)
-    const texture = new THREE.CanvasTexture(canvas)
-    texture.colorSpace = THREE.SRGBColorSpace
-    return texture
-  }, [])
-
   const coronaPositions = useMemo(() => {
     const count = 2200
     const pos = new Float32Array(count * 3)
@@ -71,10 +54,6 @@ export function Sun() {
     if (diskRef.current) {
       diskRef.current.scale.setScalar(10.6 * pulse)
     }
-    if (haloRef.current) {
-      const h = 14.5 + Math.sin(t * 0.7) * 0.35
-      haloRef.current.scale.set(h * pulse * 1.1, h * pulse, 1)
-    }
     if (glowRef.current) {
       const s = 7.2 + Math.sin(t * 0.5) * 0.3
       glowRef.current.scale.setScalar(s)
@@ -87,18 +66,6 @@ export function Sun() {
 
   return (
     <group>
-      {/* Outer fiery halo */}
-      <sprite ref={haloRef} scale={[15.5, 15.5, 1]} renderOrder={0}>
-        <spriteMaterial
-          map={haloTexture}
-          transparent
-          opacity={0.9}
-          blending={THREE.AdditiveBlending}
-          depthWrite={false}
-          toneMapped={false}
-        />
-      </sprite>
-
       {/* Photosphere disk (real SDO sun photo) */}
       <sprite ref={diskRef} scale={[10.6, 10.6, 1]} renderOrder={1}>
         <spriteMaterial
