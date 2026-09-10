@@ -4,6 +4,8 @@ import * as THREE from 'three'
 import { SUN_TEXTURE } from '../data/sunTexture'
 
 export function Sun() {
+  const diskRef = useRef<THREE.Sprite>(null!)
+  const haloRef = useRef<THREE.Sprite>(null!)
   const glowRef = useRef<THREE.Mesh>(null!)
   const coronaRef = useRef<THREE.Points>(null!)
 
@@ -17,10 +19,10 @@ export function Sun() {
     img.onload = () => {
       ctx.drawImage(img, 0, 0, 512, 512)
       ctx.globalCompositeOperation = 'destination-in'
-      const g = ctx.createRadialGradient(256, 256, 190, 256, 256, 256)
+      const g = ctx.createRadialGradient(256, 256, 150, 256, 256, 256)
       g.addColorStop(0, 'rgba(255,255,255,1)')
-      g.addColorStop(0.9, 'rgba(255,255,255,1)')
-      g.addColorStop(0.98, 'rgba(255,255,255,0.55)')
+      g.addColorStop(0.62, 'rgba(255,255,255,1)')
+      g.addColorStop(0.9, 'rgba(255,255,255,0.72)')
       g.addColorStop(1, 'rgba(255,255,255,0)')
       ctx.fillStyle = g
       ctx.fillRect(0, 0, 512, 512)
@@ -32,12 +34,28 @@ export function Sun() {
     return texture
   }, [])
 
+  const haloTexture = useMemo(() => {
+    const canvas = document.createElement('canvas')
+    canvas.width = canvas.height = 256
+    const ctx = canvas.getContext('2d')!
+    const g = ctx.createRadialGradient(128, 128, 10, 128, 128, 128)
+    g.addColorStop(0, 'rgba(255, 236, 170, 0.9)')
+    g.addColorStop(0.25, 'rgba(255, 177, 46, 0.5)')
+    g.addColorStop(0.55, 'rgba(255, 106, 0, 0.2)')
+    g.addColorStop(1, 'rgba(255, 60, 0, 0)')
+    ctx.fillStyle = g
+    ctx.fillRect(0, 0, 256, 256)
+    const texture = new THREE.CanvasTexture(canvas)
+    texture.colorSpace = THREE.SRGBColorSpace
+    return texture
+  }, [])
+
   const coronaPositions = useMemo(() => {
-    const count = 2000
+    const count = 2200
     const pos = new Float32Array(count * 3)
     for (let i = 0; i < count; i++) {
       const i3 = i * 3
-      const r = 6.1 + Math.random() * 1.5
+      const r = 6.4 + Math.random() * 1.7
       const theta = Math.random() * Math.PI * 2
       const phi = Math.acos(2 * Math.random() - 1)
       pos[i3] = r * Math.sin(phi) * Math.cos(theta)
@@ -49,9 +67,17 @@ export function Sun() {
 
   useFrame((state) => {
     const t = state.clock.elapsedTime
+    const pulse = 1 + Math.sin(t * 0.9) * 0.015
+    if (diskRef.current) {
+      diskRef.current.scale.setScalar(10.6 * pulse)
+    }
+    if (haloRef.current) {
+      const h = 14.5 + Math.sin(t * 0.7) * 0.35
+      haloRef.current.scale.set(h * pulse * 1.1, h * pulse, 1)
+    }
     if (glowRef.current) {
-      const scale = 6.5 + Math.sin(t * 0.5) * 0.3
-      glowRef.current.scale.setScalar(scale)
+      const s = 7.2 + Math.sin(t * 0.5) * 0.3
+      glowRef.current.scale.setScalar(s)
     }
     if (coronaRef.current) {
       coronaRef.current.rotation.y = t * 0.02
@@ -61,8 +87,20 @@ export function Sun() {
 
   return (
     <group>
-      {/* Photosphere core (real sun photo, masked into a disk) */}
-      <sprite scale={[10.8, 10.8, 1]}>
+      {/* Outer fiery halo */}
+      <sprite ref={haloRef} scale={[15.5, 15.5, 1]} renderOrder={0}>
+        <spriteMaterial
+          map={haloTexture}
+          transparent
+          opacity={0.9}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
+          toneMapped={false}
+        />
+      </sprite>
+
+      {/* Photosphere disk (real SDO sun photo) */}
+      <sprite ref={diskRef} scale={[10.6, 10.6, 1]} renderOrder={1}>
         <spriteMaterial
           map={sunTexture}
           transparent
@@ -77,7 +115,7 @@ export function Sun() {
         <meshBasicMaterial
           color="#ff8800"
           transparent
-          opacity={0.18}
+          opacity={0.22}
           side={THREE.BackSide}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
@@ -95,10 +133,10 @@ export function Sun() {
           />
         </bufferGeometry>
         <pointsMaterial
-          size={0.08}
+          size={0.09}
           color="#ffaa44"
           transparent
-          opacity={0.5}
+          opacity={0.55}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
           sizeAttenuation
