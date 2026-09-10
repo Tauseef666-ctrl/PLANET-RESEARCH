@@ -5,7 +5,6 @@ import { SUN_TEXTURE } from '../data/sunTexture'
 
 export function Sun() {
   const diskRef = useRef<THREE.Sprite>(null!)
-  const glowRef = useRef<THREE.Mesh>(null!)
   const coronaRef = useRef<THREE.Points>(null!)
 
   const sunTexture = useMemo(() => {
@@ -54,10 +53,6 @@ export function Sun() {
     if (diskRef.current) {
       diskRef.current.scale.setScalar(10.6 * pulse)
     }
-    if (glowRef.current) {
-      const s = 7.2 + Math.sin(t * 0.5) * 0.3
-      glowRef.current.scale.setScalar(s)
-    }
     if (coronaRef.current) {
       coronaRef.current.rotation.y = t * 0.02
       coronaRef.current.rotation.x = t * 0.01
@@ -75,19 +70,6 @@ export function Sun() {
           depthWrite={false}
         />
       </sprite>
-
-      {/* Inner glow */}
-      <mesh ref={glowRef}>
-        <sphereGeometry args={[5, 32, 32]} />
-        <meshBasicMaterial
-          color="#ff8800"
-          transparent
-          opacity={0.22}
-          side={THREE.BackSide}
-          blending={THREE.AdditiveBlending}
-          depthWrite={false}
-        />
-      </mesh>
 
       {/* Corona particles */}
       <points ref={coronaRef}>
