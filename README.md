@@ -134,11 +134,14 @@ npm run preview    # serve the production build locally
 PLANET-RESEARCH/
 ├── public/                 # Static assets (favicon, etc.)
 ├── src/
+│   ├── assets/             # Bundled same-origin images & textures
+│   │   ├── body/               # Planet/moon/asteroid photos (40 files)
+│   │   └── moon/               # Compressed moon globe textures (12 files)
 │   ├── components/         # UI components
-│   │   ├── Navbar.tsx          # Navigation & settings
+│   │   ├── Navbar.tsx          # Navigation & settings (mission-control menu)
 │   │   ├── LoadingScreen.tsx   # Boot sequence animation
 │   │   ├── HeroSection.tsx     # Landing hero
-│   │   ├── SearchPanel.tsx     # Global fuzzy search
+│   │   ├── SearchPanel.tsx     # Global fuzzy search modal
 │   │   ├── PlanetPanel.tsx     # Planet detail sidebar
 │   │   ├── PlanetExplorer.tsx  # Planet explorer
 │   │   ├── PlanetCompare.tsx   # Planet comparison view
@@ -148,24 +151,27 @@ PLANET-RESEARCH/
 │   │   ├── AsteroidSection.tsx   # Asteroid explorer
 │   │   ├── ResearchDashboard.tsx # Data visualization
 │   │   ├── SpaceMap.tsx          # Interstellar map
-│   │   ├── SearchPanel.tsx       # Global search modal
 │   │   └── Footer.tsx            # Footer
 │   ├── three/              # 3D components (React Three Fiber)
 │   │   ├── SolarSystem.tsx     # Solar system layout
 │   │   ├── Scene.tsx           # Main Canvas scene
 │   │   ├── Planet.tsx          # Orbiting planet
 │   │   ├── PlanetGlobe.tsx     # 3D planet/moon explorer view
-│   │   ├── PlanetTextures.ts   # Procedural textures & texture loader
-│   │   ├── Sun.tsx             # Sun with glow/corona
+│   │   ├── PlanetTextures.ts   # Texture loading & procedural fallbacks
+│   │   ├── Sun.tsx             # Sun (real photosphere + corona)
 │   │   ├── Moon.tsx            # Moon mesh
 │   │   ├── Stars.tsx           # Star field
 │   │   └── ...                 # Supporting 3D effects
-│   ├── data/               # Static datasets
+│   ├── data/               # Static datasets & bundled texture modules
 │   │   ├── planets.ts      # Planet data
 │   │   ├── exoplanets.ts   # Exoplanet data
 │   │   ├── missions.ts     # Mission data
 │   │   ├── moons.ts        # Moon data
-│   │   └── planetTextures.ts   # Texture URL config
+│   │   ├── planetTextures.ts   # Planet texture config & fallbacks
+│   │   ├── bodyAssets.ts       # Bundled celestial-body image map
+│   │   ├── bodyImages.ts       # Planet/moon/asteroid photo references
+│   │   ├── moonTextureData.ts  # Moon textures (base64, crash-safe)
+│   │   └── sunTexture.ts       # Sun photosphere (base64)
 │   ├── store/
 │   │   └── useStore.ts     # Zustand global state
 │   ├── utils/
@@ -173,7 +179,6 @@ PLANET-RESEARCH/
 │   ├── App.tsx             # Main application shell
 │   ├── main.tsx            # Entry point
 │   └── index.css           # Global styles
-├── public/
 ├── vercel.json            # Vercel deployment config
 ├── vite.config.ts         # Vite configuration
 ├── tsconfig.json          # TypeScript configuration
@@ -233,7 +238,7 @@ Found a vulnerability? Please report it privately — see [**SECURITY.md**](./SE
 
 - **NASA** — Planetary fact sheets and mission data
 - **NASA Exoplanet Archive** — Confirmed exoplanet catalog
-- **Wikimedia Commons / Three.js examples** — Planet surface textures (loaded at runtime; procedural fallbacks are bundled)
+- **Wikimedia Commons / NASA imagery** — Celestial-body photos, bundled locally (same-origin) with procedural fallbacks
 
 ---
 
