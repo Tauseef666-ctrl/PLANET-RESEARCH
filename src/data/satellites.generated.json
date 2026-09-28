@@ -1,603 +1,603 @@
 [
   {
-    "name": "STARLINK-38145",
-    "noradId": "100528",
+    "name": "STARLINK-38385",
+    "noradId": "100779",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 69.9974,
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38420",
+    "noradId": "100778",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38409",
+    "noradId": "100777",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38400",
+    "noradId": "100776",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38442",
+    "noradId": "100775",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38447",
+    "noradId": "100774",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38386",
+    "noradId": "100773",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38367",
+    "noradId": "100772",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38339",
+    "noradId": "100771",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38301",
+    "noradId": "100770",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 69.9996,
     "periodMinutes": 91
   },
   {
-    "name": "STARLINK-38378",
-    "noradId": "100527",
+    "name": "STARLINK-38388",
+    "noradId": "100769",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 69.9972,
+    "inclinationDeg": 69.9996,
     "periodMinutes": 91
   },
   {
-    "name": "STARLINK-38275",
-    "noradId": "100526",
+    "name": "STARLINK-38450",
+    "noradId": "100768",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 69.9969,
+    "inclinationDeg": 69.9996,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38448",
+    "noradId": "100767",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38438",
+    "noradId": "100766",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38446",
+    "noradId": "100765",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 69.9997,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38451",
+    "noradId": "100764",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38444",
+    "noradId": "100763",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38398",
+    "noradId": "100762",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38402",
+    "noradId": "100761",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38383",
+    "noradId": "100760",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38399",
+    "noradId": "100759",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38389",
+    "noradId": "100758",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38395",
+    "noradId": "100757",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38321",
+    "noradId": "100756",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38320",
+    "noradId": "100755",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38375",
+    "noradId": "100754",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38381",
+    "noradId": "100753",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.01,
+    "periodMinutes": 90
+  },
+  {
+    "name": "STARLINK-38436",
+    "noradId": "100641",
+    "launchDate": "2026-01-01",
+    "operator": "SpaceX",
+    "agency": "SpaceX",
+    "orbitType": "LEO",
+    "purpose": "Broadband internet constellation",
+    "group": "starlink",
+    "inclinationDeg": 70.0007,
     "periodMinutes": 91
   },
   {
-    "name": "STARLINK-38382",
-    "noradId": "100525",
+    "name": "STARLINK-38412",
+    "noradId": "100640",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 69.9972,
+    "inclinationDeg": 69.9995,
     "periodMinutes": 91
   },
   {
-    "name": "STARLINK-38394",
-    "noradId": "100524",
+    "name": "STARLINK-38411",
+    "noradId": "100639",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 69.998,
+    "inclinationDeg": 70.0001,
     "periodMinutes": 91
   },
   {
-    "name": "STARLINK-38390",
-    "noradId": "100523",
+    "name": "STARLINK-38416",
+    "noradId": "100638",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 69.9966,
+    "inclinationDeg": 70.0005,
     "periodMinutes": 91
   },
   {
-    "name": "STARLINK-38372",
-    "noradId": "100522",
+    "name": "STARLINK-38422",
+    "noradId": "100637",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 69.9965,
+    "inclinationDeg": 69.9994,
     "periodMinutes": 91
   },
   {
-    "name": "STARLINK-38377",
-    "noradId": "100521",
+    "name": "STARLINK-38170",
+    "noradId": "100636",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 69.9967,
+    "inclinationDeg": 69.9996,
     "periodMinutes": 91
   },
   {
-    "name": "STARLINK-38379",
-    "noradId": "100520",
+    "name": "STARLINK-38413",
+    "noradId": "100635",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 69.9958,
+    "inclinationDeg": 69.9991,
     "periodMinutes": 91
   },
   {
-    "name": "STARLINK-38370",
-    "noradId": "100519",
+    "name": "STARLINK-38415",
+    "noradId": "100634",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 69.9959,
+    "inclinationDeg": 70.0007,
     "periodMinutes": 91
   },
   {
-    "name": "STARLINK-38323",
-    "noradId": "100518",
+    "name": "STARLINK-38410",
+    "noradId": "100633",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 69.9968,
+    "inclinationDeg": 70.0002,
     "periodMinutes": 91
   },
   {
-    "name": "STARLINK-38360",
-    "noradId": "100517",
+    "name": "STARLINK-38403",
+    "noradId": "100632",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 69.9964,
+    "inclinationDeg": 69.9992,
     "periodMinutes": 91
   },
   {
-    "name": "STARLINK-38365",
-    "noradId": "100516",
+    "name": "STARLINK-38421",
+    "noradId": "100631",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 69.9966,
+    "inclinationDeg": 69.9998,
     "periodMinutes": 91
   },
   {
-    "name": "STARLINK-38316",
-    "noradId": "100515",
+    "name": "STARLINK-38376",
+    "noradId": "100630",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 69.9962,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-38397",
-    "noradId": "100514",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 69.9965,
+    "inclinationDeg": 70.0007,
     "periodMinutes": 91
   },
   {
-    "name": "STARLINK-38393",
-    "noradId": "100513",
+    "name": "STARLINK-38327",
+    "noradId": "100629",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 69.996,
+    "inclinationDeg": 69.9991,
     "periodMinutes": 91
   },
   {
-    "name": "STARLINK-38362",
-    "noradId": "100512",
+    "name": "STARLINK-38348",
+    "noradId": "100628",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 69.9965,
+    "inclinationDeg": 70.0002,
     "periodMinutes": 91
   },
   {
-    "name": "STARLINK-38369",
-    "noradId": "100511",
+    "name": "STARLINK-36778",
+    "noradId": "100627",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 69.9959,
+    "inclinationDeg": 70.002,
     "periodMinutes": 91
   },
   {
-    "name": "STARLINK-38363",
-    "noradId": "100510",
+    "name": "STARLINK-36777",
+    "noradId": "100626",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 69.9958,
+    "inclinationDeg": 69.9997,
     "periodMinutes": 91
   },
   {
-    "name": "STARLINK-38374",
-    "noradId": "100509",
+    "name": "STARLINK-38311",
+    "noradId": "100625",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 69.9955,
+    "inclinationDeg": 70.0014,
     "periodMinutes": 91
   },
   {
-    "name": "STARLINK-38355",
-    "noradId": "100508",
+    "name": "STARLINK-38423",
+    "noradId": "100624",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 69.9958,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-38277",
-    "noradId": "100507",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 69.9963,
+    "inclinationDeg": 70.0015,
     "periodMinutes": 91
   },
   {
-    "name": "STARLINK-38315",
-    "noradId": "100506",
+    "name": "STARLINK-38364",
+    "noradId": "100623",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 69.9958,
+    "inclinationDeg": 70.0003,
     "periodMinutes": 91
   },
   {
-    "name": "STARLINK-38371",
-    "noradId": "100505",
+    "name": "STARLINK-38366",
+    "noradId": "100622",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 69.9962,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-38356",
-    "noradId": "100504",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 69.9927,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-38368",
-    "noradId": "100503",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 69.9954,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-38373",
-    "noradId": "100502",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 69.995,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-37704",
-    "noradId": "100501",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 53.1598,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-36793",
-    "noradId": "100500",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 53.1601,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-38017",
-    "noradId": "100499",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 53.1594,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-37330",
-    "noradId": "100498",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 53.1595,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-37978",
-    "noradId": "100497",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 53.1596,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-37080",
-    "noradId": "100496",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 53.1599,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-37828",
-    "noradId": "100495",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 53.1594,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-37497",
-    "noradId": "100494",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 53.1597,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-38004",
-    "noradId": "100493",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 53.1605,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-37846",
-    "noradId": "100492",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 53.1598,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-37751",
-    "noradId": "100491",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 53.16,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-37709",
-    "noradId": "100490",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 53.1597,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-37920",
-    "noradId": "100489",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 53.1592,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-37913",
-    "noradId": "100488",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 53.1581,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-37960",
-    "noradId": "100487",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 53.1596,
+    "inclinationDeg": 69.9995,
     "periodMinutes": 91
   },
   {
-    "name": "STARLINK-37999",
-    "noradId": "100486",
+    "name": "STARLINK-38347",
+    "noradId": "100621",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 53.1601,
-    "periodMinutes": 90
+    "inclinationDeg": 70.0007,
+    "periodMinutes": 91
   },
   {
-    "name": "STARLINK-38028",
-    "noradId": "100485",
+    "name": "STARLINK-38278",
+    "noradId": "100620",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 53.1585,
-    "periodMinutes": 90
+    "inclinationDeg": 69.9994,
+    "periodMinutes": 91
   },
   {
-    "name": "STARLINK-37594",
-    "noradId": "100484",
+    "name": "STARLINK-36683",
+    "noradId": "100619",
     "launchDate": "2026-01-01",
     "operator": "SpaceX",
     "agency": "SpaceX",
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "starlink",
-    "inclinationDeg": 53.16,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-37377",
-    "noradId": "100483",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 53.1599,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-37971",
-    "noradId": "100482",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 53.159,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-37623",
-    "noradId": "100481",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 53.1593,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-37939",
-    "noradId": "100480",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 53.1595,
-    "periodMinutes": 90
-  },
-  {
-    "name": "STARLINK-37967",
-    "noradId": "100479",
-    "launchDate": "2026-01-01",
-    "operator": "SpaceX",
-    "agency": "SpaceX",
-    "orbitType": "LEO",
-    "purpose": "Broadband internet constellation",
-    "group": "starlink",
-    "inclinationDeg": 53.1596,
-    "periodMinutes": 90
+    "inclinationDeg": 70.0004,
+    "periodMinutes": 91
   },
   {
     "name": "ONEWEB-0708",
@@ -608,7 +608,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8873,
+    "inclinationDeg": 87.8907,
     "periodMinutes": 110
   },
   {
@@ -620,7 +620,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8888,
+    "inclinationDeg": 87.8915,
     "periodMinutes": 110
   },
   {
@@ -632,7 +632,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8884,
+    "inclinationDeg": 87.8915,
     "periodMinutes": 110
   },
   {
@@ -644,7 +644,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.889,
+    "inclinationDeg": 87.8916,
     "periodMinutes": 110
   },
   {
@@ -656,7 +656,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8888,
+    "inclinationDeg": 87.8911,
     "periodMinutes": 110
   },
   {
@@ -668,7 +668,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8971,
+    "inclinationDeg": 87.8985,
     "periodMinutes": 110
   },
   {
@@ -680,7 +680,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8886,
+    "inclinationDeg": 87.8919,
     "periodMinutes": 110
   },
   {
@@ -692,7 +692,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8896,
+    "inclinationDeg": 87.8926,
     "periodMinutes": 110
   },
   {
@@ -704,7 +704,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8883,
+    "inclinationDeg": 87.8912,
     "periodMinutes": 110
   },
   {
@@ -716,7 +716,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.895,
+    "inclinationDeg": 87.8966,
     "periodMinutes": 110
   },
   {
@@ -728,7 +728,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8954,
+    "inclinationDeg": 87.8971,
     "periodMinutes": 110
   },
   {
@@ -740,7 +740,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8949,
+    "inclinationDeg": 87.8963,
     "periodMinutes": 110
   },
   {
@@ -752,7 +752,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.9192,
+    "inclinationDeg": 87.9183,
     "periodMinutes": 109
   },
   {
@@ -764,7 +764,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.895,
+    "inclinationDeg": 87.8966,
     "periodMinutes": 110
   },
   {
@@ -776,7 +776,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8972,
+    "inclinationDeg": 87.8985,
     "periodMinutes": 110
   },
   {
@@ -788,7 +788,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8959,
+    "inclinationDeg": 87.8972,
     "periodMinutes": 110
   },
   {
@@ -800,7 +800,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.896,
+    "inclinationDeg": 87.8974,
     "periodMinutes": 110
   },
   {
@@ -812,7 +812,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.9198,
+    "inclinationDeg": 87.9192,
     "periodMinutes": 109
   },
   {
@@ -824,7 +824,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.9199,
+    "inclinationDeg": 87.9182,
     "periodMinutes": 109
   },
   {
@@ -836,7 +836,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.895,
+    "inclinationDeg": 87.8962,
     "periodMinutes": 110
   },
   {
@@ -848,7 +848,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 86.6721,
+    "inclinationDeg": 86.6758,
     "periodMinutes": 109
   },
   {
@@ -860,7 +860,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8968,
+    "inclinationDeg": 87.9004,
     "periodMinutes": 109
   },
   {
@@ -872,7 +872,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8959,
+    "inclinationDeg": 87.8995,
     "periodMinutes": 109
   },
   {
@@ -884,7 +884,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.9124,
+    "inclinationDeg": 87.9165,
     "periodMinutes": 109
   },
   {
@@ -896,7 +896,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.9116,
+    "inclinationDeg": 87.9155,
     "periodMinutes": 109
   },
   {
@@ -908,7 +908,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8968,
+    "inclinationDeg": 87.9004,
     "periodMinutes": 109
   },
   {
@@ -920,7 +920,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8973,
+    "inclinationDeg": 87.9005,
     "periodMinutes": 109
   },
   {
@@ -932,7 +932,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8968,
+    "inclinationDeg": 87.9002,
     "periodMinutes": 109
   },
   {
@@ -944,7 +944,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.9253,
+    "inclinationDeg": 87.9298,
     "periodMinutes": 109
   },
   {
@@ -956,7 +956,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.9256,
+    "inclinationDeg": 87.9302,
     "periodMinutes": 109
   },
   {
@@ -968,7 +968,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.9123,
+    "inclinationDeg": 87.9165,
     "periodMinutes": 109
   },
   {
@@ -980,7 +980,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8966,
+    "inclinationDeg": 87.9007,
     "periodMinutes": 109
   },
   {
@@ -992,7 +992,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.9136,
+    "inclinationDeg": 87.915,
     "periodMinutes": 109
   },
   {
@@ -1004,7 +1004,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.9126,
+    "inclinationDeg": 87.9162,
     "periodMinutes": 109
   },
   {
@@ -1016,7 +1016,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.9121,
+    "inclinationDeg": 87.9161,
     "periodMinutes": 109
   },
   {
@@ -1028,7 +1028,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.9136,
+    "inclinationDeg": 87.9148,
     "periodMinutes": 109
   },
   {
@@ -1040,7 +1040,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8968,
+    "inclinationDeg": 87.9002,
     "periodMinutes": 109
   },
   {
@@ -1052,7 +1052,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8961,
+    "inclinationDeg": 87.8993,
     "periodMinutes": 109
   },
   {
@@ -1064,7 +1064,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8962,
+    "inclinationDeg": 87.8994,
     "periodMinutes": 109
   },
   {
@@ -1076,7 +1076,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8963,
+    "inclinationDeg": 87.8992,
     "periodMinutes": 109
   },
   {
@@ -1088,7 +1088,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8969,
+    "inclinationDeg": 87.9002,
     "periodMinutes": 109
   },
   {
@@ -1100,7 +1100,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.897,
+    "inclinationDeg": 87.9005,
     "periodMinutes": 109
   },
   {
@@ -1112,7 +1112,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8959,
+    "inclinationDeg": 87.8996,
     "periodMinutes": 109
   },
   {
@@ -1124,7 +1124,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8966,
+    "inclinationDeg": 87.9006,
     "periodMinutes": 109
   },
   {
@@ -1136,7 +1136,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8959,
+    "inclinationDeg": 87.8996,
     "periodMinutes": 109
   },
   {
@@ -1148,7 +1148,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8966,
+    "inclinationDeg": 87.9006,
     "periodMinutes": 109
   },
   {
@@ -1160,7 +1160,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8956,
+    "inclinationDeg": 87.8994,
     "periodMinutes": 109
   },
   {
@@ -1172,7 +1172,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.8959,
+    "inclinationDeg": 87.8995,
     "periodMinutes": 109
   },
   {
@@ -1184,7 +1184,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.9116,
+    "inclinationDeg": 87.9165,
     "periodMinutes": 109
   },
   {
@@ -1196,7 +1196,7 @@
     "orbitType": "LEO",
     "purpose": "Broadband internet constellation",
     "group": "oneweb",
-    "inclinationDeg": 87.9257,
+    "inclinationDeg": 87.93,
     "periodMinutes": 109
   },
   {
@@ -1208,7 +1208,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0203,
+    "inclinationDeg": 0.0231,
     "periodMinutes": 1436
   },
   {
@@ -1220,7 +1220,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0168,
+    "inclinationDeg": 0.0148,
     "periodMinutes": 1436
   },
   {
@@ -1232,7 +1232,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0221,
+    "inclinationDeg": 0.0149,
     "periodMinutes": 1436
   },
   {
@@ -1244,7 +1244,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0201,
+    "inclinationDeg": 0.019,
     "periodMinutes": 1436
   },
   {
@@ -1256,7 +1256,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0121,
+    "inclinationDeg": 0.0133,
     "periodMinutes": 1436
   },
   {
@@ -1268,7 +1268,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0172,
+    "inclinationDeg": 0.0248,
     "periodMinutes": 1436
   },
   {
@@ -1280,7 +1280,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0183,
+    "inclinationDeg": 0.0195,
     "periodMinutes": 1436
   },
   {
@@ -1292,7 +1292,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0196,
+    "inclinationDeg": 0.0211,
     "periodMinutes": 1436
   },
   {
@@ -1304,7 +1304,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0181,
+    "inclinationDeg": 0.0147,
     "periodMinutes": 1436
   },
   {
@@ -1316,7 +1316,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0142,
+    "inclinationDeg": 0.0207,
     "periodMinutes": 1436
   },
   {
@@ -1328,7 +1328,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0097,
+    "inclinationDeg": 0.0103,
     "periodMinutes": 1436
   },
   {
@@ -1340,7 +1340,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0232,
+    "inclinationDeg": 0.0206,
     "periodMinutes": 1436
   },
   {
@@ -1352,7 +1352,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0163,
+    "inclinationDeg": 0.0198,
     "periodMinutes": 1436
   },
   {
@@ -1364,7 +1364,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0226,
+    "inclinationDeg": 0.0128,
     "periodMinutes": 1436
   },
   {
@@ -1376,7 +1376,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0237,
+    "inclinationDeg": 0.0148,
     "periodMinutes": 1436
   },
   {
@@ -1388,7 +1388,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0148,
+    "inclinationDeg": 0.0138,
     "periodMinutes": 1436
   },
   {
@@ -1400,7 +1400,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0329,
+    "inclinationDeg": 0.0167,
     "periodMinutes": 1436
   },
   {
@@ -1412,7 +1412,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0126,
+    "inclinationDeg": 0.0243,
     "periodMinutes": 1436
   },
   {
@@ -1424,7 +1424,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0219,
+    "inclinationDeg": 0.0188,
     "periodMinutes": 1436
   },
   {
@@ -1436,7 +1436,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.018,
+    "inclinationDeg": 0.0214,
     "periodMinutes": 1436
   },
   {
@@ -1448,7 +1448,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0212,
+    "inclinationDeg": 0.012,
     "periodMinutes": 1436
   },
   {
@@ -1460,7 +1460,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.016,
+    "inclinationDeg": 0.0162,
     "periodMinutes": 1436
   },
   {
@@ -1472,7 +1472,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0073,
+    "inclinationDeg": 0.0255,
     "periodMinutes": 1436
   },
   {
@@ -1484,7 +1484,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0442,
+    "inclinationDeg": 0.0228,
     "periodMinutes": 1436
   },
   {
@@ -1496,7 +1496,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0435,
+    "inclinationDeg": 0.0343,
     "periodMinutes": 1436
   },
   {
@@ -1508,7 +1508,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0165,
+    "inclinationDeg": 0.02,
     "periodMinutes": 1436
   },
   {
@@ -1520,7 +1520,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0197,
+    "inclinationDeg": 0.017,
     "periodMinutes": 1436
   },
   {
@@ -1532,7 +1532,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0288,
+    "inclinationDeg": 0.0151,
     "periodMinutes": 1436
   },
   {
@@ -1544,7 +1544,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0482,
+    "inclinationDeg": 0.0245,
     "periodMinutes": 1436
   },
   {
@@ -1556,7 +1556,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 2.0006,
+    "inclinationDeg": 2.0614,
     "periodMinutes": 1436
   },
   {
@@ -1568,7 +1568,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0118,
+    "inclinationDeg": 0.0107,
     "periodMinutes": 1436
   },
   {
@@ -1580,7 +1580,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0695,
+    "inclinationDeg": 0.0723,
     "periodMinutes": 1436
   },
   {
@@ -1592,8 +1592,8 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0164,
-    "periodMinutes": 1436
+    "inclinationDeg": 0.0427,
+    "periodMinutes": 1420
   },
   {
     "name": "DIRECTV 12",
@@ -1604,7 +1604,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0374,
+    "inclinationDeg": 0.003,
     "periodMinutes": 1436
   },
   {
@@ -1616,7 +1616,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0174,
+    "inclinationDeg": 0.0184,
     "periodMinutes": 1436
   },
   {
@@ -1628,7 +1628,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.1092,
+    "inclinationDeg": 0.171,
     "periodMinutes": 1436
   },
   {
@@ -1640,7 +1640,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0501,
+    "inclinationDeg": 0.0304,
     "periodMinutes": 1436
   },
   {
@@ -1652,7 +1652,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0489,
+    "inclinationDeg": 0.02,
     "periodMinutes": 1436
   },
   {
@@ -1664,7 +1664,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0113,
+    "inclinationDeg": 0.014,
     "periodMinutes": 1436
   },
   {
@@ -1676,7 +1676,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0029,
+    "inclinationDeg": 0.0091,
     "periodMinutes": 1436
   },
   {
@@ -1688,7 +1688,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 2.7966,
+    "inclinationDeg": 2.8573,
     "periodMinutes": 1436
   },
   {
@@ -1700,7 +1700,7 @@
     "orbitType": "LEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 3.762,
+    "inclinationDeg": 3.823,
     "periodMinutes": 1454
   },
   {
@@ -1712,7 +1712,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 3.162,
+    "inclinationDeg": 3.2219,
     "periodMinutes": 1436
   },
   {
@@ -1721,11 +1721,11 @@
     "launchDate": "2006-01-01",
     "operator": "Intelsat",
     "agency": "Intelsat S.A.",
-    "orbitType": "GEO",
+    "orbitType": "LEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 2.6132,
-    "periodMinutes": 1436
+    "inclinationDeg": 2.6778,
+    "periodMinutes": 1453
   },
   {
     "name": "GALAXY 16 (G-16)",
@@ -1736,7 +1736,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0136,
+    "inclinationDeg": 0.0123,
     "periodMinutes": 1436
   },
   {
@@ -1748,7 +1748,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 3.4928,
+    "inclinationDeg": 3.555,
     "periodMinutes": 1436
   },
   {
@@ -1760,7 +1760,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0155,
+    "inclinationDeg": 0.0025,
     "periodMinutes": 1436
   },
   {
@@ -1772,7 +1772,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 0.0542,
+    "inclinationDeg": 0.0267,
     "periodMinutes": 1436
   },
   {
@@ -1784,7 +1784,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 1.6157,
+    "inclinationDeg": 1.6768,
     "periodMinutes": 1436
   },
   {
@@ -1796,7 +1796,7 @@
     "orbitType": "GEO",
     "purpose": "Commercial communications relay",
     "group": "intelsat",
-    "inclinationDeg": 5.9958,
+    "inclinationDeg": 6.0553,
     "periodMinutes": 1436
   },
   {
@@ -1808,7 +1808,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.204,
+    "inclinationDeg": 0.2661,
     "periodMinutes": 1436
   },
   {
@@ -1820,7 +1820,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0191,
+    "inclinationDeg": 0.0233,
     "periodMinutes": 1436
   },
   {
@@ -1832,7 +1832,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.1514,
+    "inclinationDeg": 0.1565,
     "periodMinutes": 1436
   },
   {
@@ -1844,7 +1844,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.1781,
+    "inclinationDeg": 0.018,
     "periodMinutes": 1436
   },
   {
@@ -1856,7 +1856,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 3.5891,
+    "inclinationDeg": 3.6496,
     "periodMinutes": 1436
   },
   {
@@ -1868,7 +1868,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 3.59,
+    "inclinationDeg": 3.6506,
     "periodMinutes": 1436
   },
   {
@@ -1880,7 +1880,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0165,
+    "inclinationDeg": 0.0193,
     "periodMinutes": 1436
   },
   {
@@ -1892,7 +1892,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 5.4154,
+    "inclinationDeg": 5.3649,
     "periodMinutes": 1436
   },
   {
@@ -1904,7 +1904,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 1.3452,
+    "inclinationDeg": 1.2903,
     "periodMinutes": 1436
   },
   {
@@ -1916,7 +1916,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 4.3429,
+    "inclinationDeg": 4.2834,
     "periodMinutes": 1436
   },
   {
@@ -1928,7 +1928,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.004,
+    "inclinationDeg": 0.0159,
     "periodMinutes": 1436
   },
   {
@@ -1940,7 +1940,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0816,
+    "inclinationDeg": 0.0192,
     "periodMinutes": 1436
   },
   {
@@ -1952,7 +1952,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 5.3015,
+    "inclinationDeg": 5.2512,
     "periodMinutes": 1436
   },
   {
@@ -1964,7 +1964,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0143,
+    "inclinationDeg": 0.0156,
     "periodMinutes": 1436
   },
   {
@@ -1976,7 +1976,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 28.9046,
+    "inclinationDeg": 28.9282,
     "periodMinutes": 1436
   },
   {
@@ -1988,7 +1988,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0282,
+    "inclinationDeg": 0.0249,
     "periodMinutes": 1436
   },
   {
@@ -2000,7 +2000,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.597,
+    "inclinationDeg": 0.6166,
     "periodMinutes": 1436
   },
   {
@@ -2012,7 +2012,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0373,
+    "inclinationDeg": 0.045,
     "periodMinutes": 1436
   },
   {
@@ -2024,8 +2024,8 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.1297,
-    "periodMinutes": 1435
+    "inclinationDeg": 0.1944,
+    "periodMinutes": 1434
   },
   {
     "name": "SXM-10",
@@ -2036,7 +2036,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0187,
+    "inclinationDeg": 0.0102,
     "periodMinutes": 1436
   },
   {
@@ -2048,7 +2048,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0183,
+    "inclinationDeg": 0.0182,
     "periodMinutes": 1436
   },
   {
@@ -2060,7 +2060,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 3.1627,
+    "inclinationDeg": 3.1259,
     "periodMinutes": 1436
   },
   {
@@ -2072,7 +2072,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 4.2606,
+    "inclinationDeg": 4.2017,
     "periodMinutes": 1436
   },
   {
@@ -2084,7 +2084,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 1.2595,
+    "inclinationDeg": 1.3211,
     "periodMinutes": 1436
   },
   {
@@ -2096,7 +2096,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 1.2932,
+    "inclinationDeg": 1.3549,
     "periodMinutes": 1436
   },
   {
@@ -2108,7 +2108,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 4.1806,
+    "inclinationDeg": 4.12,
     "periodMinutes": 1436
   },
   {
@@ -2120,8 +2120,8 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.4045,
-    "periodMinutes": 1439
+    "inclinationDeg": 0.466,
+    "periodMinutes": 1436
   },
   {
     "name": "ZHONGXING-10R",
@@ -2132,7 +2132,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0507,
+    "inclinationDeg": 0.0566,
     "periodMinutes": 1436
   },
   {
@@ -2144,7 +2144,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0172,
+    "inclinationDeg": 0.0298,
     "periodMinutes": 1436
   },
   {
@@ -2156,7 +2156,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0201,
+    "inclinationDeg": 0.0168,
     "periodMinutes": 1436
   },
   {
@@ -2168,7 +2168,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.618,
+    "inclinationDeg": 0.5723,
     "periodMinutes": 1436
   },
   {
@@ -2180,7 +2180,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 5.2945,
+    "inclinationDeg": 5.352,
     "periodMinutes": 1436
   },
   {
@@ -2192,7 +2192,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0208,
+    "inclinationDeg": 0.0186,
     "periodMinutes": 1436
   },
   {
@@ -2204,7 +2204,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0627,
+    "inclinationDeg": 0.0631,
     "periodMinutes": 1436
   },
   {
@@ -2216,7 +2216,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0272,
+    "inclinationDeg": 0.0256,
     "periodMinutes": 1436
   },
   {
@@ -2228,7 +2228,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0476,
+    "inclinationDeg": 0.0239,
     "periodMinutes": 1436
   },
   {
@@ -2240,7 +2240,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.5155,
+    "inclinationDeg": 0.4746,
     "periodMinutes": 1436
   },
   {
@@ -2252,7 +2252,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0135,
+    "inclinationDeg": 0.0131,
     "periodMinutes": 1436
   },
   {
@@ -2264,7 +2264,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0393,
+    "inclinationDeg": 0.0354,
     "periodMinutes": 1436
   },
   {
@@ -2276,7 +2276,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.043,
+    "inclinationDeg": 0.0411,
     "periodMinutes": 1436
   },
   {
@@ -2288,7 +2288,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0334,
+    "inclinationDeg": 0.0094,
     "periodMinutes": 1436
   },
   {
@@ -2300,7 +2300,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0188,
+    "inclinationDeg": 0.0228,
     "periodMinutes": 1436
   },
   {
@@ -2312,7 +2312,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0675,
+    "inclinationDeg": 0.0756,
     "periodMinutes": 1436
   },
   {
@@ -2324,7 +2324,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 1.119,
+    "inclinationDeg": 1.0592,
     "periodMinutes": 1436
   },
   {
@@ -2336,7 +2336,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0607,
+    "inclinationDeg": 0.0703,
     "periodMinutes": 1436
   },
   {
@@ -2348,7 +2348,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0537,
+    "inclinationDeg": 0.0221,
     "periodMinutes": 1436
   },
   {
@@ -2360,7 +2360,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0192,
+    "inclinationDeg": 0.0104,
     "periodMinutes": 1436
   },
   {
@@ -2372,7 +2372,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0127,
+    "inclinationDeg": 0.0405,
     "periodMinutes": 1436
   },
   {
@@ -2384,7 +2384,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0659,
+    "inclinationDeg": 0.0612,
     "periodMinutes": 1436
   },
   {
@@ -2396,7 +2396,7 @@
     "orbitType": "GEO",
     "purpose": "Geostationary communications relay",
     "group": "geo",
-    "inclinationDeg": 0.0368,
+    "inclinationDeg": 0.0233,
     "periodMinutes": 1436
   },
   {
@@ -2408,7 +2408,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 54.9568,
+    "inclinationDeg": 54.954,
     "periodMinutes": 718
   },
   {
@@ -2420,7 +2420,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 55.1422,
+    "inclinationDeg": 55.1578,
     "periodMinutes": 718
   },
   {
@@ -2432,7 +2432,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 55.2862,
+    "inclinationDeg": 55.2945,
     "periodMinutes": 718
   },
   {
@@ -2444,7 +2444,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 54.8102,
+    "inclinationDeg": 54.8004,
     "periodMinutes": 718
   },
   {
@@ -2456,7 +2456,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 55.1262,
+    "inclinationDeg": 55.1285,
     "periodMinutes": 718
   },
   {
@@ -2468,7 +2468,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 55.1312,
+    "inclinationDeg": 55.119,
     "periodMinutes": 718
   },
   {
@@ -2480,7 +2480,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 53.9703,
+    "inclinationDeg": 53.9654,
     "periodMinutes": 718
   },
   {
@@ -2492,7 +2492,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 56.7187,
+    "inclinationDeg": 56.7311,
     "periodMinutes": 718
   },
   {
@@ -2504,7 +2504,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 55.5932,
+    "inclinationDeg": 55.581,
     "periodMinutes": 718
   },
   {
@@ -2516,7 +2516,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 55.7327,
+    "inclinationDeg": 55.7523,
     "periodMinutes": 718
   },
   {
@@ -2528,7 +2528,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 55.5671,
+    "inclinationDeg": 55.5953,
     "periodMinutes": 718
   },
   {
@@ -2540,7 +2540,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 57.0102,
+    "inclinationDeg": 57.0237,
     "periodMinutes": 718
   },
   {
@@ -2552,7 +2552,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 53.9277,
+    "inclinationDeg": 53.913,
     "periodMinutes": 718
   },
   {
@@ -2564,7 +2564,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 53.1597,
+    "inclinationDeg": 53.155,
     "periodMinutes": 718
   },
   {
@@ -2576,7 +2576,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 57.0393,
+    "inclinationDeg": 57.0531,
     "periodMinutes": 718
   },
   {
@@ -2588,7 +2588,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 55.4076,
+    "inclinationDeg": 55.4266,
     "periodMinutes": 718
   },
   {
@@ -2600,7 +2600,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 56.4543,
+    "inclinationDeg": 56.441,
     "periodMinutes": 718
   },
   {
@@ -2612,7 +2612,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 53.6611,
+    "inclinationDeg": 53.6645,
     "periodMinutes": 718
   },
   {
@@ -2624,7 +2624,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 54.4507,
+    "inclinationDeg": 54.4337,
     "periodMinutes": 718
   },
   {
@@ -2636,7 +2636,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 53.5947,
+    "inclinationDeg": 53.5993,
     "periodMinutes": 718
   },
   {
@@ -2648,7 +2648,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 54.2627,
+    "inclinationDeg": 54.2567,
     "periodMinutes": 718
   },
   {
@@ -2660,7 +2660,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 56.2571,
+    "inclinationDeg": 56.2692,
     "periodMinutes": 718
   },
   {
@@ -2672,7 +2672,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 54.5026,
+    "inclinationDeg": 54.5053,
     "periodMinutes": 718
   },
   {
@@ -2684,7 +2684,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 54.9739,
+    "inclinationDeg": 54.9575,
     "periodMinutes": 718
   },
   {
@@ -2696,7 +2696,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 54.1576,
+    "inclinationDeg": 54.1773,
     "periodMinutes": 718
   },
   {
@@ -2708,7 +2708,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 54.9258,
+    "inclinationDeg": 54.921,
     "periodMinutes": 718
   },
   {
@@ -2720,7 +2720,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 54.7145,
+    "inclinationDeg": 54.7165,
     "periodMinutes": 718
   },
   {
@@ -2732,7 +2732,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 54.8195,
+    "inclinationDeg": 54.8026,
     "periodMinutes": 718
   },
   {
@@ -2744,7 +2744,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 55.085,
+    "inclinationDeg": 55.0698,
     "periodMinutes": 718
   },
   {
@@ -2756,7 +2756,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 54.7695,
+    "inclinationDeg": 54.7521,
     "periodMinutes": 718
   },
   {
@@ -2768,7 +2768,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 54.8713,
+    "inclinationDeg": 54.8658,
     "periodMinutes": 718
   },
   {
@@ -2780,7 +2780,7 @@
     "orbitType": "MEO",
     "purpose": "Satellite navigation (GNSS)",
     "group": "gps-ops",
-    "inclinationDeg": 54.8413,
+    "inclinationDeg": 54.836,
     "periodMinutes": 718
   }
 ]
